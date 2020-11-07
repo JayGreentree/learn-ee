@@ -17,3 +17,4 @@ Each branch in this repo will serve as a separate step in the video, so you are 
 The `main` branch will serve as the most up to date version of the site
 
 ### Branches:
+Step 1: Installation - `step/1-installation`
