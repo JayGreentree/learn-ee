@@ -1,5 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+$config['index_page'] = 'index.php';
 // ExpressionEngine Config Items
 // Find more configs and overrides at
 // https://docs.expressionengine.com/latest/general/system_configuration_overrides.html
@@ -21,5 +22,7 @@ $config['database'] = array(
 );
 $config['show_ee_news'] = 'y';
 $config['share_analytics'] = 'y';
+
+$config['allow_dictionary_pw'] = 'n';
 
 // EOF
