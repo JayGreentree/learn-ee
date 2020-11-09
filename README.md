@@ -18,3 +18,5 @@ The `main` branch will serve as the most up to date version of the site
 
 ### Branches:
 Step 1: Installation - `step/1-installation`
+Step 2: Let's Create a Channel - `step/2-channel-creation`
+Step 3: Let's Create a Template - `step/3-create-template-group`
