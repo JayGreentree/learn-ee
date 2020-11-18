@@ -22,8 +22,7 @@
  * https://expressionengine.com/expressionengine/user-guide/installation/best_practices.html
  *
  */
-	$system_path = './system';
-
+	$system_path = '../system';
 
 /*
  * --------------------------------------------------------------------
