@@ -23,4 +23,4 @@ Step 3: Let's Create a Template - `step/3-create-template-group`
 Step 4: Using File Fields Part 1: Set Up - `step/4-file-field-setup`
 Step 5: Using File Fields Part 2: Templating - `step/5-file-field-templating`
 Step 6: DRY Template Layouts - `step/6-template-layouts`
-Step 7: Moving the System Directory Above Webroot - `step/6-system-directory`
+Step 7: Moving the System Directory Above Webroot - `step/7-system-directory`
