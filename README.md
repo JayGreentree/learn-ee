@@ -8,7 +8,7 @@ It is highly recommended that you watch the videos at [ExpressionEngine Universi
 
 If you want to install this repo:
 1. `git clone git@github.com:dougblackjr/learn-ee.git`
-2. Import the database from the database folder.
+2. Import the database from the database folder. (user: doug, password: password)
 
 ## Usage
 
