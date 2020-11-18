@@ -25,6 +25,8 @@ DROP TABLE IF EXISTS `exp_category_posts`;
 DROP TABLE IF EXISTS `exp_channel_data`;
 DROP TABLE IF EXISTS `exp_channel_data_field_1`;
 DROP TABLE IF EXISTS `exp_channel_data_field_2`;
+DROP TABLE IF EXISTS `exp_channel_data_field_3`;
+DROP TABLE IF EXISTS `exp_channel_data_field_4`;
 DROP TABLE IF EXISTS `exp_channel_entries_autosave`;
 DROP TABLE IF EXISTS `exp_channel_field_groups_fields`;
 DROP TABLE IF EXISTS `exp_channel_fields`;
@@ -231,6 +233,24 @@ CREATE TABLE `exp_channel_data_field_2` (
   KEY `entry_id` (`entry_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `exp_channel_data_field_3` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `entry_id` int(10) unsigned NOT NULL,
+  `field_id_3` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `field_ft_3` tinytext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `entry_id` (`entry_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `exp_channel_data_field_4` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `entry_id` int(10) unsigned NOT NULL,
+  `field_id_4` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `field_ft_4` tinytext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `entry_id` (`entry_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE `exp_channel_entries_autosave` (
   `entry_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `original_entry_id` int(10) unsigned NOT NULL,
@@ -267,7 +287,7 @@ CREATE TABLE `exp_channel_entries_autosave` (
   KEY `entry_date` (`entry_date`),
   KEY `expiration_date` (`expiration_date`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_channel_field_groups_fields` (
   `field_id` int(6) unsigned NOT NULL,
@@ -301,7 +321,7 @@ CREATE TABLE `exp_channel_fields` (
   PRIMARY KEY (`field_id`),
   KEY `field_type` (`field_type`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_channel_form_settings` (
   `channel_form_settings_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -313,7 +333,7 @@ CREATE TABLE `exp_channel_form_settings` (
   PRIMARY KEY (`channel_form_settings_id`),
   KEY `site_id` (`site_id`),
   KEY `channel_id` (`channel_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_channel_member_roles` (
   `role_id` int(10) unsigned NOT NULL,
@@ -357,7 +377,7 @@ CREATE TABLE `exp_channel_titles` (
   KEY `expiration_date` (`expiration_date`),
   KEY `site_id` (`site_id`),
   KEY `sticky_date_id_idx` (`sticky`,`entry_date`,`entry_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_channels` (
   `channel_id` int(6) unsigned NOT NULL AUTO_INCREMENT,
@@ -414,7 +434,7 @@ CREATE TABLE `exp_channels` (
   KEY `cat_group` (`cat_group`(191)),
   KEY `channel_name` (`channel_name`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_channels_channel_field_groups` (
   `channel_id` int(4) unsigned NOT NULL,
@@ -539,7 +559,7 @@ CREATE TABLE `exp_cp_log` (
   `action` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_dashboard_layout_widgets` (
   `layout_id` int(10) unsigned NOT NULL,
@@ -670,7 +690,7 @@ CREATE TABLE `exp_field_groups` (
   `group_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`group_id`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_fieldtypes` (
   `fieldtype_id` int(4) unsigned NOT NULL AUTO_INCREMENT,
@@ -749,7 +769,7 @@ CREATE TABLE `exp_files` (
   PRIMARY KEY (`file_id`),
   KEY `upload_location_id` (`upload_location_id`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_fluid_field_data` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -1103,7 +1123,7 @@ CREATE TABLE `exp_password_lockout` (
   KEY `login_date` (`login_date`),
   KEY `ip_address` (`ip_address`),
   KEY `user_agent` (`user_agent`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_permissions` (
   `permission_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1257,7 +1277,7 @@ CREATE TABLE `exp_security_hashes` (
   `hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`hash_id`),
   KEY `session_id` (`session_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_sessions` (
   `session_id` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
@@ -1451,7 +1471,7 @@ CREATE TABLE `exp_upload_prefs` (
   `module_id` int(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_upload_prefs_roles` (
   `role_id` int(10) unsigned NOT NULL,
@@ -1492,7 +1512,8 @@ INSERT INTO `exp_actions` (`action_id`, `class`, `method`, `csrf_exempt`) VALUES
 
 INSERT INTO `exp_channel_data` (`entry_id`, `site_id`, `channel_id`) VALUES 
 	(1, 1, 1),
-	(2, 1, 1);
+	(2, 1, 1),
+	(3, 1, 2);
 
 INSERT INTO `exp_channel_data_field_1` (`id`, `entry_id`, `field_id_1`, `field_ft_1`) VALUES 
 	(1, 1, 'Welcome to our site!', 'none'),
@@ -1502,34 +1523,53 @@ INSERT INTO `exp_channel_data_field_2` (`id`, `entry_id`, `field_id_2`, `field_f
 	(1, 1, '<p>This site is created with <a href=\"https://expressionengine.com/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>ExpressionEngine</strong></a>! It\'s <i>awesom</i>e!</p><p>This site is going to be amazing! You can\'t wait to read all of the things.</p>', 'none'),
 	(2, 2, '<p>We would love to hear from you!</p>', 'none');
 
+INSERT INTO `exp_channel_data_field_3` (`id`, `entry_id`, `field_id_3`, `field_ft_3`) VALUES 
+	(1, 3, '<p style=\"text-align:justify;\">I don\'t want to talk to you no more, you empty-headed animal food trough wiper! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries!</p><p style=\"text-align:justify;\">Listen, strange women lyin\' in ponds distributin\' swords is no basis for a system of government. Supreme executive power derives from a mandate from the masses, not from some farcical aquatic ceremony. You don\'t frighten us, English pig dogs. Go and boil your bottoms, you sons of a silly person. I blow my nose at you, so-called \"Arthur King,\" you and all your silly English K-nig-hts.</p>', 'none');
+
+INSERT INTO `exp_channel_data_field_4` (`id`, `entry_id`, `field_id_4`, `field_ft_4`) VALUES 
+	(1, 3, '{filedir_5}pexels-mike-3820181.jpg', 'none');
+
+INSERT INTO `exp_channel_entries_autosave` (`entry_id`, `original_entry_id`, `site_id`, `channel_id`, `author_id`, `forum_topic_id`, `ip_address`, `title`, `url_title`, `status`, `versioning_enabled`, `view_count_one`, `view_count_two`, `view_count_three`, `view_count_four`, `allow_comments`, `sticky`, `entry_date`, `year`, `month`, `day`, `expiration_date`, `comment_expiration_date`, `edit_date`, `recent_comment_date`, `comment_total`, `entry_data`) VALUES 
+	(1, 0, 1, 2, 1, NULL, '0', 'Our Very First Blog', 'our-very-first-blog', 'open', 'n', 0, 0, 0, 0, 'y', 'n', 0, '0', '0', '0', 0, 0, 1605722395, NULL, 0, '{\"title\":\"Our Very First Blog\",\"url_title\":\"our-very-first-blog\",\"field_id_3\":\"<p style=\\\"text-align:justify;\\\">I don\'t want to talk to you no more, you empty-headed animal food trough wiper! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries!<\\/p><p style=\\\"text-align:justify;\\\">Listen, strange women lyin\' in ponds distributin\' swords is no basis for a system of government. Supreme executive power derives from a mandate from the masses, not from some farcical aquatic ceremony. You don\'t frighten us, English pig dogs. Go and boil your bottoms, you sons of a silly person. I blow my nose at you, so-called \\\"Arthur King,\\\" you and all your silly English K-nig-hts.<\\/p>\",\"field_id_4\":\"\",\"entry_date\":\"11\\/18\\/2020 12:57 PM\",\"expiration_date\":\"\",\"channel_id\":\"2\",\"status\":\"open\",\"author_id\":\"1\"}');
+
 INSERT INTO `exp_channel_field_groups_fields` (`field_id`, `group_id`) VALUES 
 	(1, 1),
-	(2, 1);
+	(2, 1),
+	(3, 2),
+	(4, 2);
 
 INSERT INTO `exp_channel_fields` (`field_id`, `site_id`, `field_name`, `field_label`, `field_instructions`, `field_type`, `field_list_items`, `field_pre_populate`, `field_pre_channel_id`, `field_pre_field_id`, `field_ta_rows`, `field_maxl`, `field_required`, `field_text_direction`, `field_search`, `field_is_hidden`, `field_fmt`, `field_show_fmt`, `field_order`, `field_content_type`, `field_settings`, `legacy_field_data`) VALUES 
 	(1, 0, 'subtitle', 'Subtitle', '', 'text', '', 'n', NULL, NULL, 8, 256, 'n', 'ltr', 'y', 'n', 'none', 'n', 1, 'all', 'YTo0OntzOjEwOiJmaWVsZF9tYXhsIjtzOjM6IjI1NiI7czoxODoiZmllbGRfY29udGVudF90eXBlIjtzOjM6ImFsbCI7czoxODoiZmllbGRfc2hvd19zbWlsZXlzIjtzOjE6Im4iO3M6MjQ6ImZpZWxkX3Nob3dfZmlsZV9zZWxlY3RvciI7czowOiIiO30=', 'n'),
-	(2, 0, 'page_content', 'Page Content', '', 'rte', '', 'n', NULL, NULL, 8, NULL, 'y', 'ltr', 'n', 'n', 'none', 'n', 2, 'any', 'YTo2OntzOjEwOiJ0b29sc2V0X2lkIjtzOjE6IjEiO3M6NToiZGVmZXIiO3M6MToibiI7czoxNDoiZGJfY29sdW1uX3R5cGUiO3M6NDoidGV4dCI7czoxMDoiZmllbGRfd2lkZSI7YjoxO3M6OToiZmllbGRfZm10IjtzOjQ6Im5vbmUiO3M6MTQ6ImZpZWxkX3Nob3dfZm10IjtzOjE6Im4iO30=', 'n');
+	(2, 0, 'page_content', 'Page Content', '', 'rte', '', 'n', NULL, NULL, 8, NULL, 'y', 'ltr', 'n', 'n', 'none', 'n', 2, 'any', 'YTo2OntzOjEwOiJ0b29sc2V0X2lkIjtzOjE6IjEiO3M6NToiZGVmZXIiO3M6MToibiI7czoxNDoiZGJfY29sdW1uX3R5cGUiO3M6NDoidGV4dCI7czoxMDoiZmllbGRfd2lkZSI7YjoxO3M6OToiZmllbGRfZm10IjtzOjQ6Im5vbmUiO3M6MTQ6ImZpZWxkX3Nob3dfZm10IjtzOjE6Im4iO30=', 'n'),
+	(3, 0, 'blog_content', 'Blog Content', '', 'rte', '', 'n', NULL, NULL, 8, NULL, 'n', 'ltr', 'n', 'n', 'none', 'n', 3, 'any', 'YTo2OntzOjEwOiJ0b29sc2V0X2lkIjtzOjE6IjEiO3M6NToiZGVmZXIiO3M6MToibiI7czoxNDoiZGJfY29sdW1uX3R5cGUiO3M6NDoidGV4dCI7czoxMDoiZmllbGRfd2lkZSI7YjoxO3M6OToiZmllbGRfZm10IjtzOjQ6Im5vbmUiO3M6MTQ6ImZpZWxkX3Nob3dfZm10IjtzOjE6Im4iO30=', 'n'),
+	(4, 0, 'featured_image', 'Featured Image', '', 'file', '', 'n', NULL, NULL, 8, NULL, 'y', 'ltr', 'n', 'n', 'none', 'y', 4, 'image', 'YTo1OntzOjE4OiJmaWVsZF9jb250ZW50X3R5cGUiO3M6NToiaW1hZ2UiO3M6MTk6ImFsbG93ZWRfZGlyZWN0b3JpZXMiO3M6MToiNSI7czoxMzoic2hvd19leGlzdGluZyI7czoxOiJ5IjtzOjEyOiJudW1fZXhpc3RpbmciO3M6MjoiNTAiO3M6OToiZmllbGRfZm10IjtzOjQ6Im5vbmUiO30=', 'n');
 
 INSERT INTO `exp_channel_form_settings` (`channel_form_settings_id`, `site_id`, `channel_id`, `default_status`, `allow_guest_posts`, `default_author`) VALUES 
-	(1, 1, 1, '', 'n', 1);
+	(1, 1, 1, '', 'n', 1),
+	(2, 1, 2, '', 'n', 1);
 
 INSERT INTO `exp_channel_titles` (`entry_id`, `site_id`, `channel_id`, `author_id`, `forum_topic_id`, `ip_address`, `title`, `url_title`, `status`, `status_id`, `versioning_enabled`, `view_count_one`, `view_count_two`, `view_count_three`, `view_count_four`, `allow_comments`, `sticky`, `entry_date`, `year`, `month`, `day`, `expiration_date`, `comment_expiration_date`, `edit_date`, `recent_comment_date`, `comment_total`) VALUES 
 	(1, 1, 1, 1, NULL, '127.0.0.1', 'Homepage', 'homepage', 'open', 1, 'n', 0, 0, 0, 0, 'y', 'n', 1604840820, '2020', '11', '08', 0, 0, 1604842666, NULL, 0),
-	(2, 1, 1, 1, NULL, '127.0.0.1', 'Contact', 'contact', 'open', 1, 'n', 0, 0, 0, 0, 'y', 'n', 1604842080, '2020', '11', '08', 0, 0, 1604842150, NULL, 0);
+	(2, 1, 1, 1, NULL, '127.0.0.1', 'Contact', 'contact', 'open', 1, 'n', 0, 0, 0, 0, 'y', 'n', 1604842080, '2020', '11', '08', 0, 0, 1604842150, NULL, 0),
+	(3, 1, 2, 1, NULL, '127.0.0.1', 'Our Very First Blog', 'our-very-first-blog', 'open', 1, 'n', 0, 0, 0, 0, 'y', 'n', 1605722220, '2020', '11', '18', 0, 0, 1605722419, NULL, 0);
 
 INSERT INTO `exp_channels` (`channel_id`, `site_id`, `channel_name`, `channel_title`, `channel_url`, `channel_description`, `channel_lang`, `total_entries`, `total_records`, `total_comments`, `last_entry_date`, `last_comment_date`, `cat_group`, `deft_status`, `search_excerpt`, `deft_category`, `deft_comments`, `channel_require_membership`, `channel_max_chars`, `channel_html_formatting`, `extra_publish_controls`, `channel_allow_img_urls`, `channel_auto_link_urls`, `channel_notify`, `channel_notify_emails`, `sticky_enabled`, `comment_url`, `comment_system_enabled`, `comment_require_membership`, `comment_moderate`, `comment_max_chars`, `comment_timelock`, `comment_require_email`, `comment_text_formatting`, `comment_html_formatting`, `comment_allow_img_urls`, `comment_auto_link_urls`, `comment_notify`, `comment_notify_authors`, `comment_notify_emails`, `comment_expiration`, `search_results_url`, `rss_url`, `enable_versioning`, `max_revisions`, `default_entry_title`, `title_field_label`, `url_title_prefix`, `preview_url`, `max_entries`) VALUES 
-	(1, 1, 'page', 'Page', 'http://learn-ee.test/index.php', '', 'en', 2, 2, 0, 1604842080, 0, '', 'open', NULL, '', 'y', 'y', NULL, 'all', 'n', 'y', 'n', 'n', '', 'n', '', 'n', 'n', 'n', 5000, 0, 'y', 'xhtml', 'safe', 'n', 'y', 'n', 'n', '', 0, '', '', 'n', 10, '', 'Title', '', '', 0);
+	(1, 1, 'page', 'Page', 'http://learn-ee.test/index.php', '', 'en', 2, 2, 0, 1604842080, 0, '', 'open', NULL, '', 'y', 'y', NULL, 'all', 'n', 'y', 'n', 'n', '', 'n', '', 'n', 'n', 'n', 5000, 0, 'y', 'xhtml', 'safe', 'n', 'y', 'n', 'n', '', 0, '', '', 'n', 10, '', 'Title', '', '', 0),
+	(2, 1, 'blog', 'Blog', 'https://learn-ee.test/index.php', '', 'en', 1, 1, 0, 1605722220, 0, '', 'open', NULL, '', 'y', 'y', NULL, 'all', 'n', 'y', 'n', 'n', '', 'n', '', 'y', 'n', 'n', 5000, 0, 'y', 'xhtml', 'safe', 'n', 'y', 'n', 'n', '', 0, '', '', 'n', 10, '', 'Title', '', '', 0);
 
 INSERT INTO `exp_channels_channel_field_groups` (`channel_id`, `group_id`) VALUES 
-	(1, 1);
+	(1, 1),
+	(2, 2);
 
 INSERT INTO `exp_channels_statuses` (`channel_id`, `status_id`) VALUES 
 	(1, 1),
-	(1, 2);
+	(1, 2),
+	(2, 1),
+	(2, 2);
 
 INSERT INTO `exp_config` (`config_id`, `site_id`, `key`, `value`) VALUES 
 	(1, 1, 'is_site_on', 'y'),
-	(2, 1, 'base_url', 'http://learn-ee.test/'),
+	(2, 1, 'base_url', 'https://learn-ee.test/'),
 	(3, 1, 'base_path', '/home/doug/sites/learn-ee/'),
 	(4, 1, 'site_index', 'index.php'),
 	(5, 1, 'site_url', '{base_url}'),
@@ -1693,13 +1733,19 @@ INSERT INTO `exp_content_types` (`content_type_id`, `name`) VALUES
 
 INSERT INTO `exp_cp_log` (`id`, `site_id`, `member_id`, `username`, `ip_address`, `act_date`, `action`) VALUES 
 	(1, 1, 1, 'doug', '127.0.0.1', 1604839791, 'Logged in'),
-	(2, 1, 1, 'doug', '127.0.0.1', 1604840801, 'Channel Created&nbsp;&nbsp;Page');
+	(2, 1, 1, 'doug', '127.0.0.1', 1604840801, 'Channel Created&nbsp;&nbsp;Page'),
+	(3, 1, 1, 'doug', '127.0.0.1', 1604916954, 'Logged in'),
+	(4, 1, 1, 'doug', '127.0.0.1', 1604920529, 'Logged in'),
+	(5, 1, 1, 'doug', '127.0.0.1', 1604925171, 'Logged in'),
+	(6, 1, 1, 'doug', '127.0.0.1', 1605721150, 'Logged in'),
+	(7, 1, 1, 'doug', '127.0.0.1', 1605722249, 'Channel Created&nbsp;&nbsp;Blog');
 
 INSERT INTO `exp_extensions` (`extension_id`, `class`, `method`, `hook`, `settings`, `priority`, `version`, `enabled`) VALUES 
 	(1, 'Comment_ext', 'addCommentMenu', 'cp_custom_menu', 'a:0:{}', 10, '2.3.3', 'y');
 
 INSERT INTO `exp_field_groups` (`group_id`, `site_id`, `group_name`) VALUES 
-	(1, 0, 'Page Group');
+	(1, 0, 'Page Group'),
+	(2, 0, 'Blog Group');
 
 INSERT INTO `exp_fieldtypes` (`fieldtype_id`, `name`, `version`, `settings`, `has_global_settings`) VALUES 
 	(1, 'select', '1.0.0', 'YTowOnt9', 'n'),
@@ -1721,6 +1767,9 @@ INSERT INTO `exp_fieldtypes` (`fieldtype_id`, `name`, `version`, `settings`, `ha
 	(17, 'url', '1.0.0', 'YTowOnt9', 'n'),
 	(18, 'colorpicker', '1.0.0', 'YTowOnt9', 'n');
 
+INSERT INTO `exp_files` (`file_id`, `site_id`, `title`, `upload_location_id`, `mime_type`, `file_name`, `file_size`, `description`, `credit`, `location`, `uploaded_by_member_id`, `upload_date`, `modified_by_member_id`, `modified_date`, `file_hw_original`) VALUES 
+	(1, 1, 'pexels-mike-3820181.jpg', 5, 'image/jpeg', 'pexels-mike-3820181.jpg', 221123, NULL, NULL, NULL, 1, 1605722409, 1, 1605722409, '1280 1920');
+
 INSERT INTO `exp_html_buttons` (`id`, `site_id`, `member_id`, `tag_name`, `tag_open`, `tag_close`, `accesskey`, `tag_order`, `tag_row`, `classname`) VALUES 
 	(1, 1, 0, 'html_btn_bold', '<strong>', '</strong>', 'b', 1, '1', 'html-bold'),
 	(2, 1, 0, 'html_btn_italic', '<em>', '</em>', 'i', 2, '1', 'html-italic'),
@@ -1735,7 +1784,7 @@ INSERT INTO `exp_member_news_views` (`news_id`, `version`, `member_id`) VALUES
 	(1, '6.0.0-b.3', 1);
 
 INSERT INTO `exp_members` (`member_id`, `role_id`, `username`, `screen_name`, `password`, `salt`, `unique_id`, `crypt_key`, `authcode`, `email`, `signature`, `avatar_filename`, `avatar_width`, `avatar_height`, `photo_filename`, `photo_width`, `photo_height`, `sig_img_filename`, `sig_img_width`, `sig_img_height`, `ignore_list`, `private_messages`, `accept_messages`, `last_view_bulletins`, `last_bulletin_date`, `ip_address`, `join_date`, `last_visit`, `last_activity`, `total_entries`, `total_comments`, `total_forum_topics`, `total_forum_posts`, `last_entry_date`, `last_comment_date`, `last_forum_post_date`, `last_email_date`, `in_authorlist`, `accept_admin_email`, `accept_user_email`, `notify_by_default`, `notify_of_pm`, `display_signatures`, `parse_smileys`, `smart_notifications`, `language`, `timezone`, `time_format`, `date_format`, `include_seconds`, `profile_theme`, `forum_theme`, `tracker`, `template_size`, `notepad`, `notepad_size`, `bookmarklets`, `quick_links`, `quick_tabs`, `show_sidebar`, `pmember_id`, `cp_homepage`, `cp_homepage_channel`, `cp_homepage_custom`) VALUES 
-	(1, 1, 'doug', 'doug', '$2y$10$yHbcRwghrLuuyJPdNIB7g.tHXwQfSGT2FbOFNldUDl0VxWHZCg.bC', '', 'd32eaadca3a44981ce316218ee85bf605138fd8c', '123e8e8814afb6ad85331c55017161fa0bafcd61', NULL, 'doug@triplenerdscore.net', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'y', 0, 0, '127.0.0.1', 1604839755, 1604839791, 1604844047, 2, 0, 0, 0, 1604842080, 0, 0, 0, 'n', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'english', 'America/New_York', NULL, NULL, NULL, NULL, NULL, NULL, '28', NULL, '18', NULL, '', NULL, 'n', 0, NULL, NULL, NULL);
+	(1, 1, 'doug', 'doug', '$2y$10$yHbcRwghrLuuyJPdNIB7g.tHXwQfSGT2FbOFNldUDl0VxWHZCg.bC', '', 'd32eaadca3a44981ce316218ee85bf605138fd8c', '123e8e8814afb6ad85331c55017161fa0bafcd61', NULL, 'doug@triplenerdscore.net', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'y', 0, 0, '127.0.0.1', 1604839755, 1604928382, 1605722563, 3, 0, 0, 0, 1605722220, 0, 0, 0, 'n', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'english', 'America/New_York', NULL, NULL, NULL, NULL, NULL, NULL, '28', NULL, '18', NULL, '', NULL, 'n', 0, NULL, NULL, NULL);
 
 INSERT INTO `exp_members_roles` (`member_id`, `role_id`) VALUES 
 	(1, 1);
@@ -1754,6 +1803,13 @@ INSERT INTO `exp_modules` (`module_id`, `module_name`, `module_version`, `has_cp
 	(8, 'Filepicker', '1.0', 'y', 'n'),
 	(9, 'Relationship', '1.0.0', 'n', 'n'),
 	(10, 'Search', '2.2.2', 'n', 'n');
+
+INSERT INTO `exp_password_lockout` (`lockout_id`, `login_date`, `ip_address`, `user_agent`, `username`) VALUES 
+	(1, 1605721074, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', 'ee-admin'),
+	(2, 1605721105, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', 'eeadmin'),
+	(3, 1605721122, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', 'admin'),
+	(4, 1605721124, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', 'admin'),
+	(5, 1605721129, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', 'ee_admin');
 
 INSERT INTO `exp_permissions` (`permission_id`, `role_id`, `site_id`, `permission`) VALUES 
 	(1, 1, 1, 'can_view_offline_system'),
@@ -1875,13 +1931,18 @@ INSERT INTO `exp_rte_toolsets` (`toolset_id`, `toolset_name`, `settings`) VALUES
 	(2, 'Full', 'YTozOntzOjc6InRvb2xiYXIiO2E6Mjk6e2k6MDtzOjQ6ImJvbGQiO2k6MTtzOjY6Iml0YWxpYyI7aToyO3M6MTM6InN0cmlrZXRocm91Z2giO2k6MztzOjk6InVuZGVybGluZSI7aTo0O3M6OToic3Vic2NyaXB0IjtpOjU7czoxMToic3VwZXJzY3JpcHQiO2k6NjtzOjEwOiJibG9ja3F1b3RlIjtpOjc7czo0OiJjb2RlIjtpOjg7czo3OiJoZWFkaW5nIjtpOjk7czoxMjoicmVtb3ZlRm9ybWF0IjtpOjEwO3M6NDoidW5kbyI7aToxMTtzOjQ6InJlZG8iO2k6MTI7czoxMjoibnVtYmVyZWRMaXN0IjtpOjEzO3M6MTI6ImJ1bGxldGVkTGlzdCI7aToxNDtzOjc6Im91dGRlbnQiO2k6MTU7czo2OiJpbmRlbnQiO2k6MTY7czo0OiJsaW5rIjtpOjE3O3M6MTE6ImZpbGVtYW5hZ2VyIjtpOjE4O3M6MTE6Imluc2VydFRhYmxlIjtpOjE5O3M6MTA6Im1lZGlhRW1iZWQiO2k6MjA7czoxNDoiYWxpZ25tZW50OmxlZnQiO2k6MjE7czoxNToiYWxpZ25tZW50OnJpZ2h0IjtpOjIyO3M6MTY6ImFsaWdubWVudDpjZW50ZXIiO2k6MjM7czoxNzoiYWxpZ25tZW50Omp1c3RpZnkiO2k6MjQ7czoxNDoiaG9yaXpvbnRhbExpbmUiO2k6MjU7czoxNzoic3BlY2lhbENoYXJhY3RlcnMiO2k6MjY7czo4OiJyZWFkTW9yZSI7aToyNztzOjk6ImZvbnRDb2xvciI7aToyODtzOjE5OiJmb250QmFja2dyb3VuZENvbG9yIjt9czo2OiJoZWlnaHQiO3M6MzoiMjAwIjtzOjEwOiJ1cGxvYWRfZGlyIjtzOjM6ImFsbCI7fQ==');
 
 INSERT INTO `exp_security_hashes` (`hash_id`, `date`, `session_id`, `hash`) VALUES 
-	(1, 1604839791, 'f15fa009bc30833d8e576aa057e6b32c13fe25d9', '082e5a60bef50f7849d702d69a49244df5d52f1d');
+	(1, 1604839791, 'f15fa009bc30833d8e576aa057e6b32c13fe25d9', '082e5a60bef50f7849d702d69a49244df5d52f1d'),
+	(2, 1604916955, '94cbe39bbe5c249e8a358e4efd3dec431ec2af56', 'b2e08954eb1f80807dd0d59c9b09a4429e76f33f'),
+	(3, 1604920529, '7772f7afe46824bb91e0061331c179f8cd7dd380', 'b8636eddf3fe7c4c246870532440aff8f9874bc4'),
+	(4, 1604924503, 'd0e27e13dd1323ae528c1f1193a0cdc127bb4130', '06d63e0c71b156fcbe0cbfda9660487b845b2043'),
+	(5, 1604925171, '16a27d7b50287ac8f637804835be5fe1d9f19d73', '1d66c56fcab5d696cf2396ce22dfe49d1de5e154'),
+	(6, 1605721151, '569fd40fde6c25f1beb2cd50568c86199367bdfb', 'd834b6befa560b3a9717324ca51a1b890a80ff80');
 
 INSERT INTO `exp_sessions` (`session_id`, `member_id`, `admin_sess`, `ip_address`, `user_agent`, `login_state`, `fingerprint`, `sess_start`, `auth_timeout`, `last_activity`, `can_debug`) VALUES 
-	('f15fa009bc30833d8e576aa057e6b32c13fe25d9', 1, 1, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', NULL, '93ce595b17f9bdc5fae4aeb7c206742e', 1604844047, 0, 1604844051, '0');
+	('569fd40fde6c25f1beb2cd50568c86199367bdfb', 1, 1, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', NULL, '93ce595b17f9bdc5fae4aeb7c206742e', 1605721150, 0, 1605722628, '0');
 
 INSERT INTO `exp_sites` (`site_id`, `site_label`, `site_name`, `site_description`, `site_bootstrap_checksums`, `site_pages`) VALUES 
-	(1, 'Our New EE Site', 'default_site', NULL, 'YToxOntzOjM1OiIvaG9tZS9kb3VnL3NpdGVzL2xlYXJuLWVlL2luZGV4LnBocCI7czozMjoiYmY1ZTViNWVhNGVkOWZiYjY3YmNlZDAyZDY2Y2MwYTMiO30=', '');
+	(1, 'Our New EE Site', 'default_site', NULL, 'YToxOntzOjM1OiIvaG9tZS9kb3VnL3NpdGVzL2xlYXJuLWVlL2luZGV4LnBocCI7czozMjoiYmY1ZTViNWVhNGVkOWZiYjY3YmNlZDAyZDY2Y2MwYTMiO30=', 'YToxOntpOjE7YToxOntzOjM6InVybCI7czoyMToie2Jhc2VfdXJsfS9pbmRleC5waHAvIjt9fQ==');
 
 INSERT INTO `exp_specialty_templates` (`template_id`, `site_id`, `enable_template`, `template_name`, `data_title`, `template_type`, `template_subtype`, `template_data`, `template_notes`, `edit_date`, `last_author_id`) VALUES 
 	(1, 1, 'y', 'offline_template', '', 'system', NULL, '<!doctype html>\n<html dir=\"ltr\">\n    <head>\n        <title>System Offline</title>\n        <meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\"  name=\"viewport\">\n\n        <style type=\"text/css\">\n:root, body {\n    --ee-panel-bg: #fff;\n    --ee-panel-border: #dfe0ef;\n    --ee-text-normal: #0d0d19;\n    --ee-main-bg: #f7f7fb;\n    --ee-link: #5D63F1;\n    --ee-link-hover: #171feb;\n}\n\n*, :after, :before {\n    box-sizing: inherit;\n}\n\nhtml {\n    box-sizing: border-box;\n    font-size: 15px;\n    height: 100%;\n    line-height: 1.15;\n}\n\nbody {\n    font-family: Roboto,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Ubuntu,\"Helvetica Neue\",Oxygen,Cantarell,sans-serif;\n    height: 100%;\n    font-size: 1rem;\n    line-height: 1.6;\n    color: var(--ee-text-normal);\n    background: var(--ee-main-bg);\n    -webkit-font-smoothing: antialiased;\n    margin: 0;\n}\n\n.panel {\n    margin-bottom: 20px;\n    background-color: var(--ee-panel-bg);\n    border: 1px solid var(--ee-panel-border);\n    border-radius: 6px;\n}\n.redirect {\n	max-width: 700px;\n	min-width: 350px;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%,-50%);\n}\n\n.panel-heading {\n    padding: 20px 25px;\n    position: relative;\n}\n\n.panel-body {\n    padding: 20px 25px;\n}\n\n.panel-body:after, .panel-body:before {\n    content: \" \";\n    display: table;\n}\n\n.redirect p {\n    margin-bottom: 20px;\n}\np {\n    line-height: 1.6;\n}\na, blockquote, code, h1, h2, h3, h4, h5, h6, ol, p, pre, ul {\n    color: inherit;\n    margin: 0;\n    padding: 0;\n    font-weight: inherit;\n}\n\na {\n    color: var(--ee-link);\n    text-decoration: none;\n    -webkit-transition: color .15s ease-in-out;\n    -moz-transition: color .15s ease-in-out;\n    -o-transition: color .15s ease-in-out;\n}\n\na:hover {\n    color: var(--ee-link-hover);\n}\n\nh3 {\n    font-size: 1.35em;\n    font-weight: 500;\n}\n\nol, ul {\n    padding-left: 0;\n}\n\nol li, ul li {\n    list-style-position: inside;\n}\n\n.panel-footer {\n    padding: 20px 25px;\n    position: relative;\n}\n\n\n        </style>\n    </head>\n    <body>\n        <section class=\"flex-wrap\">\n            <section class=\"wrap\">\n                <div class=\"panel redirect\">\n                    <div class=\"panel-heading\">\n                        <h3>System Offline</h3>\n                    </div>\n					<div class=\"panel-body\">\n					This site is currently offline\n                    </div>\n                </div>\n            </section>\n        </section>\n    </body>\n</html>', NULL, 1604839755, 0),
@@ -1901,7 +1962,7 @@ INSERT INTO `exp_specialty_templates` (`template_id`, `site_id`, `enable_templat
 	(15, 1, 'y', 'pm_inbox_full', 'Your private message mailbox is full', 'email', 'private_messages', '{recipient_name},\n\n{sender_name} has just attempted to send you a Private Message,\nbut your inbox is full, exceeding the maximum of {pm_storage_limit}.\n\nPlease log in and remove unwanted messages from your inbox at:\n{site_url}', NULL, 1604839755, 0);
 
 INSERT INTO `exp_stats` (`stat_id`, `site_id`, `total_members`, `recent_member_id`, `recent_member`, `total_entries`, `total_forum_topics`, `total_forum_posts`, `total_comments`, `last_entry_date`, `last_forum_post_date`, `last_comment_date`, `last_visitor_date`, `most_visitors`, `most_visitor_date`, `last_cache_clear`) VALUES 
-	(1, 1, 1, 1, 'doug', 2, 0, 0, 0, 1604842080, 0, 0, 0, 0, 0, 1605444750);
+	(1, 1, 1, 1, 'doug', 3, 0, 0, 0, 1605722220, 0, 0, 0, 0, 0, 1606325643);
 
 INSERT INTO `exp_statuses` (`status_id`, `status`, `status_order`, `highlight`) VALUES 
 	(1, 'open', 1, '009933'),
@@ -1915,7 +1976,7 @@ INSERT INTO `exp_template_groups` (`group_id`, `site_id`, `group_name`, `group_o
 	(1, 1, 'default', 1, 'y');
 
 INSERT INTO `exp_templates` (`template_id`, `site_id`, `group_id`, `template_name`, `template_type`, `template_data`, `template_notes`, `edit_date`, `last_author_id`, `cache`, `refresh`, `no_auth_bounce`, `enable_http_auth`, `allow_php`, `php_parse_location`, `hits`, `protect_javascript`) VALUES 
-	(1, 1, 1, 'index', 'webpage', '', NULL, 1604841816, 0, 'n', 0, '', 'n', 'n', 'o', 0, 'n');
+	(1, 1, 1, 'index', 'webpage', '<!DOCTYPE html>\n<html lang=\"en\">\n   <head>\n      <title>Welcome to Our Site</title>\n      <meta charset=\"utf-8\">\n      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n      <meta name=\"description\" content=\"\">\n      <meta name=\"author\" content=\"\">\n      <link rel=\"stylesheet\" href=\"https://rsms.me/inter/inter.css\">\n      <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css\">\n      <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"favicon-tailwind.png\">\n      <style type=\"text/css\">\n         html, .font-sans{font-family:\"Inter var\",system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}\n         .sm:font-sans{font-family:\"Inter var\",system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}\n         .md:font-sans{font-family:\"Inter var\",system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}\n         .lg:font-sans{font-family:\"Inter var\",system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}\n         .xl:font-sans{font-family:\"Inter var\",system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}\n      </style>\n   </head>\n   <body class=\"\">\n      {exp:channel:entries channel=\"page\" url_title=\"homepage\"}\n         <div class=\"\">\n            <div class=\"relative bg-white overflow-hidden\">\n               <div class=\"max-w-screen-xl mx-auto\">\n                  <div class=\"relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32\">\n                     <svg class=\"hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2\" fill=\"currentColor\" viewbox=\"0 0 100 100\" preserveaspectratio=\"none\">\n                        <polygon points=\"50,0 100,0 50,100 0,100\"></polygon>\n                     </svg>\n                     <div class=\"relative pt-6 px-4 sm:px-6 lg:px-8\">\n                        <nav class=\"relative flex items-center justify-between sm:h-10 lg:justify-start\">\n                           <div class=\"flex items-center flex-grow flex-shrink-0 lg:flex-grow-0\">\n                              <div class=\"flex items-center justify-between w-full md:w-auto\">\n                                 <a href=\"#\" aria-label=\"Home\"><img class=\"h-8 w-auto sm:h-10\" src=\"https://tailwindui.com/img/logos/workflow-mark-on-white.svg\" alt=\"\"></a>\n                                 <div class=\"-mr-2 flex items-center md:hidden\">\n                                    <button class=\"inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out\" id=\"main-menu\" type=\"button\" aria-label=\"Main menu\" aria-haspopup=\"true\">\n                                       <svg class=\"h-6 w-6\" stroke=\"currentColor\" fill=\"none\" viewbox=\"0 0 24 24\">\n                                          <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 6h16M4 12h16M4 18h16\"></path>\n                                       </svg>\n                                    </button>\n                                 </div>\n                              </div>\n                           </div>\n                           <div class=\"hidden md:block md:ml-10 md:pr-4\">\n                             <a class=\"font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out\" href=\"/\">Home</a>\n                             <a class=\"ml-8 font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out\" href=\"/blog\">Blog</a>\n                             <a class=\"ml-8 font-medium text-indigo-600 hover:text-indigo-900 transition duration-150 ease-in-out\" href=\"/contact\">Contact</a></div>\n                        </nav>\n                     </div>\n                     <div class=\"hidden absolute top-0 inset-x-0 p-2 transition transform origin-top-right\">\n                        <div class=\"rounded-lg shadow-md\">\n                           <div class=\"rounded-lg bg-white shadow-xs overflow-hidden\" role=\"menu\" aria-orientation=\"vertical\" aria-labelledby=\"main-menu\">\n                              <div class=\"px-5 pt-4 flex items-center justify-between\">\n                                 <div><img class=\"h-8 w-auto\" src=\"https://tailwindui.com/img/logos/workflow-mark-on-white.svg\" alt=\"\"></div>\n                                 <div class=\"-mr-2\">\n                                    <button class=\"inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out\" type=\"button\" aria-label=\"Close menu\">\n                                       <svg class=\"h-6 w-6\" stroke=\"currentColor\" fill=\"none\" viewbox=\"0 0 24 24\">\n                                          <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\"></path>\n                                       </svg>\n                                    </button>\n                                 </div>\n                              </div>\n                              <div class=\"px-2 pt-2 pb-3\">\n                                 <a class=\"block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition duration-150 ease-in-out\" href=\"/\" role=\"menuitem\">Home</a><a class=\"mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition duration-150 ease-in-out\" href=\"/blog\" role=\"menuitem\">Blog</a></div>\n                              <div><a class=\"block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100 hover:text-indigo-700 focus:outline-none focus:bg-gray-100 focus:text-indigo-700 transition duration-150 ease-in-out\" href=\"/contact\" role=\"menuitem\">Contact</a></div>\n                           </div>\n                        </div>\n                     </div>\n                     <main class=\"mt-10 mx-auto max-w-screen-xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28\">\n                        <div class=\"sm:text-center lg:text-left\">\n                           <h2 class=\"text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:text-5xl sm:leading-none md:text-6xl\">\n                              <span class=\"mr-1\">{title}</span>\n                           </h2>\n                           <p class=\"mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0\">{subtitle}</p>\n                        </div>\n                     </main>\n                  </div>\n               </div>\n               <div class=\"lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2\"><img class=\"h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full\" src=\"https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2850&amp;q=80\" alt=\"\"></div>\n            </div>\n            <section class=\"py-12 bg-gray-50 overflow-hidden md:py-20 lg:py-24\">\n               <div class=\"relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8\">\n                  <svg class=\"absolute top-full right-full transform translate-x-1/3 -translate-y-1/4 lg:translate-x-1/2 xl:-translate-y-1/2\" width=\"404\" height=\"404\" fill=\"none\" viewbox=\"0 0 404 404\" role=\"img\" aria-labelledby=\"svg-workcation\">\n                     <defs>\n                        <pattern id=\"ad119f34-7694-4c31-947f-5c9d249b21f3\" x=\"0\" y=\"0\" width=\"20\" height=\"20\" patternunits=\"userSpaceOnUse\">\n                           <rect class=\"text-gray-200\" x=\"0\" y=\"0\" width=\"4\" height=\"4\" fill=\"currentColor\"></rect>\n                        </pattern>\n                     </defs>\n                     <rect width=\"404\" height=\"404\" fill=\"url(#ad119f34-7694-4c31-947f-5c9d249b21f3)\"></rect>\n                  </svg>\n                  <div class=\"relative\">\n                  	{page_content}\n                  </div>\n               </div>\n            </section>\n            <div class=\"relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8\">\n               <div class=\"absolute inset-0\">\n                  <div class=\"bg-white h-1/3 sm:h-2/3\"></div>\n               </div>\n               <div class=\"relative max-w-7xl mx-auto\">\n                  <div class=\"text-center\">\n                     <h2 class=\"text-3xl leading-9 tracking-tight font-extrabold text-gray-900 sm:text-4xl sm:leading-10\">From the blog</h2>\n                     <p class=\"mt-3 max-w-2xl mx-auto text-xl leading-7 text-gray-500 sm:mt-4\">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed.</p>\n                  </div>\n                  <div class=\"mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none\">\n                     <div class=\"flex flex-col rounded-lg shadow-lg overflow-hidden\">\n                        <div class=\"flex-shrink-0\"><img class=\"h-48 w-full object-cover\" src=\"https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1679&amp;q=80\" alt=\"\"></div>\n                        <div class=\"flex-1 bg-white p-6 flex flex-col justify-between\">\n                           <div class=\"flex-1\">\n                              <p class=\"text-sm leading-5 font-medium text-indigo-600\"><a class=\"hover:underline\" href=\"#\">Blog</a></p>\n                              <a class=\"block\" href=\"#\">\n                                 <h3 class=\"mt-2 text-xl leading-7 font-semibold text-gray-900\">Boost your conversion rate</h3>\n                                 <p class=\"mt-3 text-base leading-6 text-gray-500\">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.</p>\n                              </a>\n                           </div>\n                           <div class=\"mt-6 flex items-center\">\n                              <div class=\"flex-shrink-0\"><a href=\"#\"><img class=\"h-10 w-10 rounded-full\" src=\"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80\" alt=\"\"></a></div>\n                              <div class=\"ml-3\">\n                                 <p class=\"text-sm leading-5 font-medium text-gray-900\"><a class=\"hover:underline\" href=\"#\">Roel Aufderhar</a></p>\n                                 <div class=\"flex text-sm leading-5 text-gray-500\">\n                                    <time datetime=\"2020-03-16\">Mar 16, 2020</time>\n                                    <span class=\"mx-1\">&middot;</span>\n                                    <span>6 min read</span>\n                                 </div>\n                              </div>\n                           </div>\n                        </div>\n                     </div>\n                  </div>\n               </div>\n            </div>\n            <div class=\"relative bg-white\">\n               <div class=\"absolute inset-0\">\n                  <div class=\"absolute inset-y-0 left-0 w-1/2 bg-gray-50\"></div>\n               </div>\n               <div class=\"relative max-w-7xl mx-auto lg:grid lg:grid-cols-5\">\n                  <div class=\"bg-gray-50 py-16 px-4 sm:px-6 lg:col-span-2 lg:px-8 lg:py-24 xl:pr-12\">\n                     <div class=\"max-w-lg mx-auto\">\n                        <h2 class=\"text-2xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-3xl sm:leading-9\">Get in touch</h2>\n                        <p class=\"mt-3 text-lg leading-6 text-gray-500\">Let us know what you think</p>\n                        <dl class=\"mt-8 text-base leading-6 text-gray-500\">\n                           <div>\n                              <dt class=\"sr-only\">Postal address</dt>\n                              <dd>\n                                 <p>742 Evergreen Terrace</p>\n                                 <p>Springfield, OR 12345</p>\n                              </dd>\n                           </div>\n                           <div class=\"mt-6\">\n                              <dt class=\"sr-only\">Phone number</dt>\n                              <dd class=\"flex\">\n                                 <svg class=\"flex-shrink-0 h-6 w-6 text-gray-400\" fill=\"none\" viewbox=\"0 0 24 24\" stroke=\"currentColor\">\n                                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z\"></path>\n                                 </svg>\n                                 <span class=\"ml-3\">+1 (555) 123-4567</span>\n                              </dd>\n                           </div>\n                           <div class=\"mt-3\">\n                              <dt class=\"sr-only\">Email</dt>\n                              <dd class=\"flex\">\n                                 <svg class=\"flex-shrink-0 h-6 w-6 text-gray-400\" fill=\"none\" viewbox=\"0 0 24 24\" stroke=\"currentColor\">\n                                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z\"></path>\n                                 </svg>\n                                 <span class=\"ml-3\">support@example.com</span>\n                              </dd>\n                           </div>\n                        </dl>\n                        <p class=\"mt-6 text-base leading-6 text-gray-500\">Looking for careers? <a class=\"font-medium text-gray-700 underline\" href=\"#\">View all job openings</a>.</p>\n                     </div>\n                  </div>\n                  <div class=\"bg-white py-16 px-4 sm:px-6 lg:col-span-3 lg:py-24 lg:px-8 xl:pl-12\">\n                     <div class=\"max-w-lg mx-auto lg:max-w-none\">\n                        <form class=\"grid grid-cols-1 row-gap-6\" action=\"#\" method=\"POST\">\n                           <div>\n                              <label class=\"sr-only\" for=\"full_name\">Full name</label>\n                              <div class=\"relative rounded-md shadow-sm\">\n                                 <input class=\"form-input block w-full py-3 px-4 placeholder-gray-500 transition ease-in-out duration-150\" id=\"full_name\" placeholder=\"Full name\">\n                              </div>\n                           </div>\n                           <div>\n                              <label class=\"sr-only\" for=\"email\">Email</label>\n                              <div class=\"relative rounded-md shadow-sm\">\n                                 <input class=\"form-input block w-full py-3 px-4 placeholder-gray-500 transition ease-in-out duration-150\" id=\"email\" type=\"email\" placeholder=\"Email\">\n                              </div>\n                           </div>\n                           <div>\n                              <label class=\"sr-only\" for=\"phone\">Phone</label>\n                              <div class=\"relative rounded-md shadow-sm\">\n                                 <input class=\"form-input block w-full py-3 px-4 placeholder-gray-500 transition ease-in-out duration-150\" id=\"phone\" placeholder=\"Phone\">\n                              </div>\n                           </div>\n                           <div>\n                              <label class=\"sr-only\" for=\"message\">Message</label>\n                              <div class=\"relative rounded-md shadow-sm\"><textarea class=\"form-input block w-full py-3 px-4 placeholder-gray-500 transition ease-in-out duration-150\" id=\"message\" rows=\"4\" placeholder=\"Message\"></textarea></div>\n                           </div>\n                           <div>\n                              <span class=\"inline-flex rounded-md shadow-sm\">\n                              <button class=\"inline-flex justify-center py-3 px-6 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out\" type=\"submit\">Submit</button>\n                              </span>\n                           </div>\n                        </form>\n                     </div>\n                  </div>\n               </div>\n            </div>\n         </div>\n      {/exp:channel:entries}\n   </body>\n</html>', NULL, 1604844964, 0, 'n', 0, '', 'n', 'n', 'o', 0, 'n');
 
 INSERT INTO `exp_templates_roles` (`role_id`, `template_id`) VALUES 
 	(1, 1),
@@ -1931,7 +1992,11 @@ INSERT INTO `exp_upload_prefs` (`id`, `site_id`, `name`, `server_path`, `url`, `
 	(1, 1, 'Avatars', '{base_path}images/avatars/', '{base_url}images/avatars/', 'img', 'list', '50', '100', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
 	(2, 1, 'Member Photos', '/', '{base_url}images/member_photos/', 'img', 'list', '50', '100', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
 	(3, 1, 'Signature Attachments', '{base_path}images/signature_attachments/', '{base_url}images/signature_attachments/', 'img', 'list', '30', '80', '480', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-	(4, 1, 'PM Attachments', '{base_path}images/pm_attachments/', '{base_url}images/pm_attachments/', 'img', 'list', '250', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+	(4, 1, 'PM Attachments', '{base_path}images/pm_attachments/', '{base_url}images/pm_attachments/', 'img', 'list', '250', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+	(5, 1, 'Blog Images', '{base_path}/images/', '{base_url}/images/', 'img', 'list', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, 0);
+
+INSERT INTO `exp_upload_prefs_roles` (`role_id`, `upload_id`) VALUES 
+	(5, 5);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET TIME_ZONE=@OLD_TIME_ZONE;
@@ -1940,6 +2005,6 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET SQL_NOTES=@OLD_SQL_NOTES;
 
 --
--- Database backup completed by ExpressionEngine on 2020-11-08 09:00:51EST
+-- Database backup completed by ExpressionEngine on 2020-11-18 01:03:48EST
 --
 
