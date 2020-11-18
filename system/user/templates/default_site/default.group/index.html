@@ -102,30 +102,42 @@
                   <h2 class="text-3xl leading-9 tracking-tight font-extrabold text-gray-900 sm:text-4xl sm:leading-10">From the blog</h2>
                   <p class="mt-3 max-w-2xl mx-auto text-xl leading-7 text-gray-500 sm:mt-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed.</p>
                </div>
+               <!-- Blog container -->
                <div class="mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
-                  <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
-                     <div class="flex-shrink-0"><img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1679&amp;q=80" alt=""></div>
-                     <div class="flex-1 bg-white p-6 flex flex-col justify-between">
-                        <div class="flex-1">
-                           <p class="text-sm leading-5 font-medium text-indigo-600"><a class="hover:underline" href="#">Blog</a></p>
-                           <a class="block" href="#">
-                              <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">Boost your conversion rate</h3>
-                              <p class="mt-3 text-base leading-6 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.</p>
-                           </a>
+                  <!-- Blog card -->
+                  {exp:channel:entries channel="blog" limit="3" dynamic="no" disable="categories"}
+                     <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+                        <div class="flex-shrink-0">
+                           {featured_image}
+                              <img class="h-48 w-full object-cover" src="{url}" alt="{title}" />
+                           {/featured_image}
                         </div>
-                        <div class="mt-6 flex items-center">
-                           <div class="flex-shrink-0"><a href="#"><img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""></a></div>
-                           <div class="ml-3">
-                              <p class="text-sm leading-5 font-medium text-gray-900"><a class="hover:underline" href="#">Roel Aufderhar</a></p>
-                              <div class="flex text-sm leading-5 text-gray-500">
-                                 <time datetime="2020-03-16">Mar 16, 2020</time>
-                                 <span class="mx-1">&middot;</span>
-                                 <span>6 min read</span>
+                        <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+                           <div class="flex-1">
+                              <p class="text-sm leading-5 font-medium text-indigo-600">
+                                 <a class="hover:underline" href="/blog/entry/{url_title}">Blog</a></p>
+                              <a class="block" href="/blog/entry/{url_title}">
+                                 <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">
+                                    {title}
+                                 </h3>
+                                 <p class="mt-3 text-base leading-6 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.</p>
+                              </a>
+                           </div>
+                           <div class="mt-6 flex items-center">
+                              <div class="flex-shrink-0">
+                                 <a href="#"><img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""></a></div>
+                              <div class="ml-3">
+                                 <p class="text-sm leading-5 font-medium text-gray-900"><a class="hover:underline" href="#">{author}</a></p>
+                                 <div class="flex text-sm leading-5 text-gray-500">
+                                    <time datetime="{entry_date format='%Y-%m-%d'}">{entry_date format="%M %d, %Y"}</time>
+                                    <span class="mx-1">&middot;</span>
+                                    <span>6 min read</span>
+                                 </div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
+                  {/exp:channel:entries}
                </div>
             </div>
          </div>
