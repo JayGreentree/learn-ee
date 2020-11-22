@@ -1,0 +1,22 @@
+<!-- Google / Search Engine Tags -->
+<meta itemprop="name" content="{if seo_title}{seo_title}{if:else}{title}{/if}">
+<meta itemprop="description" content="{if seo_description}{seo_description}{if:else}{subtitle}{/if}">
+<meta itemprop="image" content="{featured_image}">
+
+<!-- Facebook Meta Tags -->
+<meta property="og:url" content="{site_url}/blog/{url_title}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{if seo_title}{seo_title}{if:else}{title}{/if}">
+<meta property="og:description" content="{if seo_description}{seo_description}{if:else}{subtitle}{/if}">
+<meta property="og:image" content="{featured_image}">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{if seo_title}{seo_title}{if:else}{title}{/if}">
+<meta name="twitter:description" content="{if seo_description}{seo_description}{if:else}{subtitle}{/if}">
+<meta name="twitter:image" content="{featured_image}">
+
+<!-- No Robots -->
+{if no_robots}
+	<meta name="robots" content="noindex" />
+{/if}
