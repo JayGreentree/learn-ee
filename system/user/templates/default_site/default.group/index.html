@@ -40,7 +40,7 @@
                <!-- Blog container -->
                <div class="mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
                   <!-- Blog card -->
-                  {exp:channel:entries channel="blog" limit="3" dynamic="no" disable="categories"}
+                  {exp:channel:entries channel="blog" limit="3" dynamic="no"}
                      <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
                         <div class="flex-shrink-0">
                            {featured_image}
@@ -49,8 +49,13 @@
                         </div>
                         <div class="flex-1 bg-white p-6 flex flex-col justify-between">
                            <div class="flex-1">
+                              {!-- Categories --}
                               <p class="text-sm leading-5 font-medium text-indigo-600">
-                                 <a class="hover:underline" href="/blog/entry/{url_title}">Blog</a></p>
+                                 {if has_categories}
+                                    {categories backspace="2"}<a class="hover:underline" href="/blog/entry/{url_title}">{category_name}</a>, {/categories}
+                                 {/if}
+                              </p>
+                              {!-- End categories --}
                               <a class="block" href="/blog/entry/{url_title}">
                                  <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">
                                     {title}
