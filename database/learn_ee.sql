@@ -874,7 +874,7 @@ CREATE TABLE `exp_layout_publish` (
   PRIMARY KEY (`layout_id`),
   KEY `site_id` (`site_id`),
   KEY `channel_id` (`channel_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `exp_layout_publish_member_roles` (
   `layout_id` int(10) unsigned NOT NULL,
@@ -1881,6 +1881,12 @@ INSERT INTO `exp_html_buttons` (`id`, `site_id`, `member_id`, `tag_name`, `tag_o
 	(4, 1, 0, 'html_btn_anchor', '<a href=\"[![Link:!:http://]!]\"(!( title=\"[![Title]!]\")!)>', '</a>', 'a', 4, '1', 'html-link'),
 	(5, 1, 0, 'html_btn_picture', '<img src=\"[![Link:!:http://]!]\" alt=\"[![Alternative text]!]\" />', '', '', 5, '1', 'html-upload');
 
+INSERT INTO `exp_layout_publish` (`layout_id`, `site_id`, `channel_id`, `layout_name`, `field_layout`) VALUES 
+	(1, 1, 2, 'Blog Layout', 'a:5:{i:0;a:4:{s:2:\"id\";s:7:\"publish\";s:4:\"name\";s:7:\"publish\";s:7:\"visible\";b:1;s:6:\"fields\";a:5:{i:0;a:3:{s:5:\"field\";s:5:\"title\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:1;a:3:{s:5:\"field\";s:9:\"url_title\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:2;a:3:{s:5:\"field\";s:10:\"field_id_3\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:3;a:3:{s:5:\"field\";s:10:\"field_id_4\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:4;a:3:{s:5:\"field\";s:10:\"field_id_5\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}}}i:1;a:4:{s:2:\"id\";s:11:\"custom__seo\";s:4:\"name\";s:3:\"SEO\";s:7:\"visible\";b:1;s:6:\"fields\";a:3:{i:0;a:3:{s:5:\"field\";s:10:\"field_id_6\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:1;a:3:{s:5:\"field\";s:10:\"field_id_7\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:2;a:3:{s:5:\"field\";s:10:\"field_id_8\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}}}i:2;a:4:{s:2:\"id\";s:4:\"date\";s:4:\"name\";s:4:\"date\";s:7:\"visible\";b:1;s:6:\"fields\";a:2:{i:0;a:3:{s:5:\"field\";s:10:\"entry_date\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:1;a:3:{s:5:\"field\";s:15:\"expiration_date\";s:7:\"visible\";b:0;s:9:\"collapsed\";b:0;}}}i:3;a:4:{s:2:\"id\";s:10:\"categories\";s:4:\"name\";s:10:\"categories\";s:7:\"visible\";b:1;s:6:\"fields\";a:1:{i:0;a:3:{s:5:\"field\";s:26:\"categories[cat_group_id_1]\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}}}i:4;a:4:{s:2:\"id\";s:7:\"options\";s:4:\"name\";s:7:\"options\";s:7:\"visible\";b:1;s:6:\"fields\";a:3:{i:0;a:3:{s:5:\"field\";s:10:\"channel_id\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:1;a:3:{s:5:\"field\";s:6:\"status\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}i:2;a:3:{s:5:\"field\";s:9:\"author_id\";s:7:\"visible\";b:1;s:9:\"collapsed\";b:0;}}}}');
+
+INSERT INTO `exp_layout_publish_member_roles` (`layout_id`, `role_id`) VALUES 
+	(1, 1);
+
 INSERT INTO `exp_member_data` (`member_id`) VALUES 
 	(1);
 
@@ -1888,7 +1894,7 @@ INSERT INTO `exp_member_news_views` (`news_id`, `version`, `member_id`) VALUES
 	(1, '6.0.0-b.3', 1);
 
 INSERT INTO `exp_members` (`member_id`, `role_id`, `username`, `screen_name`, `password`, `salt`, `unique_id`, `crypt_key`, `authcode`, `email`, `signature`, `avatar_filename`, `avatar_width`, `avatar_height`, `photo_filename`, `photo_width`, `photo_height`, `sig_img_filename`, `sig_img_width`, `sig_img_height`, `ignore_list`, `private_messages`, `accept_messages`, `last_view_bulletins`, `last_bulletin_date`, `ip_address`, `join_date`, `last_visit`, `last_activity`, `total_entries`, `total_comments`, `total_forum_topics`, `total_forum_posts`, `last_entry_date`, `last_comment_date`, `last_forum_post_date`, `last_email_date`, `in_authorlist`, `accept_admin_email`, `accept_user_email`, `notify_by_default`, `notify_of_pm`, `display_signatures`, `parse_smileys`, `smart_notifications`, `language`, `timezone`, `time_format`, `date_format`, `include_seconds`, `profile_theme`, `forum_theme`, `tracker`, `template_size`, `notepad`, `notepad_size`, `bookmarklets`, `quick_links`, `quick_tabs`, `show_sidebar`, `pmember_id`, `cp_homepage`, `cp_homepage_channel`, `cp_homepage_custom`) VALUES 
-	(1, 1, 'doug', 'doug', '$2y$10$yHbcRwghrLuuyJPdNIB7g.tHXwQfSGT2FbOFNldUDl0VxWHZCg.bC', '', 'd32eaadca3a44981ce316218ee85bf605138fd8c', '123e8e8814afb6ad85331c55017161fa0bafcd61', NULL, 'doug@triplenerdscore.net', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'y', 0, 0, '127.0.0.1', 1604839755, 1605804021, 1606070632, 5, 0, 0, 0, 1605724440, 0, 0, 0, 'n', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'english', 'America/New_York', NULL, NULL, NULL, NULL, NULL, NULL, '28', NULL, '18', NULL, '', NULL, 'n', 0, NULL, NULL, NULL);
+	(1, 1, 'doug', 'doug', '$2y$10$yHbcRwghrLuuyJPdNIB7g.tHXwQfSGT2FbOFNldUDl0VxWHZCg.bC', '', 'd32eaadca3a44981ce316218ee85bf605138fd8c', '123e8e8814afb6ad85331c55017161fa0bafcd61', NULL, 'doug@triplenerdscore.net', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'y', 0, 0, '127.0.0.1', 1604839755, 1605804021, 1606070934, 5, 0, 0, 0, 1605724440, 0, 0, 0, 'n', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'english', 'America/New_York', NULL, NULL, NULL, NULL, NULL, NULL, '28', NULL, '18', NULL, '', NULL, 'n', 0, NULL, NULL, NULL);
 
 INSERT INTO `exp_members_roles` (`member_id`, `role_id`) VALUES 
 	(1, 1);
@@ -2051,7 +2057,7 @@ INSERT INTO `exp_security_hashes` (`hash_id`, `date`, `session_id`, `hash`) VALU
 	(10, 1606063736, '983ec009118bc84cea3071bb6533f049db9a0d75', '8533afb9b8db5b25cb0c6bc4dcf9107c13c6acbf');
 
 INSERT INTO `exp_sessions` (`session_id`, `member_id`, `admin_sess`, `ip_address`, `user_agent`, `login_state`, `fingerprint`, `sess_start`, `auth_timeout`, `last_activity`, `can_debug`) VALUES 
-	('983ec009118bc84cea3071bb6533f049db9a0d75', 1, 1, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', NULL, '93ce595b17f9bdc5fae4aeb7c206742e', 1606067636, 0, 1606070636, '0');
+	('983ec009118bc84cea3071bb6533f049db9a0d75', 1, 1, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36', NULL, '93ce595b17f9bdc5fae4aeb7c206742e', 1606067636, 0, 1606071158, '0');
 
 INSERT INTO `exp_sites` (`site_id`, `site_label`, `site_name`, `site_description`, `site_bootstrap_checksums`, `site_pages`) VALUES 
 	(1, 'Our New EE Site', 'default_site', NULL, 'YToyOntzOjQyOiIvaG9tZS9kb3VnL3NpdGVzL2xlYXJuLWVlL3B1YmxpYy9pbmRleC5waHAiO3M6MzI6ImJlNWUxY2U1MmMzYjE4NTIzMWQyYWIxYTU4ZDBlMmQyIjtzOjc6ImVtYWlsZWQiO2E6MDp7fX0=', 'YToxOntpOjE7YToxOntzOjM6InVybCI7czoyMToie2Jhc2VfdXJsfS9pbmRleC5waHAvIjt9fQ==');
@@ -2155,6 +2161,6 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET SQL_NOTES=@OLD_SQL_NOTES;
 
 --
--- Database backup completed by ExpressionEngine on 2020-11-22 01:43:56EST
+-- Database backup completed by ExpressionEngine on 2020-11-22 01:52:38EST
 --
 
