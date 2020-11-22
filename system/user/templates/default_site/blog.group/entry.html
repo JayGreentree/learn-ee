@@ -25,6 +25,53 @@
 					{blog_content}
 				</div>
 			</div>
+			<div class="relative max-w-7xl mx-auto">
+			   <div class="text-center">
+			      <h2 class="text-3xl leading-9 tracking-tight font-extrabold text-gray-900 sm:text-4xl sm:leading-10">Related Blogs</h2>
+			   </div>
+			   <!-- Blog container -->
+			   <div class="mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
+			      <!-- Blog card -->
+			      {related_blogs}
+			         <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+			            <div class="flex-shrink-0">
+			               {related_blogs:featured_image}
+			                  <img class="h-48 w-full object-cover" src="{url}" alt="{title}" />
+			               {/related_blogs:featured_image}
+			            </div>
+			            <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+			               <div class="flex-1">
+			                  {!-- Categories --}
+			                  <p class="text-sm leading-5 font-medium text-indigo-600">
+			                     {if related_blogs:has_categories}
+			                        {related_blogs:categories backspace="2"}<a class="hover:underline" href="/blog/entry/{url_title}">{category_name}</a>, {/related_blogs:categories}
+			                     {/if}
+			                  </p>
+			                  {!-- End categories --}
+			                  <a class="block" href="/blog/entry/{related_blogs:url_title}">
+			                     <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">
+			                        {related_blogs:title}
+			                     </h3>
+			                     <p class="mt-3 text-base leading-6 text-gray-500">{related_blogs:blog_content:attr_safe limit="150"}</p>
+			                  </a>
+			               </div>
+			               <div class="mt-6 flex items-center">
+			                  <div class="flex-shrink-0">
+			                     <a href="#"><img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""></a></div>
+			                  <div class="ml-3">
+			                     <p class="text-sm leading-5 font-medium text-gray-900"><a class="hover:underline" href="#">{related_blogs:author}</a></p>
+			                     <div class="flex text-sm leading-5 text-gray-500">
+			                        <time datetime="{related_blogs:entry_date format='%Y-%m-%d'}">{related_blogs:entry_date format="%M %d, %Y"}</time>
+			                        <span class="mx-1">&middot;</span>
+			                        <span>6 min read</span>
+			                     </div>
+			                  </div>
+			               </div>
+			            </div>
+			         </div>
+			      {/related_blogs}
+			   </div>
+			</div>
 	{/exp:channel:entries}
 		
 <div class="bg-gray-800">
