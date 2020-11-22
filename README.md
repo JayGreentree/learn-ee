@@ -26,3 +26,4 @@ Step 6: DRY Template Layouts - `step/6-template-layouts`
 Step 7: Moving the System Directory Above Webroot - `step/7-system-directory`
 Step 8: Variable Modifiers - `step/8-variable-modifiers`
 Step 9: Working with Categories - `step/9-categories`
+Step 10: Working with Relationships - `step/10-relationships`
