@@ -25,3 +25,4 @@ Step 5: Using File Fields Part 2: Templating - `step/5-file-field-templating`
 Step 6: DRY Template Layouts - `step/6-template-layouts`
 Step 7: Moving the System Directory Above Webroot - `step/7-system-directory`
 Step 8: Variable Modifiers - `step/8-variable-modifiers`
+Step 9: Working with Categories - `step/9-categories`
