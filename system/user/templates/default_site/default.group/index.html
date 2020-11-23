@@ -42,6 +42,7 @@
                   <!-- Blog card -->
                   {exp:channel:entries channel="blog" limit="3" dynamic="no"}
                      {embed="embeds/blog-card"
+                        url_title="{url_title}"
                         featured_image="{featured_image}"
                         categories='{if has_categories}{categories backspace="2"}<a class="hover:underline" href="/blog/entry/{url_title}">{category_name}</a>, {/categories}{/if}'
                         title="{title}"
