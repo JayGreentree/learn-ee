@@ -31,3 +31,4 @@ Step 11: Partials, Embeds, and Variables - `step/11-partials-embeds-variables`
 Step 12: Channel Layouts - `step/12-channel-layouts`
 Step 13: Routing - `step/13-routing`
 Step 14: Contact Form - `step/14-contact-form`
+Step 15: 404 Page - `step/15-404-page`
