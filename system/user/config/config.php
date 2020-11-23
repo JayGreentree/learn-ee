@@ -25,4 +25,5 @@ $config['share_analytics'] = 'y';
 
 $config['allow_dictionary_pw'] = 'n';
 
+// $config['show_profiler'] = 'y';
 // EOF
