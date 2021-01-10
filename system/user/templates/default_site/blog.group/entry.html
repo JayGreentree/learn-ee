@@ -1,5 +1,10 @@
 {layout="layouts/main"}
 	{exp:channel:entries channel="blog" url_title="{segment_3}"}
+
+		{if no_results}
+			{redirect="404"}
+		{/if}
+
 		{layout:set name="title"}{title}{/layout:set}
 		{layout:set name="head_extra"}
 			{seo}
