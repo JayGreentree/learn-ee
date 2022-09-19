@@ -2,113 +2,115 @@
 
 $lang = array(
 
-'all_pages' => 'All Pages',
+    'all_pages' => 'All Pages',
 
-'channel_entry' => 'Channel Entry',
+    'channel_entry' => 'Channel Entry',
 
-'choose_entry' => 'Choose Entry',
+    'choose_entry' => 'Choose Entry',
 
-'choose_template' => 'Choose Template for Displaying Page',
+    'choose_template' => 'Choose Template for Displaying Page',
 
-'configuration_updated' => 'Configuration Updated',
+    'configuration_updated' => 'Configuration Updated',
 
-'create_entry' => 'Create Entry',
+    'create_entry' => 'Create Entry',
 
-'create_new' => 'Create New',
+    'create_new' => 'Create New',
 
-'create_page' => 'Create New Page',
+    'create_page' => 'Create New Page',
 
-'create_template' => 'Create Template',
+    'create_template' => 'Create Template',
 
-'default_for_page_creation' => 'Default Channel for \'Create New Page\' Tab',
+    'default_for_page_creation' => 'Default Channel for \'Create New Page\' Tab',
 
-'default_template' => 'Default Template',
+    'default_template' => 'Default Template',
 
-'duplicate_page_uri' => 'Duplicate Page URI',
+    'duplicate_page_uri' => 'Duplicate Page URI',
 
-'edit_page' => 'Edit Page',
+    'duplicate_page_uri_used' => 'Duplicate Page URI is used by <a href="%s">%s</a>.',
 
-'example_uri' => '/example/pages/uri/',
+    'edit_page' => 'Edit Page',
 
-'filter_channels' => 'filter channels',
+    'example_uri' => '/example/pages/uri/',
 
-'invalid_page_name' => 'Invalid Page Name Submitted',
+    'filter_channels' => 'filter channels',
 
-'invalid_page_num_segs' => 'You have exceeded the number of allowed URI segments in the pages URL',
+    'invalid_page_name' => 'Invalid Page Name Submitted',
 
-'invalid_page_uri' => 'Invalid Page URI',
+    'invalid_page_num_segs' => 'You have exceeded the number of allowed URI segments in the pages URL',
 
-'invalid_template' => 'You must select a valid template for displaying this page.',
+    'invalid_page_uri' => 'Invalid Page URI',
 
-'nested' => 'Nested',
+    'invalid_template' => 'You must select a valid template for displaying this page.',
 
-'no_default' => 'No Default',
+    'nested' => 'Nested',
 
-'no_pages' => 'No Pages Currently Exist',
+    'no_default' => 'No Default',
 
-'not_nested' => 'Not Nested',
+    'no_pages' => 'No Pages Currently Exist',
 
-'page' => 'Page',
+    'not_nested' => 'Not Nested',
 
-'page_created' => 'Page Created',
+    'page' => 'Page',
 
-'page_name' => 'Page Name',
+    'page_created' => 'Page Created',
 
-'page_settings' => 'Page Settings',
+    'page_name' => 'Page Name',
 
-'page_updated' => 'Page Updated',
+    'page_settings' => 'Page Settings',
 
-'page_url' => 'Page URL',
+    'page_updated' => 'Page Updated',
 
-'pages_channel' => 'Channel',
+    'page_url' => 'Page URL',
 
-'pages_channel_desc' => 'Default channel for creating new pages.',
+    'pages_channel' => 'Channel',
 
-'pages_configuration' => 'Module Configuration',
+    'pages_channel_desc' => 'Default channel for creating new pages.',
 
-'pages_deleted_desc' => 'The following Page URLs were deleted',
+    'pages_configuration' => 'Module Configuration',
 
-'pages_display_on_homepage' => 'Display of URIs on Module Homepage',
+    'pages_deleted_desc' => 'The following Page URLs were deleted',
 
-'pages_display_urls' => 'Display of <abbr title="Unified Resource Locator">URL</abbr>s?',
+    'pages_display_on_homepage' => 'Display of URIs on Module Homepage',
 
-'pages_display_urls_desc' => 'When set to <b>Nested</b>, <abbr title="Unified Resource Locator">URL</abbr>s will be displayed in a nested hierarchy.',
+    'pages_display_urls' => 'Display of <abbr title="Unified Resource Locator">URL</abbr>s?',
 
-'pages_homepage' => 'Pages Homepage',
+    'pages_display_urls_desc' => 'When set to <b>Nested</b>, <abbr title="Unified Resource Locator">URL</abbr>s will be displayed in a nested hierarchy.',
 
-'pages_manager' => 'Pages Manager',
+    'pages_homepage' => 'Pages Homepage',
 
-'pages_module_description' => 'Uses Channel Entries to make Static pages',
+    'pages_manager' => 'Pages Manager',
 
-'pages_module_name' => 'Pages',
+    'pages_module_description' => 'Uses Channel Entries to make Static pages',
 
-'pages_no_default' => 'No default',
+    'pages_module_name' => 'Pages',
 
-'pages_settings' => 'Pages Settings',
+    'pages_no_default' => 'No default',
 
-'pages_templates' => 'Templates',
+    'pages_settings' => 'Pages Settings',
 
-'pages_templates_desc' => 'Default templates for each channel.',
+    'pages_templates' => 'Templates',
 
-'pages_uri' => 'Pages URI',
+    'pages_templates_desc' => 'Default templates for each channel.',
 
-'pages_url_nested' => 'Nested',
+    'pages_uri' => 'Pages URI',
 
-'pages_url_not_nested' => 'Not Nested',
+    'pages_url_nested' => 'Nested',
 
-'parent_page' => 'Parent Page',
+    'pages_url_not_nested' => 'Not Nested',
 
-'preference' => 'Preference',
+    'parent_page' => 'Parent Page',
 
-'preference_name' => 'Preference Name',
+    'preference' => 'Preference',
 
-'preference_value' => 'Preference Value',
+    'preference_name' => 'Preference Name',
 
-'setting' => 'Setting',
+    'preference_value' => 'Preference Value',
 
-'template' => 'Template',
+    'setting' => 'Setting',
 
-'view_page' => 'View Page',
+    'template' => 'Template',
+
+    'view_page' => 'View Page',
 
 );
 

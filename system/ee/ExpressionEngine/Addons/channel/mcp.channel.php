@@ -4,18 +4,16 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
 /**
  * Channel Module control panel
  */
-
-class Channel_mcp {
-
-	var $stats_cache	= array(); // Used by mod.stats.php
-
+class Channel_mcp
+{
+    public $stats_cache = array(); // Used by mod.stats.php
 }
 // END CLASS
 

@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -16,47 +16,46 @@ use ExpressionEngine\Service\Validation\ValidationRule;
 /**
  * File Exists Validation Rule
  */
-class FileExists extends ValidationRule {
+class FileExists extends ValidationRule
+{
+    protected $all_values = array();
 
-	protected $fs;
-	protected $all_values = array();
+    public function validate($key, $value)
+    {
+        $filesystem = ee('Filesystem');
 
-	public function validate($key, $value)
-	{
-		if ($this->getFilesystem()->exists(parse_config_variables($value, $this->all_values)))
-		{
-			return TRUE;
-		}
+        if(array_key_exists('filesystem_provider', $this->all_values)) {
+            try {
+                $provider = $this->all_values['filesystem_provider'];
+                $filesystem = $provider->getFilesystem();
+                unset($this->all_values['filesystem_provider']);
+            }catch(\Exception $e) {
+                $this->stop();
+            }
+        }
 
-		// STOP if not exists, there's no point in further validating an
-		// invalid file path
-		if ($value !== NULL && $value !== '')
-		{
-			return $this->stop();
-		}
+        if ($filesystem->exists(parse_config_variables($value, $this->all_values))) {
+            return true;
+        }
 
-		return FALSE;
-	}
+        // STOP if not exists, there's no point in further validating an
+        // invalid file path
+        if ($value !== null && $value !== '') {
+            return $this->stop();
+        }
 
-	public function getLanguageKey()
-	{
-		return 'invalid_path';
-	}
+        return false;
+    }
 
-	protected function getFilesystem()
-	{
-		if ( ! isset($this->fs))
-		{
-			$this->fs = new Filesystem();
-		}
+    public function getLanguageKey()
+    {
+        return 'invalid_path';
+    }
 
-		return $this->fs;
-	}
-
-	public function setAllValues(array $values)
-	{
-		$this->all_values = $values;
-	}
+    public function setAllValues(array $values)
+    {
+        $this->all_values = $values;
+    }
 }
 
 // EOF

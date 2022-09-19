@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -16,53 +16,49 @@ use ExpressionEngine\Service\Model\Model;
 /**
  * Extension Model
  */
-class Extension extends Model {
+class Extension extends Model
+{
+    protected static $_primary_key = 'extension_id';
+    protected static $_table_name = 'extensions';
 
-	protected static $_primary_key = 'extension_id';
-	protected static $_table_name = 'extensions';
+    protected static $_typed_columns = array(
+        'enabled' => 'boolString'
+    );
 
-	protected static $_validation_rules = array(
-		'csrf_exempt'  => 'enum[y,n]'
-	);
+    protected $extension_id;
+    protected $class;
+    protected $method;
+    protected $hook;
+    protected $settings;
+    protected $priority;
+    protected $version;
+    protected $enabled;
 
-	protected static $_typed_columns = array(
-		'enabled' => 'boolString'
-	);
+    /**
+     * Marks the Extension as enabled
+     */
+    public function enable()
+    {
+        $this->setProperty('enabled', 'y');
+    }
 
-	protected $extension_id;
-	protected $class;
-	protected $method;
-	protected $hook;
-	protected $settings;
-	protected $priority;
-	protected $version;
-	protected $enabled;
+    /**
+     * Marks the Extension as disabled
+     */
+    public function disable()
+    {
+        $this->setProperty('enabled', 'n');
+    }
 
-	/**
-	 * Marks the Extension as enabled
-	 */
-	public function enable()
-	{
-		$this->setProperty('enabled', 'y');
-	}
+    public function set__settings($settings)
+    {
+        $this->setRawProperty('settings', serialize($settings));
+    }
 
-	/**
-	 * Marks the Extension as disabled
-	 */
-	public function disable()
-	{
-		$this->setProperty('enabled', 'n');
-	}
-
-	public function set__settings($settings)
-	{
-		$this->setRawProperty('settings', serialize($settings));
-	}
-
-	public function get__settings()
-	{
-		return unserialize($this->settings);
-	}
+    public function get__settings()
+    {
+        return unserialize($this->settings);
+    }
 }
 
 // EOF

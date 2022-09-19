@@ -17,7 +17,7 @@
 |
 | Please see the user guide for complete details:
 |
-|	http://codeigniter.com/user_guide/general/routing.html
+|	https://codeigniter.com/userguide3/general/routing.html
 |
 | -------------------------------------------------------------------------
 | RESERVED ROUTES
@@ -44,10 +44,9 @@
 $route['default_controller'] = "ee/index";
 $route['404_override'] = "ee/index";
 
-if (defined('REQ') && REQ == 'CP')
-{
-	$route['default_controller'] = "cp/homepage/index";
-	$route['404_override'] = "cp/error/file_not_found";
+if (defined('REQ') && REQ == 'CP') {
+    $route['default_controller'] = "cp/homepage/index";
+    $route['404_override'] = "cp/error/file_not_found";
 }
 
 return $route;

@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -14,89 +14,100 @@ use ExpressionEngine\Core\Application;
 use ExpressionEngine\Core\Provider;
 
 /**
- * Addon Service Factory
+ * Add-on Service Factory
  */
-class Factory {
+class Factory
+{
+    /**
+     * @var Application object
+     */
+    protected $app;
 
-	/**
-	 * @var Application object
-	 */
-	protected $app;
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
 
-	public function __construct(Application $app)
-	{
-		$this->app = $app;
-	}
+    /**
+     * Get the add-on `$name`
+     *
+     * @param String $name Add-on short name
+     * @return Object Add-on The requested addon
+     */
+    public function get($name)
+    {
+        if (isset(ee()->core) && false !== $addon = ee()->core->cache(__CLASS__, $name, false)) {
+            return $addon;
+        }
+        
+        if (! $this->app->has($name)) {
+            return null;
+        }
 
-	/**
-	 * Get the addon `$name`
-	 *
-	 * @param String $name Addon short name
-	 * @return Object Addon The requested addon
-	 */
-	public function get($name)
-	{
-		if ( ! $this->app->has($name))
-		{
-			return NULL;
-		}
+        $provider = $this->app->get($name);
 
-		$provider = $this->app->get($name);
+        if ($this->isAddon($provider)) {
+            $addon = new Addon($provider);
+            if (isset(ee()->core)) {
+                ee()->core->set_cache(__CLASS__, $name, $addon);
+            }
+            return $addon;
+        }
 
-		if ($this->isAddon($provider))
-		{
-			return new Addon($provider);
-		}
+        return null;
+    }
 
-		return NULL;
-	}
+    /**
+     * Get all addons
+     *
+     * @return array An array of Add-on objects.
+     */
+    public function all()
+    {
+        if (isset(ee()->core) && false !== $all = ee()->core->cache(__CLASS__, '_all', false)) {
+            return $all;
+        }
 
-	/**
-	 * Get all addons
-	 *
-	 * @return array An array of Addon objects.
-	 */
-	public function all()
-	{
-		$providers = $this->app->getProviders();
+        $providers = $this->app->getProviders();
 
-		$all = array();
+        $all = array();
 
-		foreach ($providers as $key => $obj)
-		{
-			if ($this->isAddon($obj))
-			{
-				$all[$key] = new Addon($obj);
-			}
-		}
+        foreach ($providers as $key => $obj) {
+            if ($this->isAddon($obj)) {
+                $all[$key] = new Addon($obj);
+            }
+        }
 
-		return $all;
-	}
+        if (isset(ee()->core)) {
+            ee()->core->set_cache(__CLASS__, '_all', $all);
+        }
 
-	/**
-	 * Fetch all installed addons
-	 *
-	 * @return array An array of Addon objects.
-	 */
-	public function installed()
-	{
-		return array_filter($this->all(), function($addon)
-		{
-			return $addon->isInstalled();
-		});
-	}
+        return $all;
+    }
 
-	/**
-	 * Is a given provider an addon?
-	 *
-	 * @return bool Is an addon?
-	 */
-	protected function isAddon(Provider $provider)
-	{
-		$path = $provider->getPath();
+    /**
+     * Fetch all installed addons
+     *
+     * @return array An array of Add-on objects.
+     */
+    public function installed()
+    {
+        return array_filter($this->all(), function ($addon) {
+            return $addon->isInstalled();
+        });
+    }
 
-		return (strpos($path, PATH_ADDONS) === 0 || strpos($path, PATH_THIRD) === 0);
-	}
+    /**
+     * Is a given provider an addon?
+     *
+     * @return bool Is an addon?
+     */
+    protected function isAddon(Provider $provider)
+    {
+        $path = $provider->getPath();
+
+        return (strpos($path, PATH_ADDONS) === 0 || strpos($path, PATH_THIRD) === 0);
+    }
 }
 
 // EOF

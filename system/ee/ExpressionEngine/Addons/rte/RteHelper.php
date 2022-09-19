@@ -5,306 +5,24 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
 namespace ExpressionEngine\Addons\Rte;
 
 use ExpressionEngine\Library\Rte\RteFilebrowserInterface;
+use ExpressionEngine\Library\CP\FileManager\Traits\FileUsageTrait;
 
 class RteHelper
 {
+    use FileUsageTrait;
 
-    private static $_includedFieldResources = false;
-    private static $_includedConfigs;
     private static $_fileTags;
     private static $_pageTags;
     private static $_extraTags;
     private static $_sitePages;
     private static $_pageData;
-
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Returns a map of common EE language folder names to CKEditor language codes.
-     *
-     * @return array $languageMap
-     */
-    public static function languageMap()
-    {
-        return array(
-            'arabic'              => 'ar',
-            'arabic-utf8'         => 'ar',
-            'arabic-windows-1256' => 'ar',
-            'czech'               => 'cs',
-            'cesky'               => 'cs',
-            'danish'              => 'da',
-            'german'              => 'de',
-            'deutsch'             => 'de',
-            'english'             => 'en',
-            'spanish'             => 'es',
-            'spanish_ee201pb'     => 'es',
-            'finnish'             => 'fi',
-            'french'              => 'fr',
-            'hungarian'           => 'hu',
-            'croatian'            => 'hr',
-            'italian'             => 'it',
-            'japanese'            => 'ja',
-            'korean'              => 'ko',
-            'dutch'               => 'nl',
-            'norwegian'           => 'no',
-            'polish'              => 'pl',
-            'brazilian'           => 'pt',
-            'portuguese'          => 'pt',
-            'brasileiro'          => 'pt',
-            'brasileiro_160'      => 'pt',
-            'russian'             => 'ru',
-            'russian_utf8'        => 'ru',
-            'russian_win1251'     => 'ru',
-            'slovak'              => 'sk',
-            'swedish'             => 'sv',
-            'swedish_ee20pb'      => 'sv',
-            'turkish'             => 'tr',
-            'ukrainian'           => 'uk',
-            'chinese'             => 'zh',
-            'chinese_traditional' => 'zh',
-            'chinese_simplified'  => 'zh'
-        );
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Returns the default config settings.
-     *
-     * @return array $configSettings
-     */
-    public static function defaultConfigSettings()
-    {
-        $toolbars = static::defaultToolbars();
-
-        return array(
-            'toolbar'        => $toolbars['Basic'],
-            'height'         => '200',
-            'upload_dir'     => 'all'
-        );
-    }
-
-    /**
-     * Returns the default toolbars.
-     *
-     * @return array $toolbars
-     */
-    public static function defaultToolbars()
-    {
-        return array(
-            'Basic' => array(
-                "bold",
-                "italic",
-                "underline",
-                "numberedList",
-                "bulletedList",
-                "link"
-            ),
-            'Full'  => array(
-                "bold",
-                "italic",
-                "strikethrough",
-                "underline",
-                "subscript",
-                "superscript",
-                "blockquote",
-                "code",
-                "heading",
-                "removeFormat",
-                "undo",
-                "redo",
-                "numberedList",
-                "bulletedList",
-                "outdent",
-                "indent",
-                "link",
-                "filemanager",
-                "insertTable",
-                "mediaEmbed",
-                "alignment:left",
-                "alignment:right",
-                "alignment:center",
-                "alignment:justify",
-                "horizontalLine",
-                "specialCharacters",
-                "readMore",
-                "fontColor",
-                "fontBackgroundColor"
-            )
-        );
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Includes the necessary CSS and JS files to get Rte fields working.
-     */
-    public static function includeFieldResources()
-    {
-        if (! static::$_includedFieldResources) {
-            ee()->cp->add_to_foot('<script type="text/javascript" src="' . URL_THEMES . 'rte/scripts/ckeditor.js"></script>');
-            ee()->cp->add_to_foot('<script type="text/javascript" src="' . URL_THEMES . 'rte/scripts/rte.js"></script>');
-            ee()->cp->add_to_head('<link rel="stylesheet" type="text/css" href="' . URL_THEMES . 'rte/styles/rte.css' . '" />');
-
-            $action_id = ee()->db->select('action_id')
-                ->where('class', 'Rte')
-                ->where('method', 'pages_autocomplete')
-                ->get('actions');
-
-            $filedir_urls = ee('Model')->get('UploadDestination')->all()->getDictionary('id', 'url');
-
-            ee()->javascript->set_global([
-                'Rte.pages_autocomplete' => ee()->functions->fetch_site_index(0, 0) . QUERY_MARKER . 'ACT=' . $action_id->row('action_id') . '&t=' . ee()->localize->now,
-                'Rte.filedirUrls' => $filedir_urls
-            ]);
-
-            static::$_includedFieldResources = true;
-        }
-    }
-
-    /**
-     * Inserts the Rte config JS in the page foot by config ID.
-     *
-     * @param $configId
-     *
-     * @return $configHandle The handle for config used by Rte JS
-     */
-    public static function insertConfigJsById($configId = null)
-    {
-        ee()->lang->loadfile('rte');
-        
-        // starting point
-        $baseConfig = static::defaultConfigSettings();
-
-        // -------------------------------------------
-        //  Editor Config
-        // -------------------------------------------
-
-        if (empty($configId) && !empty(ee()->config->item('rte_default_toolset'))) {
-            $configId = ee()->config->item('rte_default_toolset');
-        }
-        $toolsetQuery = ee('Model')->get('rte:Toolset');
-        if (!empty($configId)) {
-            $toolsetQuery->filter('toolset_id', $configId);
-        }
-        $toolset = $toolsetQuery->first();
-        if (!empty($toolset)) {
-            $configHandle = preg_replace('/[^a-z0-9]/i', '_', $toolset->toolset_name) . $toolset->toolset_id;
-            $config = array_merge($baseConfig, $toolset->settings);
-        } else {
-            $config = $baseConfig;
-            $configHandle = 'default0';
-        }
-
-        // skip if already included
-        if (isset(static::$_includedConfigs) && in_array($configHandle, static::$_includedConfigs)) {
-            return $configHandle;
-        }
-
-        // language
-        $language = isset(ee()->session) ? ee()->session->get_language() : ee()->config->item('deft_lang');
-        $langMap = static::languageMap();
-        $config['language'] = isset($langMap[$language]) ? $langMap[$language] : 'en';
-
-        // toolbar
-        if (is_array($config['toolbar'])) {
-            $toolbarObject = new \stdClass();
-            $toolbarObject->items = $config['toolbar'];
-            $config['toolbar'] = $toolbarObject;
-            $config['image'] = new \stdClass();
-            $config['image']->toolbar = [
-                'imageTextAlternative',
-                'imageStyle:full',
-                'imageStyle:side',
-                'imageStyle:alignLeft',
-                'imageStyle:alignCenter',
-                'imageStyle:alignRight'
-            ];
-            $config['image']->styles = [
-                'full',
-                'side',
-                'alignLeft',
-                'alignCenter',
-                'alignRight'
-            ];
-        }
-
-        if (!empty(ee()->config->item('site_pages'))) {
-            ee()->cp->add_to_foot('<script type="text/javascript">
-                EE.Rte.configs.' . $configHandle . '.mention = {"feeds": [{"marker": "@", "feed": getPages, "itemRenderer": formatPageLinks, "minimumCharacters": 3}]};
-            </script>');
-        }
-
-        // -------------------------------------------
-        //  File Browser Config
-        // -------------------------------------------
-
-        $uploadDir = (isset($config['upload_dir']) && !empty($config['upload_dir'])) ? $config['upload_dir'] : 'all';
-        unset($config['upload_dir']);
-
-        $fileBrowserOptions = ['filepicker'];
-        if (!empty(ee()->config->item('rte_file_browser'))) {
-            array_unshift($fileBrowserOptions, ee()->config->item('rte_file_browser'));
-        }
-        $fileBrowserOptions = array_unique($fileBrowserOptions);
-        foreach ($fileBrowserOptions as $fileBrowserName) {
-            $fileBrowserAddon = ee('Addon')->get($fileBrowserName);
-            if ($fileBrowserAddon !== null && $fileBrowserAddon->isInstalled() && $fileBrowserAddon->hasRteFilebrowser()) {
-                $fqcn = $fileBrowserAddon->getRteFilebrowserClass();
-                $fileBrowser = new $fqcn();
-                if ($fileBrowser instanceof RteFilebrowserInterface) {
-                    $fileBrowser->addJs($uploadDir);
-                    break;
-                }
-            }
-        }
-
-        if (stripos($fqcn, 'filepicker_rtefb') !== false && REQ != 'CP') {
-            unset($config['image']);
-            $filemanager_key = array_search('filemanager', $config['toolbar']->items);
-            if ($filemanager_key) {
-                $items = $config['toolbar']->items;
-                unset($items[$filemanager_key]);
-                $config['toolbar']->items = array_values($items);
-            }
-        }
-
-        $config['toolbar']->shouldNotGroupWhenFull = true;
-
-        //link
-        $config['link'] = (object) ['decorators' => [
-            'openInNewTab' => [
-                    'mode' => 'manual',
-                    'label' => lang('open_in_new_tab'),
-                    'attributes' => [
-                        'target' => '_blank',
-                        'rel' => 'noopener noreferrer'
-                    ]
-                ]
-            ]
-        ];
-
-        // -------------------------------------------
-        //  JSONify Config and Return
-        // -------------------------------------------
-        ee()->javascript->set_global([
-            'Rte.configs.' . $configHandle => $config
-        ]);
-
-        static::$_includedConfigs[] = $configHandle;
-
-        ee()->cp->add_to_head('<style type="text/css">.ck-editor__editable_inline { min-height: ' . $config['height'] . 'px; }</style>');
-
-        return $configHandle;
-    }
 
     // --------------------------------------------------------------------
 
@@ -321,9 +39,8 @@ class RteHelper
             $tags = array();
             $urls = array();
 
-            $dirs = ee('Model')->get('UploadDestination')
-                ->all()
-                ->getDictionary('id', 'url');
+            ee()->load->model('file_upload_preferences_model');
+            $dirs = ee()->file_upload_preferences_model->get_paths();
 
             foreach ($dirs as $id => $url) {
                 // ignore "/" URLs
@@ -347,8 +64,8 @@ class RteHelper
      */
     public static function replaceFileTags(&$data)
     {
-        $tags = static::_getFileTags();
-        $data = str_replace($tags[0], $tags[1], $data);
+        ee()->load->library('file_field');
+        $data = ee()->file_field->parse_string($data);
     }
 
     /**
@@ -360,6 +77,15 @@ class RteHelper
     {
         $tags = static::_getFileTags();
         $data = str_replace($tags[1], $tags[0], $data);
+        
+        $filedirReplacements = static::getFileUsageReplacements($data);
+        if (!empty($filedirReplacements)) {
+            foreach ($filedirReplacements as $file_id => $replacements) {
+                foreach ($replacements as $from => $to) {
+                    $data = str_replace($from, $to, $data);
+                }
+            }
+        }
     }
 
     /**
@@ -400,7 +126,6 @@ class RteHelper
         }
     }
 
-
     // --------------------------------------------------------------------
 
     /**
@@ -420,8 +145,10 @@ class RteHelper
 
             if (!empty($pageData)) {
                 foreach ($pageData as $page) {
-                    $tags[] = LD . 'page_' . $page->entry_id . RD;
-                    $urls[] = $page->uri;
+                    if (isset($page->entry_id)) {
+                        $tags[] = LD . 'page_' . $page->entry_id . RD;
+                        $urls[] = $page->uri;
+                    }
                 }
             }
 
@@ -438,7 +165,7 @@ class RteHelper
      */
     public static function replacePageTags(&$data)
     {
-        if (strpos($data, LD . 'page_') !== false) {
+        if ( !empty($data) && strpos($data, LD . 'page_') !== false) {
             $tags = static::_getPageTags();
 
             foreach ($tags[0] as $key => $pageTag) {
@@ -494,11 +221,11 @@ class RteHelper
             $site_id = ee()->config->item('site_id');
         }
 
-        $cache_key = '/site_pages/rte_' . $site_id;
+        $cache_key = 'rte_' . $site_id;
         if (!empty($search)) {
             $cache_key .= '_' . urlencode($search);
         }
-        $pages = ee()->cache->get($cache_key, \Cache::GLOBAL_SCOPE);
+        $pages = ee()->cache->get('/site_pages/' . md5($cache_key), \Cache::GLOBAL_SCOPE);
 
         if ($pages === false) {
             $pages = [];
@@ -516,12 +243,12 @@ class RteHelper
              *          'uri' => page URI
              *      ];
              */
-            if (ee()->extensions->active_hook('rte_autocomplete_pages') === true) {
+            /*if (ee()->extensions->active_hook('rte_autocomplete_pages') === true) {
                 $pages = ee()->extensions->call('rte_autocomplete_pages', $pages, $search, $site_id);
                 if (ee()->extensions->end_script === true) {
                     $break = true;
                 }
-            }
+            }*/
 
             if (!$break) {
                 $site = ee('Model')->get('Site', $site_id)->first();
@@ -533,10 +260,12 @@ class RteHelper
                         ->all()
                         ->getDictionary('channel_id', 'channel_title');
                     $entries = ee('Model')->get('ChannelEntry', $entry_ids)
-                        ->fields('entry_id', 'title', 'url_title', 'channel_id')
-                        ->all();
-                    $titles = $entries->getDictionary('entry_id', 'title');
-                    $channel_ids = $entries->getDictionary('entry_id', 'channel_id');
+                        ->fields('entry_id', 'title', 'url_title', 'channel_id');
+                    if (!empty($search)) {
+                        $entries->filter('title', 'LIKE', '%' . $search . '%');
+                    }
+                    $titles = $entries->all()->getDictionary('entry_id', 'title');
+                    $channel_ids = $entries->all()->getDictionary('entry_id', 'channel_id');
                     foreach ($site_pages[$site_id]['uris'] as $entry_id => $uri) {
                         if (isset($titles[$entry_id])) {
                             $pages[] = (object) [
@@ -551,9 +280,41 @@ class RteHelper
                     }
                 }
             }
-            ee()->cache->save($cache_key, $pages, 0, \Cache::GLOBAL_SCOPE);
+            ee()->cache->save('/site_pages/' . md5($cache_key), $pages, 0, \Cache::GLOBAL_SCOPE);
         }
 
         return $pages;
+    }
+
+    /**
+     * Just a placeholder
+     *
+     * @return void
+     */
+    public static function includeFieldResources()
+    {
+
+    }
+
+    /**
+     * Backwards compatibility for third-party fieldtypes
+     *
+     * @param [type] $toolset_id
+     * @return void
+     */
+    public static function insertConfigJsById($toolset_id = null)
+    {
+        $toolsetId = (!empty($toolset_id)) ? (int) $toolset_id : (!empty(ee()->config->item('rte_default_toolset')) ? (int) ee()->config->item('rte_default_toolset') : null);
+        if (!empty($toolsetId)) {
+            $toolset = ee('Model')->get('rte:Toolset')->filter('toolset_id', $toolsetId)->first();
+        } else {
+            $toolset = ee('Model')->get('rte:Toolset')->first();
+        }
+
+        // Load proper toolset
+        $serviceName = ucfirst($toolset->toolset_type) . 'Service';
+        $configHandle = ee('rte:' . $serviceName)->init([], $toolset);
+
+        return $configHandle;
     }
 }

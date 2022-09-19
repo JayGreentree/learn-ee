@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,129 +15,149 @@ use ExpressionEngine\Service\View\ViewFactory;
 /**
  * Sidebar Service
  */
-class Sidebar extends AbstractSidebar {
+class Sidebar extends AbstractSidebar
+{
+    public $collapsedState;
+    
+    /**
+     * Renders the sidebar
+     *
+     * @return string The rendered HTML of the sidebar
+     */
+    public function render()
+    {
+        $output = '';
 
-	/**
-	 * Renders the sidebar
-	 *
-	 * @return string The rendered HTML of the sidebar
-	 */
-	public function render()
-	{
-		$output = '';
+        if (! empty($this->list)) {
+            $output .= $this->list->render($this->view);
+        }
 
-		if ( ! empty($this->list))
-		{
-			$output .= $this->list->render($this->view);
-		}
+        $is_legacy = false;
 
-		$is_legacy = false;
+        foreach ($this->items as $item) {
+            $output .= $item->render($this->view);
 
-		foreach ($this->items as $item) {
-			$output .= $item->render($this->view);
+            // LEGACY: Check if the header has a link, if it does, the legacy sidebar styles need to be used.
+            if ($item instanceof Header && $item->hasUrl()) {
+                $is_legacy = true;
+            }
+        }
 
-			// LEGACY: Check if the header has a link, if it does, the legacy sidebar styles need to be used.
-			if ($item instanceof Header && $item->hasUrl()) {
-				$is_legacy = true;
-			}
-		}
+        if (! empty($this->action_bar)) {
+            $output .= $this->action_bar->render($this->view);
+        }
 
-		if ( ! empty($this->action_bar))
-		{
-			$output .= $this->action_bar->render($this->view);
-		}
+        if (empty($output)) {
+            return '';
+        }
 
-		if (empty($output))
-		{
-			return '';
-		}
+        if ($is_legacy) {
+            $this->class .= ' ';
+        }
 
-		if ($is_legacy) {
-			$this->class .= ' ';
-		}
+        //depending on where it is inserted, set class for owner
+        $owner = ee()->uri->segment(2);
+        if (ee()->uri->segment(2) == 'addons') {
+            $owner = ee()->uri->segment(4);
+        }
+        $containerClass = ' secondary-sidebar__' . $owner;
+        $state = json_decode(ee()->input->cookie('secondary_sidebar'));
+        if (!empty($state) && isset($state->$owner) && $state->$owner == 1) {
+            $containerClass = ' secondary-sidebar__collapsed';
+            $this->collapsedState = true;
+        }
 
-		return $this->view->make('_shared/sidebar/sidebar')
-			     ->render([
-					'class' => $this->class,
-					'sidebar' => $output,
-				]);
-	}
+        return $this->view->make('_shared/sidebar/sidebar')
+            ->render([
+                'class' => $this->class,
+                'containerClass' => $containerClass,
+                'owner' => $owner,
+                'sidebar' => $output,
+            ]);
+    }
 
-	/**
-	 * Adds a basic item to the sidebar
-	 *
-	 * @param string $text The text of the item
-	 * @param URL|string $url An optional CP\URL object or string containing the
-	 *   URL for the text.
-	 * @return Header A new BasicItem object.
-	 */
-	public function addItem($text, $url = NULL)
-	{
-		$item = new BasicItem($text, $url);
-		$this->items[] = $item;
-		return $item;
-	}
+    /**
+     * Adds a basic item to the sidebar
+     *
+     * @param string $text The text of the item
+     * @param URL|string $url An optional CP\URL object or string containing the
+     *   URL for the text.
+     * @return Header A new BasicItem object.
+     */
+    public function addItem($text, $url = null)
+    {
+        $item = new BasicItem($text, $url);
+        $this->items[] = $item;
 
-	/**
-	 * Adds a header to the sidebar
-	 *
-	 * @param string $text The text of the header
-	 * @param URL|string $url An optional CP\URL object or string containing the
-	 *   URL for the text.
-	 * @return Header A new Header object.
-	 */
-	public function addHeader($text, $url = NULL)
-	{
-		$header = new Header($text, $url);
-		$this->items[] = $header;
-		return $header;
-	}
+        return $item;
+    }
 
-	/**
-	 * Adds a divider to the sidebar
-	 *
-	 * @return Divider A new divider object.
-	 */
-	public function addDivider() {
-		$divider = new Divider();
-		$this->items[] = $divider;
-		return $divider;
-	}
+    /**
+     * Adds a header to the sidebar
+     *
+     * @param string $text The text of the header
+     * @param URL|string $url An optional CP\URL object or string containing the
+     *   URL for the text.
+     * @return Header A new Header object.
+     */
+    public function addHeader($text, $url = null)
+    {
+        $header = new Header($text, $url);
+        $this->items[] = $header;
 
-	/**
-	 * Adds a folder list to the sidebar, without a header
-	 *
-	 * @param string $name The name of the folder list
-	 * @return FolderList A new FolderList object
-	 */
-	public function addFolderList($name)
-	{
-		$this->list = new FolderList($name);
-		return $this->list;
-	}
+        return $header;
+    }
 
-	/**
-	 * Adds a folder list under this header
-	 *
-	 * @param string $name The name of the folder list
-	 * @return FolderList A new FolderList object
-	 */
-	public function addActionBar()
-	{
-		$this->action_bar = new ActionBar();
-		return $this->action_bar;
-	}
+    /**
+     * Adds a divider to the sidebar
+     *
+     * @return Divider A new divider object.
+     */
+    public function addDivider()
+    {
+        $divider = new Divider();
+        $this->items[] = $divider;
 
-	/**
-	 * Adds some bottom margin to this sidebar
-	 *
-	 * @return self
-	 */
-	public function addMarginBottom()
-	{
-		$this->class = ' mb';
-		return $this;
-	}
+        return $divider;
+    }
+
+    /**
+     * Adds a folder list to the sidebar, without a header
+     *
+     * @param string $name The name of the folder list
+     * @return FolderList A new FolderList object
+     */
+    public function addFolderList($name)
+    {
+        $this->list = new FolderList($name);
+
+        return $this->list;
+    }
+
+    /**
+     * Adds a folder list under this header
+     *
+     * @param string $name The name of the folder list
+     * @return FolderList A new FolderList object
+     */
+    public function addActionBar()
+    {
+        $this->action_bar = new ActionBar();
+
+        return $this->action_bar;
+    }
+
+    /**
+     * Adds some bottom margin to this sidebar
+     *
+     * @return self
+     */
+    public function addMarginBottom()
+    {
+        $this->class = ' mb';
+
+        return $this;
+    }
 }
 
 // EOF

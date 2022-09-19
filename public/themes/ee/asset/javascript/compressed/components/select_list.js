@@ -27,7 +27,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 var SelectList =
@@ -190,7 +190,7 @@ function (_React$Component) {
               };
               var children = $(node).find('> ul > [data-id]');
 
-              if (children.size()) {
+              if (children.length) {
                 item['children'] = getNestedItems(children.toArray());
               }
 
@@ -227,6 +227,8 @@ function (_React$Component) {
     value: function bindNestable() {
       var _this3 = this;
 
+      // Make sure the draggable container is positioned relatively so that the nestable drag item is positioned correctly
+      this.container.parentNode.style.position = 'relative';
       $(this.container).nestable({
         listNodeName: 'ul',
         listClass: 'field-nested',
@@ -371,6 +373,9 @@ function (_React$Component) {
 
       var props = this.props;
       var shouldShowToggleAll = (props.multi || !props.selectable) && props.toggleAll !== null;
+      var values = props.selected.length ? props.selected.map(function (item) {
+        return item.value;
+      }) : [];
       return React.createElement("div", {
         className: props.tooMany ? ' lots-of-checkboxes' : '',
         ref: function ref(container) {
@@ -434,14 +439,14 @@ function (_React$Component) {
         item: this.getFullItem(props.selected[0]),
         clearSelection: this.clearSelection,
         selectionRemovable: props.selectionRemovable
-      }), props.selectable && props.selected.length == 0 && React.createElement("input", {
+      }), !props.jsonify && props.selectable && props.selected.length == 0 && React.createElement("input", {
         type: "hidden",
         name: props.multi ? props.name + '[]' : props.name,
         value: "",
         ref: function ref(input) {
           _this8.input = input;
         }
-      }), props.selectable && props.selected.map(function (item) {
+      }), !props.jsonify && props.selectable && props.selected.map(function (item) {
         return React.createElement("input", {
           type: "hidden",
           key: item.value,
@@ -451,6 +456,13 @@ function (_React$Component) {
             _this8.input = input;
           }
         });
+      }), props.jsonify && props.selectable && React.createElement("input", {
+        type: "hidden",
+        name: props.name,
+        value: JSON.stringify(values),
+        ref: function ref(input) {
+          _this8.input = input;
+        }
       }));
     }
   }], [{
@@ -471,7 +483,7 @@ function (_React$Component) {
           });
         } else {
           // When formatting selected items lists, selections will likely be a flat
-          // array of values for multi-select
+          // array of values for multi select
           var value = multi ? items[key] : key;
           var newItem = {
             value: items[key].value || items[key].value === '' ? items[key].value : value,
@@ -480,7 +492,10 @@ function (_React$Component) {
             children: null,
             parent: parent ? parent : null,
             component: items[key].component != undefined ? items[key].component : null,
-            sectionLabel: currentSection
+            sectionLabel: currentSection,
+            entry_id: items[key].entry_id ? items[key].entry_id : '',
+            upload_location_id: items[key].upload_location_id ? items[key].upload_location_id : '',
+            path: items[key].path ? items[key].path : ''
           };
 
           if (items[key].children) {
@@ -581,7 +596,7 @@ function (_React$Component2) {
         "data-group-toggle": props.groupToggle ? JSON.stringify(props.groupToggle) : '[]',
         disabled: disabled ? 'disabled' : ''
       }), React.createElement("div", {
-        className: "checkbox-label__text"
+        className: props.editable ? "checkbox-label__text checkbox-label__text-editable" : "checkbox-label__text"
       }, props.reorderable && React.createElement("span", {
         className: "icon-reorder icon-left"
       }), props.editable && React.createElement("a", {
@@ -596,15 +611,22 @@ function (_React$Component2) {
         }
       }), " ", props.item.instructions && React.createElement("span", {
         className: "meta-info"
-      }, props.item.instructions), props.removable && React.createElement("a", {
+      }, props.item.instructions), React.createElement("div", {
+        "class": "button-group button-group-xsmall button-group-flyout-right"
+      }, props.editable && React.createElement("a", {
         href: "",
-        className: "button button--small default float-right",
+        className: "button button--default flyout-edit flyout-edit-icon"
+      }, React.createElement("i", {
+        "class": "fal fa-pencil-alt"
+      })), props.removable && React.createElement("a", {
+        href: "",
+        className: "button button--default js-button-delete",
         onClick: function onClick(e) {
           return props.handleRemove(e, props.item);
         }
       }, React.createElement("i", {
-        "class": "fas fa-fw fa-trash-alt"
-      }))));
+        "class": "fal fa-fw fa-trash-alt"
+      })))));
 
       if (props.nested) {
         return React.createElement("li", {
@@ -649,13 +671,13 @@ function (_React$Component3) {
       return React.createElement("div", {
         className: "lots-of-checkboxes__selection"
       }, React.createElement("i", {
-        className: "fas fa-check-circle"
+        className: "fal fa-check-circle"
       }), " ", label, props.selectionRemovable && React.createElement("a", {
         className: "button button--default float-right",
         href: "",
         onClick: props.clearSelection
       }, React.createElement("i", {
-        "class": "fas fa-trash-alt"
+        "class": "fal fa-trash-alt"
       })));
     }
   }]);

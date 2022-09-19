@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -19,7 +19,6 @@ use ExpressionEngine\Library\CP\URL;
  */
 class NavigationItem extends ListItem
 {
-
     /**
      * Sets the URL property of the item
      *
@@ -33,6 +32,7 @@ class NavigationItem extends ListItem
         if ($url instanceof URL && $url->matchesTheRequestedURI()) {
             $this->isActive();
         }
+
         return $this;
     }
 
@@ -44,7 +44,8 @@ class NavigationItem extends ListItem
      * @param ViewFactory $view A ViewFactory object to use with rendering
      * @return string The rendered HTML of the item
      */
-    public function render(ViewFactory $view) {
+    public function render(ViewFactory $view)
+    {
         $class = $this->getClass();
 
         $attrs = $this->attributes;

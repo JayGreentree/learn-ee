@@ -4,32 +4,32 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
 /**
  * Markdown Plugin
  */
-class Markdown {
+class Markdown
+{
+    public $return_data;
 
-	public $return_data;
+    public function __construct($tagdata = '')
+    {
+        $tagdata = (empty($tagdata)) ? ee()->TMPL->tagdata : $tagdata;
+        $smartypants = ee()->TMPL->fetch_param('smartypants', 'yes');
+        $convert_curly = ee()->TMPL->fetch_param('convert_curly', 'yes');
 
-	public function __construct($tagdata = '')
-	{
-		$tagdata       = (empty($tagdata)) ? ee()->TMPL->tagdata : $tagdata;
-		$smartypants   = ee()->TMPL->fetch_param('smartypants', 'yes');
-		$convert_curly = ee()->TMPL->fetch_param('convert_curly', 'yes');
+        ee()->load->library('typography');
+        ee()->typography->convert_curly = get_bool_from_string($convert_curly);
+        $this->return_data = ee()->typography->markdown(
+            $tagdata,
+            compact('smartypants')
+        );
 
-		ee()->load->library('typography');
-		ee()->typography->convert_curly = get_bool_from_string($convert_curly);
-		$this->return_data = ee()->typography->markdown(
-			$tagdata,
-			compact('smartypants')
-		);
-
-		return $this->return_data;
-	}
+        return $this->return_data;
+    }
 }
 // END CLASS
 

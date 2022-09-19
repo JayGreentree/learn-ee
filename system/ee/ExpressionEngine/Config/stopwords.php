@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -17,36 +17,36 @@
 
 // $ignore =
 return array(
-	'a',
-	'about',
-	'an',
-	'and',
-	'are',
-	'as',
-	'at',
-	'be',
-	'by',
-	'but',
-	'from',
-	'how',
-	'i',
-	'in',
-	'is',
-	'it',
-	'of',
-	'on',
-	'or',
-	'that',
-	'the',
-	'this',
-	'to',
-	'was',
-	'we',
-	'what',
-	'when',
-	'where',
-	'which',
-	'with'	// no comma after last item
+    'a',
+    'about',
+    'an',
+    'and',
+    'are',
+    'as',
+    'at',
+    'be',
+    'by',
+    'but',
+    'from',
+    'how',
+    'i',
+    'in',
+    'is',
+    'it',
+    'of',
+    'on',
+    'or',
+    'that',
+    'the',
+    'this',
+    'to',
+    'was',
+    'we',
+    'what',
+    'when',
+    'where',
+    'which',
+    'with'	// no comma after last item
 );
 
 // EOF

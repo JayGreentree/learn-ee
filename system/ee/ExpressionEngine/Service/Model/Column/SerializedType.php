@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,38 +15,37 @@ use ExpressionEngine\Library\Data\Entity;
 /**
  * Model Service Serialized Typed Column
  */
-abstract class SerializedType implements Type {
+abstract class SerializedType implements Type
+{
+    protected $data = '';
 
-	protected $data = '';
+    public static function create()
+    {
+        return new static();
+    }
 
-	public static function create()
-	{
-		return new static;
-	}
+    public function load($db_data)
+    {
+        $data = $this->unserialize($db_data);
+        $this->data = $data;
 
-	public function load($db_data)
-	{
-		$data = $this->unserialize($db_data);
-		$this->data = $data;
+        return $data;
+    }
 
-		return $data;
-	}
+    public function store($data)
+    {
+        return $this->serialize($this->data);
+    }
 
-	public function store($data)
-	{
-		return $this->serialize($this->data);
-	}
+    public function set($data)
+    {
+        return $this->data = $data;
+    }
 
-	public function set($data)
-	{
-		return $this->data = $data;
-	}
-
-	public function get()
-	{
-		return $this->data;
-	}
-
+    public function get()
+    {
+        return $this->data;
+    }
 }
 
 // EOF

@@ -5,7 +5,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,7 +13,6 @@ namespace ExpressionEngine\Library\Advisor;
 
 class FieldtypeAdvisor
 {
-
     public function getMissingFieldtypes()
     {
         $used_fts = $this->guessAllUsedFieldtypes();
@@ -102,6 +101,7 @@ class FieldtypeAdvisor
         foreach ($channel_fields->result_array() as $ft) {
             $data[$ft['field_type']] = ['exp_channel_fields'];
         }
+
         return $data;
     }
 
@@ -109,6 +109,7 @@ class FieldtypeAdvisor
     public function getFieldtypesFromTable()
     {
         $used_fieldtypes = ee()->db->select('name')->order_by('name')->get('fieldtypes');
+
         return array_column($used_fieldtypes->result_array(), 'name');
     }
 

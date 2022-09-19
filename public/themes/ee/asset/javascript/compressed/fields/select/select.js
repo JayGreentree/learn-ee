@@ -27,7 +27,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 var FilterableSelectList = makeFilterableComponent(SelectList);
@@ -89,7 +89,7 @@ function (_React$Component) {
 
       if (this.props.manageable) {
         return React.createElement("div", null, selectItem, this.props.addLabel && React.createElement("a", {
-          className: "button button--primary submit",
+          className: "button button--default button--small submit publish__add-category-button",
           rel: "add_new",
           href: "#"
         }, this.props.addLabel), React.createElement(ToggleTools, {

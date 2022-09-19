@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,14 +13,14 @@ namespace ExpressionEngine\Protocol\Config;
 /**
  * ExpressionEngine Config Protocol interface
  */
-interface Config {
-
-	/**
-	 * Get a config item
-	 *
-	 * @param string $key Config key name
-	 * @param mixed $default Default value to return if item does not exist.
-	 * @return mixed
-	 */
-	public function get($key, $default = NULL);
+interface Config
+{
+    /**
+     * Get a config item
+     *
+     * @param string $key Config key name
+     * @param mixed $default Default value to return if item does not exist.
+     * @return mixed
+     */
+    public function get($key, $default = null);
 }

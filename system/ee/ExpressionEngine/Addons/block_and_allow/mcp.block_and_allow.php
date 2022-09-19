@@ -5,7 +5,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -14,7 +14,6 @@
  */
 class Block_and_allow_mcp
 {
-
     public $LB = "\r\n";
 
     /**
@@ -145,9 +144,11 @@ class Block_and_allow_mcp
 
         if (! file_exists($str) || ! is_file($str)) {
             ee()->form_validation->set_message('_check_path', lang('invalid_htaccess_path'));
+
             return false;
         } elseif (! is_writeable(ee()->input->get_post('htaccess_path'))) {
             ee()->form_validation->set_message('_check_path', lang('invalid_htaccess_path'));
+
             return false;
         }
 
@@ -230,7 +231,7 @@ class Block_and_allow_mcp
 
         $domain .= 'SetEnvIfNoCase Referer "^$" GoodHost' . $this->LB;  // If no referrer, they be safe!
 
-        $host  = 'SetEnvIfNoCase Referer ".*(' . preg_quote($site['host']) . ').*" GoodHost' . $this->LB;
+        $host = 'SetEnvIfNoCase Referer ".*(' . preg_quote($site['host']) . ').*" GoodHost' . $this->LB;
 
         if ($urls != '' || $ips != '') {
             $data .= $this->LB . $this->LB . "##EE Spam Block" . $this->LB
@@ -261,7 +262,7 @@ class Block_and_allow_mcp
      * Update Blockedlist
      *
      * @access public
-     * @return string
+     * @return void
      */
     public function ee_blockedlist()
     {
@@ -278,7 +279,7 @@ class Block_and_allow_mcp
      * Update Allowedlist
      *
      * @access public
-     * @return string
+     * @return void
      */
     public function ee_allowedlist()
     {
@@ -380,19 +381,19 @@ class Block_and_allow_mcp
                 }
             }
 
-             sort($new_values);
+            sort($new_values);
 
-             $_POST[$val] = implode("|", array_unique($new_values));
+            $_POST[$val] = implode("|", array_unique($new_values));
 
-             ee()->db->where('blockedlist_type', $type);
-             ee()->db->delete('blockedlist');
+            ee()->db->where('blockedlist_type', $type);
+            ee()->db->delete('blockedlist');
 
-             $data = array(
-                 'blockedlist_type' => $type,
-                 'blockedlist_value' => $_POST[$val]
-             );
+            $data = array(
+                'blockedlist_type' => $type,
+                'blockedlist_value' => $_POST[$val]
+            );
 
-             ee()->db->insert('blockedlist', $data);
+            ee()->db->insert('blockedlist', $data);
         }
     }
 
@@ -470,7 +471,7 @@ class Block_and_allow_mcp
      * Download and update ExpressionEngine.com Blocked- or Allowedlist
      *
      * @access private
-     * @return string
+     * @return void
      */
     private function _download_update_list($listtype = "blocked")
     {

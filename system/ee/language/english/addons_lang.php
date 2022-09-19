@@ -2,188 +2,201 @@
 
 $lang = array(
 
-/* Sidebar Menu */
-'addon' => 'Add-On',
+    /* Sidebar Menu */
+    'addon' => 'Add-On',
 
-'addon_manager' => 'Add-Ons',
+    'addon_manager' => 'Add-Ons',
 
-'updates' => 'Updates',
+    'updates' => 'Updates',
 
-'add-on-store' => 'Add-On Store',
+    'add-on-store' => 'Add-On Store',
 
-'addons' => 'Add-Ons',
+    'addons' => 'Add-Ons',
 
-'all_addons' => 'All Add-Ons',
+    'all_addons' => 'All Add-Ons',
 
-'author' => 'Author',
+    'author' => 'Author',
 
-'available_parameters' => 'Available Parameters',
+    'available_parameters' => 'Available Parameters',
 
-'example_usage' => 'Example Usage',
+    'example_usage' => 'Example Usage',
 
-'manage_addon_extensions' => 'Manage Add-on Extensions',
+    'manage_addon_extensions' => 'Manage Add-on Extensions',
 
-'manage_extensions' => 'Manage Extensions',
+    'manage_extensions' => 'Manage Extensions',
 
-'manual' => 'Manual',
+    'manual' => 'Manual',
 
-'no_addon_extensions_search_results' => 'No <b>Add-on Extensions</b> Found',
+    'no_addon_extensions_search_results' => 'No <b>Add-on Extensions</b> Found',
 
-'no_addon_search_results' => 'No <b>Add-Ons</b> Found',
+    'no_addon_search_results' => 'No <b>Add-Ons</b> Found',
 
-'requested_module_not_installed' => 'The requested module is not installed:',
+    'requested_module_not_installed' => 'The requested module is not installed:',
 
-'search_addons_button' => 'search add-ons',
+    'search_addons_button' => 'search add-ons',
 
-'show_all_addons' => 'All %d Add-Ons',
+    'show_all_addons' => 'All %d Add-Ons',
 
-'third_party_addons' => 'Third Party Add-Ons',
+    'third_party_addons' => 'Third Party Add-Ons',
 
-'update' => 'Update',
+    'update' => 'Update',
 
-'update_to_version' => 'Update to %s',
+    'update_to_version' => 'Update to %s',
 
+    /* confirm uninstall modal */
+    'btn_confirm_and_uninstall' => 'Confirm, and Uninstall',
 
-/* confirm uninstall modal */
-'btn_confirm_and_uninstall' => 'Confirm, and Uninstall',
+    'btn_confirm_and_uninstall_working' => 'Uninstalling...',
 
-'btn_confirm_and_uninstall_working' => 'Uninstalling...',
+    'confirm_uninstall' => 'Confirm Uninstall',
 
-'confirm_uninstall' => 'Confirm Uninstall',
+    'confirm_uninstall_desc' => 'You are attempting to uninstall the following items, please confirm this action.',
 
-'confirm_uninstall_desc' => 'You are attempting to uninstall the following items, please confirm this action.',
+    /* Filters */
+    'addons_installed' => 'Add-Ons Installed',
 
+    'addons_installed_desc' => 'The following add-on(s) have been installed: ',
 
-/* Filters */
-'addons_installed' => 'Add-Ons Installed',
+    'addons_not_installed' => 'Add-Ons Not Installed',
 
-'addons_installed_desc' => 'The following add-on(s) have been installed: ',
+    'addon_not_fully_functional' => '%s is not fully functional',
 
-'addons_not_installed' => 'Add-Ons Not Installed',
+    'existing_consent_request' => 'The following add-on(s) could not be installed due to an existing Consent Request which the add-on(s) are trying to create:',
 
-'existing_consent_request' => 'The following add-on(s) could not be installed due to an existing Consent Request which the add-on(s) are trying to create:',
+    'contact_developer' => 'Please contact the add-on developer(s) for assistance.',
 
-'contact_developer' => 'Please contact the add-on developer(s) for assistance.',
+    'addons_uninstalled' => 'Add-Ons Uninstalled',
 
-'addons_uninstalled' => 'Add-Ons Uninstalled',
+    'addons_uninstalled_desc' => 'The following add-on(s) have been uninstalled: ',
 
-'addons_uninstalled_desc' => 'The following add-on(s) have been uninstalled: ',
+    'addons_updated' => 'Add-Ons Updated',
 
-'addons_updated' => 'Add-Ons Updated',
+    'addons_updated_desc' => 'The following add-on(s) have been updated: ',
 
-'addons_updated_desc' => 'The following add-on(s) have been updated: ',
+    'btn_save_settings' => 'Save Settings',
 
-'btn_save_settings' => 'Save Settings',
+    'custom_limit' => 'custom limit',
 
-'custom_limit' => 'custom limit',
+    'developer' => 'developer',
 
-'developer' => 'developer',
+    'entries' => 'Entries',
 
-'entries' => 'Entries',
+    'extension_class_does_not_exist' => 'Class %c does not exist in (%f)',
 
-'extension_class_does_not_exist' => 'Class %c does not exist in (%f)',
+    'filter_by_status' => 'status',
 
-'filter_by_status' => 'status',
+    'install' => 'Install',
 
-'install' => 'Install',
+    'installed' => 'Installed',
 
-'installed' => 'Installed',
+    'needs_updates' => 'Needs Updates',
 
-'needs_updates' => 'Needs Updates',
+    'settings_saved' => 'Settings Saved',
 
-'settings_saved' => 'Settings Saved',
+    'settings_saved_desc' => 'The settings for %s have been saved.',
 
-'settings_saved_desc' => 'The settings for %s have been saved.',
+    'uninstall' => 'Uninstall',
 
-'uninstall' => 'Uninstall',
+    'uninstalled' => 'Uninstalled',
 
-'uninstalled' => 'Uninstalled',
+    /* 2.x */
+    'addons_extensions' => 'Extensions',
 
+    'addons_fieldtypes' => 'Fieldtypes',
 
-/* 2.x */
-'addons_extensions' => 'Extensions',
+    'addons_modules' => 'Modules',
 
-'addons_fieldtypes' => 'Fieldtypes',
+    'addons_plugins' => 'Plugins',
 
-'addons_modules' => 'Modules',
+    'and_more' => 'and %x more...',
 
-'addons_plugins' => 'Plugins',
+    'available_to_member_groups' => 'Available to Member Groups',
 
-'and_more' => 'and %x more...',
+    'component' => 'Component',
 
-'available_to_member_groups' => 'Available to Member Groups',
+    'configuration' => 'Configuration',
 
-'component' => 'Component',
+    'current_status' => 'Current Status',
 
-'configuration' => 'Configuration',
+    'delete_fieldtype' => 'Remove Fieldtype',
 
-'current_status' => 'Current Status',
+    'delete_fieldtype_confirm' => 'Are you sure you want to remove this fieldtype?',
 
-'delete_fieldtype' => 'Remove Fieldtype',
+    'description' => 'Description',
 
-'delete_fieldtype_confirm' => 'Are you sure you want to remove this fieldtype?',
+    'ext_disabled_short' => 'disabled',
 
-'description' => 'Description',
+    'ext_enabled_short' => 'enabled',
 
-'ext_disabled_short' => 'disabled',
+    'extension' => 'Extension',
 
-'ext_enabled_short' => 'enabled',
+    'extension_disabled' => 'Extension Disabled',
 
-'extension' => 'Extension',
+    'extension_enabled' => 'Extension Enabled',
 
-'extension_disabled' => 'Extension Disabled',
+    'extensions' => 'Extensions',
 
-'extension_enabled' => 'Extension Enabled',
+    'extensions_disabled' => 'Extensions Disabled',
 
-'extensions' => 'Extensions',
+    'extensions_disabled_desc' => 'Extensions have been disabled.',
 
-'extensions_disabled' => 'Extensions Disabled',
+    'extensions_disabled_message' => 'Extensions have been disabled in system configuration, therefore they are not present in this list.',
 
-'extensions_disabled_desc' => 'Extensions have been disabled.',
+    'extensions_disabled_warning' => 'In order to install this add-on you need to enable extensions. Do you want to enable extensions?',
 
-'extensions_disabled_message' => 'Extensions have been disabled in system configuration, therefore they are not present in this list.',
+    'extensions_enabled' => 'Extensions Enabled',
 
-'extensions_disabled_warning' => 'In order to install this add-on you need to enable extensions. Do you want to enable extensions?',
+    'extensions_enabled_desc' => 'Extensions have been enabled.',
 
-'extensions_enabled' => 'Extensions Enabled',
+    'fieldtype' => 'Fieldtype',
 
-'extensions_enabled_desc' => 'Extensions have been enabled.',
+    'fieldtype_data_will_be_lost' => 'All data associated with this fieldtype, including all associated channel data, will be permanently deleted!',
 
-'fieldtype' => 'Fieldtype',
+    'fieldtype_name' => 'Fieldtype Name',
 
-'fieldtype_data_will_be_lost' => 'All data associated with this fieldtype, including all associated channel data, will be permanently deleted!',
+    'global_settings_saved' => 'Settings Saved',
 
-'fieldtype_name' => 'Fieldtype Name',
+    'member_group_assignment' => 'Assigned Member Groups',
 
-'global_settings_saved' => 'Settings Saved',
+    'module' => 'Module',
 
-'member_group_assignment' => 'Assigned Member Groups',
+    'modules' => 'Modules',
 
-'module' => 'Module',
+    'no_extension_id' => 'No Extension Specified',
 
-'modules' => 'Modules',
+    'none' => 'None',
 
-'no_extension_id' => 'No Extension Specified',
+    'not_installed' => 'Not Installed',
 
-'none' => 'None',
+    'package_settings' => 'Package Settings',
 
-'not_installed' => 'Not Installed',
+    'page_assignment' => 'Assigned Pages',
 
-'package_settings' => 'Package Settings',
+    'plugins' => 'Plugins',
 
-'page_assignment' => 'Assigned Pages',
+    'plugins_not_available' => 'Plugin Feed Disabled in Beta Version.',
 
-'plugins' => 'Plugins',
+    'remove' => 'Remove',
 
-'plugins_not_available' => 'Plugin Feed Disabled in Beta Version.',
+    'required_by' => 'Required by:',
 
-'remove' => 'Remove',
+    'specific_page' => 'Specific Page?',
 
-'required_by' => 'Required by:',
+    'version' => 'Version',
 
-'specific_page' => 'Specific Page?',
+    'version_required' => '%s version %s or higher is required.',
 
-'version' => 'Version',
+    /* License */
+
+    'license_license_expired' => 'License Expired',
+    'license_invalid_domain' => 'Invalid Site Domain',
+    'license_invalid_license_key' => 'Invalid Key',
+    'license_missing_license_key' => 'Missing Key',
+    'license_update_available' => 'Update Available',
+    'unlicensed_addon' => 'Unlicensed Add-on',
+    'unlicensed_addon_message' => '<b>%s</b> does not have a valid license. <a href="https://expressionengine.com/store/licenses" target="_blank">More Info</a>',
+
+
 
 );
 

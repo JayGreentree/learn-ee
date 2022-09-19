@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,26 +15,25 @@ use ExpressionEngine\Service\Validation\ValidationRule;
 /**
  * Greater Than Validation Rule
  */
-class GreaterThan extends ValidationRule {
+class GreaterThan extends ValidationRule
+{
+    public function validate($key, $value)
+    {
+        list($compare) = $this->assertParameters('compare_to');
 
-	public function validate($key, $value)
-	{
-		list($compare) = $this->assertParameters('compare_to');
+        $compare = $this->numericOrConstantParameter($compare);
 
-		$compare = $this->numericOrConstantParameter($compare);
+        if ($compare === false) {
+            return false;
+        }
 
-		if ($compare === FALSE)
-		{
-			return FALSE;
-		}
+        return ($value > $compare);
+    }
 
-		return ($value > $compare);
-	}
-
-	public function getLanguageKey()
-	{
-		return 'greater_than';
-	}
+    public function getLanguageKey()
+    {
+        return 'greater_than';
+    }
 }
 
 // EOF

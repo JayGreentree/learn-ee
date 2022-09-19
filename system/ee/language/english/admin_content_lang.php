@@ -2,847 +2,865 @@
 
 $lang = array(
 
-'accesskey' => 'Shortcut',
+    'accesskey' => 'Shortcut',
 
-'accesskey_desc' => 'Keyboard shortcut to initiate this button.',
+    'accesskey_desc' => 'Keyboard shortcut to initiate this button.',
 
-'action_can_not_be_undone' => 'THIS ACTION CANNOT BE UNDONE',
+    'action_can_not_be_undone' => 'THIS ACTION CANNOT BE UNDONE',
 
-'add' => 'Add',
+    'add' => 'Add',
 
-'add_a_row' => 'Add A Row',
+    'add_a_row' => 'Add A Row',
 
-'add_preset_button' => 'Add Preset Button:',
+    'add_preset_button' => 'Add Preset Button:',
 
-'all_fields' => 'All Fields',
+    'all_fields' => 'All Fields',
 
-'allow_all_html' => 'Allow ALL HTML',
+    'allow_all_html' => 'Allow ALL HTML',
 
-'allow_all_html_not_recommended' => 'Allow all HTML (not recommended)',
+    'allow_all_html_not_recommended' => 'Allow all HTML (not recommended)',
 
-'allow_safe_html' => 'Allow only safe HTML',
+    'allow_safe_html' => 'Allow only safe HTML',
 
-'alpha' => 'Alphabetical',
+    'alpha' => 'Alphabetical',
 
-'assign_group_to_channel' => 'Note: In order to use your new group, you must assign it to a channel.',
+    'assign_group_to_channel' => 'Note: In order to use your new group, you must assign it to a channel.',
 
-'auto_link_urls' => 'Automatically turn URLs and email addresses into links?',
+    'auto_link_urls' => 'Automatically turn URLs and email addresses into links?',
 
-'be_careful' => 'BE CAREFUL!',
+    'be_careful' => 'BE CAREFUL!',
 
-'can_edit_status' => 'Can access status',
+    'selectable_buttons_options' => 'Buttons options',
 
-'category' => 'Category',
+    'selectable_buttons_options_desc' => '<em><i>Each item in the textarea will be included as selectable button in the publish form.</i>',
 
-'category_description' => 'Category Description',
+    'can_edit_status' => 'Can access status',
 
-'category_order_confirm_text' => 'Are you sure you want to sort this category group alphabetically?',
+    'category' => 'Category',
 
-'category_sort_warning' => 'If you are using a custom sort order it will be replaced with an alphabetical one.',
+    'category_description' => 'Category Description',
 
-'category_updated' => 'Category Updated',
+    'category_order_confirm_text' => 'Are you sure you want to sort this category group alphabetically?',
 
-'channel_allow_img_urls' => 'Allow image URLs in channel entries?',
+    'category_sort_warning' => 'If you are using a custom sort order it will be replaced with an alphabetical one.',
 
-'channel_base_setup' => 'General Channel Preferences',
+    'category_updated' => 'Category Updated',
 
-'channel_created' => 'Channel Created:',
+    'channel_allow_img_urls' => 'Allow image URLs in channel entries?',
 
-'channel_deleted' => 'Channel Deleted:',
+    'channel_base_setup' => 'General Channel Preferences',
 
-'channel_description' => 'Channel Description',
+    'channel_created' => 'Channel Created:',
 
-'channel_full_name' => 'Full Name',
+    'channel_deleted' => 'Channel Deleted:',
 
-'channel_html_formatting' => 'Default HTML formatting in channel entries',
+    'channel_description' => 'Channel Description',
 
-'channel_id' => 'ID',
+    'channel_full_name' => 'Full Name',
 
-'channel_lang' => 'XML Language',
+    'channel_html_formatting' => 'Default HTML formatting in channel entries',
 
-'channel_max_chars' => 'Maximum number of characters allowed in channel entries',
+    'channel_id' => 'ID',
 
-'channel_name' => 'Short Name',
+    'channel_lang' => 'XML Language',
 
-'channel_notify' => 'Enable recipient list below for channel entry notification?',
+    'channel_max_chars' => 'Maximum number of characters allowed in channel entries',
 
-'channel_prefs' => 'Channel Preferences',
+    'channel_name' => 'Short Name',
 
-'channel_require_email' => 'Require email address to post channel entries?',
+    'channel_notify' => 'Enable recipient list below for channel entry notification?',
 
-'channel_require_membership' => 'Require membership in order to post channel entries?',
+    'channel_prefs' => 'Channel Preferences',
 
-'channel_settings' => 'Channel Posting Preferences',
+    'channel_require_email' => 'Require email address to post channel entries?',
 
-'channel_short_name' => 'Short Name',
+    'channel_require_membership' => 'Require membership in order to post channel entries?',
 
-'channel_text_formatting' => 'Default text formatting in channel entries',
+    'channel_settings' => 'Channel Posting Preferences',
 
-'channel_title' => 'Full Channel Name',
+    'channel_short_name' => 'Short Name',
 
-'channel_updated' => 'Channel Updated:',
+    'channel_text_formatting' => 'Default text formatting in channel entries',
 
-'channel_url' => 'Channel URL',
+    'channel_title' => 'Full Channel Name',
 
-'channel_url_exp' => 'The URL to this particular channel',
+    'channel_updated' => 'Channel Updated:',
 
-'checkbox_options' => 'Checkbox options',
+    'channel_url' => 'Channel URL',
 
-'checkbox_options_desc' => '<em><i>Each item in the textarea will generate a single checkbox and label pair in the publish form.</i>',
+    'channel_url_exp' => 'The URL to this particular channel',
 
-'clear_versioning_data' => 'Delete all existing revision data in this channel',
+    'checkbox_options' => 'Checkbox options',
 
-'click_to_assign_group' => 'Click here to assign it',
+    'checkbox_options_desc' => '<em><i>Each item in the textarea will generate a single checkbox and label pair in the publish form.</i>',
 
-'closed' => 'Closed',
+    'clear_versioning_data' => 'Delete all existing revision data in this channel',
 
-'comment_allow_img_urls' => 'Allow image URLs in comments?',
+    'click_to_assign_group' => 'Click here to assign it',
 
-'comment_expiration' => 'Comment Expiration',
+    'closed' => 'Closed',
 
-'comment_expiration_desc' => 'The number of days after an entry is posted during which to allow comments. Enter 0 (zero) for no expiration.',
+    'comment_allow_img_urls' => 'Allow image URLs in comments?',
 
-'comment_html_formatting' => 'Comment HTML Formatting',
+    'comment_expiration' => 'Comment Expiration',
 
-'comment_max_chars' => 'Maximum number of characters allowed in comments',
+    'comment_expiration_desc' => 'The number of days after an entry is posted during which to allow comments. Enter 0 (zero) for no expiration.',
 
-'comment_moderate' => 'Moderate Comments?',
+    'comment_html_formatting' => 'Comment HTML Formatting',
 
-'comment_moderate_exp' => 'If set to yes, comments will not be visible until a moderator approves them.',
+    'comment_max_chars' => 'Maximum number of characters allowed in comments',
 
-'comment_notify' => 'Enable recipient list below for comment notification?',
+    'comment_moderate' => 'Moderate Comments?',
 
-'comment_notify_authors' => 'Notify the author of an entry whenever a comment is submitted?',
+    'comment_moderate_exp' => 'If set to yes, comments will not be visible until a moderator approves them.',
 
-'comment_notify_emails' => 'Email Address of Notification Recipient(s)',
+    'comment_notify' => 'Enable recipient list below for comment notification?',
 
-'comment_notify_note' => 'Separate multiple emails with a comma',
+    'comment_notify_authors' => 'Notify the author of an entry whenever a comment is submitted?',
 
-'comment_prefs' => 'Comment Posting Preferences',
+    'comment_notify_emails' => 'Email Address of Notification Recipient(s)',
 
-'comment_require_email' => 'Require email address to post comments?',
+    'comment_notify_note' => 'Separate multiple emails with a comma',
 
-'comment_require_membership' => 'Require membership in order to post comments?',
+    'comment_prefs' => 'Comment Posting Preferences',
 
-'comment_system_enabled' => 'Allow comments in this channel?',
+    'comment_require_email' => 'Require email address to post comments?',
 
-'comment_text_formatting' => 'Comment Text Formatting',
+    'comment_require_membership' => 'Require membership in order to post comments?',
 
-'comment_timelock' => 'Comment Re-submission Time Interval',
+    'comment_system_enabled' => 'Allow comments in this channel?',
 
-'comment_timelock_desc' => 'The number of seconds that must pass before a user can submit another comment. Leave blank or set to zero for no limit.',
+    'comment_text_formatting' => 'Comment Text Formatting',
 
-'comment_url' => 'Comment Page URL',
+    'comment_timelock' => 'Comment Re-submission Time Interval',
 
-'comment_url_exp' => 'The URL where the comment page for this channel is located',
+    'comment_timelock_desc' => 'The number of seconds that must pass before a user can submit another comment. Leave blank or set to zero for no limit.',
 
-'comment_use_captcha' => 'Enable CAPTCHA for Comment Posting?',
+    'comment_url' => 'Comment Page URL',
 
-'convert_to_entities' => 'Convert HTML into character entities',
+    'comment_url_exp' => 'The URL where the comment page for this channel is located',
 
-'create_field' => 'Create Field in %s',
+    'comment_use_captcha' => 'Enable CAPTCHA for Comment Posting?',
 
-'create_field_error' => 'Cannot Create Field',
+    'convert_to_entities' => 'Convert HTML into character entities',
 
-'create_field_error_desc' => 'We were unable to create this field, please review and fix errors below.',
+    'create_field' => 'Create Field in %s',
 
-'create_field_group' => 'New Field Group',
+    'create_field_error' => 'Cannot Create Field',
 
-'create_field_group_error' => 'Cannot Create Field Group',
+    'create_field_error_desc' => 'We were unable to create this field, please review and fix errors below.',
 
-'create_field_group_error_desc' => 'We were unable to create this field group, please review and fix errors below.',
+    'create_field_group' => 'New Field Group',
 
-'create_field_group_success' => 'Field Group Created',
+    'create_field_group_error' => 'Cannot Create Field Group',
 
-'create_field_group_success_desc' => 'The field group <b>%s</b> has been created.',
+    'create_field_group_error_desc' => 'We were unable to create this field group, please review and fix errors below.',
 
-'create_field_group_warning' => '<b>Warning</b>: Field groups require custom fields to be created.',
+    'create_field_group_success' => 'Field Group Created',
 
-'create_field_group_warning2' => 'It\'s best practice to create any <a href="%s">custom fields</a>, first.',
+    'create_field_group_success_desc' => 'The field group <b>%s</b> has been created.',
 
-'create_field_success' => 'Field Created',
+    'create_field_group_warning' => '<b>Warning</b>: Field groups require custom fields to be created.',
 
-'create_field_success_desc' => 'The field <b>%s</b> has been created.',
+    'create_field_group_warning2' => 'It\'s best practice to create any <a href="%s">custom fields</a>, first.',
 
-'create_html_button' => 'Create <abbr title="Hyper-Text Markup Language">HTML</abbr> Button',
+    'create_field_success' => 'Field Created',
 
-'create_new_channel' => 'Create a New Channel',
+    'create_field_success_desc' => 'The field <b>%s</b> has been created.',
 
-'custom' => 'Custom',
+    'create_html_button' => 'Create <abbr title="Hyper-Text Markup Language">HTML</abbr> Button',
 
-'custom_fields' => 'Custom Fields',
+    'create_new_channel' => 'Create a New Channel',
 
-'custom_fields_not_found' => 'No <b>custom fields</b> found',
+    'custom' => 'Custom',
 
-'date_field' => 'Date Field',
+    'custom_fields' => 'Custom Fields',
 
-'default' => 'Default',
+    'custom_fields_not_found' => 'No <b>custom fields</b> found',
 
-'default_settings' => 'Administrative Preferences',
+    'date_field' => 'Date Field',
 
-'define_html_buttons' => '<abbr title="Hyper-Text Markup Language">HTML</abbr> Formatting Button Definitions',
+    'default' => 'Default',
 
-'deft_category' => 'Default Category',
+    'default_settings' => 'Administrative Preferences',
 
-'deft_comments' => 'Select \'Allow Comments\' button in Publish page by default?',
+    'define_html_buttons' => '<abbr title="Hyper-Text Markup Language">HTML</abbr> Formatting Button Definitions',
 
-'deft_field_formatting' => 'Default Text Formatting',
+    'deft_category' => 'Default Category',
 
-'deft_status' => 'Default Status',
+    'deft_comments' => 'Select \'Allow Comments\' button in Publish page by default?',
 
-'delete_channel' => 'Delete Channel',
+    'deft_field_formatting' => 'Default Text Formatting',
 
-'delete_channel_confirmation' => 'Are you sure you want to permanently delete this channel?',
+    'deft_status' => 'Default Status',
 
-'display_criteria' => 'Select display criteria for PUBLISH page',
+    'delete_channel' => 'Delete Channel',
 
-'do_not_duplicate' => 'Do Not Duplicate',
+    'delete_channel_confirmation' => 'Are you sure you want to permanently delete this channel?',
 
-'duplicate_channel_prefs' => 'Duplicate existing channel\'s preferences',
+    'display_criteria' => 'Select display criteria for PUBLISH page',
 
-'duplicate_group' => 'Duplicate an existing template group',
+    'do_not_duplicate' => 'Do Not Duplicate',
 
-'edit_channel' => 'Edit Channel',
+    'duplicate_channel_prefs' => 'Duplicate existing channel\'s preferences',
 
-'edit_channel_prefs' => 'Edit Channel Preferences',
+    'duplicate_group' => 'Duplicate an existing template group',
 
-'edit_field_error' => 'Cannot Update Field',
+    'edit_channel' => 'Edit Channel',
 
-'edit_field_error_desc' => 'We were unable to update this field, please review and fix errors below.',
+    'edit_channel_prefs' => 'Edit Channel Preferences',
 
-'edit_field_group' => 'Edit Field Group',
+    'edit_field_error' => 'Cannot Update Field',
 
-'edit_field_group_error' => 'Cannot Update Field Group',
+    'edit_field_error_desc' => 'We were unable to update this field, please review and fix errors below.',
 
-'edit_field_group_error_desc' => 'We were unable to update this field group, please review and fix errors below.',
+    'edit_field_group' => 'Edit Field Group',
 
-'edit_field_group_success' => 'Field Group Updated',
+    'edit_field_group_error' => 'Cannot Update Field Group',
 
-'edit_field_group_success_desc' => 'The field group <b>%s</b> has been updated.',
+    'edit_field_group_error_desc' => 'We were unable to update this field group, please review and fix errors below.',
 
-'edit_field_success' => 'Field Updated',
+    'edit_field_group_success' => 'Field Group Updated',
 
-'edit_field_success_desc' => 'The field <b>%s</b> has been updated.',
+    'edit_field_group_success_desc' => 'The field group <b>%s</b> has been updated.',
 
-'edit_group_assignments' => 'Group Assignments',
+    'edit_field_success' => 'Field Updated',
 
-'edit_group_prefs' => 'Edit Group Preferences',
+    'edit_field_success_desc' => 'The field <b>%s</b> has been updated.',
 
-'edit_html_button' => 'Edit <abbr title="Hyper-Text Markup Language">HTML</abbr> Button',
+    'edit_group_assignments' => 'Group Assignments',
 
-'enable_versioning' => 'Enable Entry Versioning',
+    'edit_group_prefs' => 'Edit Group Preferences',
 
-'field' => 'Field',
+    'edit_html_button' => 'Edit <abbr title="Hyper-Text Markup Language">HTML</abbr> Button',
 
-'fields_assign_to_group' => 'Assign one or more fields to this group.',
+    'enable_versioning' => 'Enable Entry Versioning',
 
-'field_content_text' => 'Allowed content',
+    'field' => 'Field',
 
-'field_content_text_desc' => 'Type of content this field can contain.',
+    'fields_assign_to_group' => 'Assign one or more fields to this group.',
 
-'field_groups_uc' => 'Field Groups',
+    'field_content_text' => 'Allowed content',
 
-'field_groups_desc' => 'Used to group together related custom fields.',
+    'field_content_text_desc' => 'Type of content this field can contain.',
 
-'field_groups_deleted_desc' => 'The following field groups were deleted',
+    'field_groups_uc' => 'Field Groups',
 
-'field_is_hidden' => 'Show this field by default?',
+    'field_groups_desc' => 'Used to group together related custom fields.',
 
-'field_label_info' => 'This is the name that will appear in the PUBLISH page',
+    'field_groups_deleted_desc' => 'The following field groups were deleted',
 
-'field_manager' => 'Fields',
+    'field_is_hidden' => 'Show this field by default?',
 
-'field_options' => 'Field Options',
+    'field_label_info' => 'This is the name that will appear in the PUBLISH page',
 
-'field_populate_from_channel' => 'Populate the menu from another channel field',
+    'field_manager' => 'Fields',
 
-'field_populate_manually' => 'Populate the menu manually',
+    'field_options' => 'Field Options',
 
-'field_tools' => 'Field tools',
+    'field_populate_from_channel' => 'Populate from another channel field',
 
-'field_type_options' => 'Field Options',
+    'field_populate_manually' => 'Populate manually',
 
-'field_val' => 'You must choose a field name from this menu, not a channel name.',
+    'field_populate_missing' => 'You must select a field to populate from',
 
-'field_value_label_pairs' => 'Value/Label Pairs',
+    'field_tools' => 'Field tools',
 
-'fields' => 'Fields',
+    'field_type_options' => 'Field Options',
 
-'fields_deleted_desc' => 'The following fields were deleted',
+    'field_val' => 'You must choose a field name from this menu, not a channel name.',
 
-'filter_by_group' => 'field group',
+    'field_value_label_pairs' => 'Value/Label Pairs',
 
-'fmt_has_changed' => 'Note: You have selected a different field formatting choice than what was previously saved.',
+    'fields' => 'Fields',
 
-'formatting_no_available' => 'Text formatting is not available for your chosen field type',
+    'fields_deleted_desc' => 'The following fields were deleted',
 
-'global_sort_order' => 'Master Sort Order',
+    'filter_by_group' => 'field group',
 
-'grid_checkbox_options_desc' => 'Specify value/label pairs, or each item in the textarea will generate a single checkbox and label pair in the publish form.',
+    'fmt_has_changed' => 'Note: You have selected a different field formatting choice than what was previously saved.',
 
-'grid_multiselect_options_desc' => 'Specify value/label pairs, or each item in the textarea will be included in a multi-select in the publish form.',
+    'formatting_no_available' => 'Text formatting is not available for your chosen fieldtype',
 
-'grid_radio_options_desc' => 'Specify value/label pairs, or each item in the textarea will generate a single radio button and label pair in the publish form.',
+    'global_sort_order' => 'Master Sort Order',
 
-'grid_select_options_desc' => 'Specify value/label pairs, or each item in the textarea will be included in a select drop down menu in the publish form.',
+    'grid_buttons_options_desc' => 'Specify value/label pairs, or each item in the textarea will be included as selectable buttons in the publish form.',
 
-'group_required' => 'You must submit a group name.',
+    'grid_checkbox_options_desc' => 'Specify value/label pairs, or each item in the textarea will generate a single checkbox and label pair in the publish form.',
 
-'hidden_field_blurb' => 'This preference determines whether the field is visible in the PUBLISH page. If set to \'no\' you will see a link allowing you to open the field. ',
+    'grid_multiselect_options_desc' => 'Specify value/label pairs, or each item in the textarea will be included in a multi select in the publish form.',
 
-'hide_field' => 'Hide field?',
+    'grid_radio_options_desc' => 'Specify value/label pairs, or each item in the textarea will generate a single radio button and label pair in the publish form.',
 
-'hide_field_desc' => 'When enabled, this field will be hidden on the publish form, with a link to show.',
+    'grid_select_options_desc' => 'Specify value/label pairs, or each item in the textarea will be included in a select drop down menu in the publish form.',
 
-'hide_formatting_buttons' => 'Hide Formatting Menu',
+    'group_required' => 'You must submit a group name.',
 
-'html_button' => 'HTML Button',
+    'hidden_field_blurb' => 'This preference determines whether the field is visible in the PUBLISH page. If set to \'no\' you will see a link allowing you to open the field. ',
 
-'html_buttons' => 'HTML Buttons',
+    'hide_field' => 'Hide field?',
 
-'htmlbutton_delete_instructions' => 'To delete an item submit the form with the tag name blank',
+    'hide_field_desc' => 'When enabled, this field will be hidden on the publish form, with a link to show.',
 
-'id' => 'ID#',
+    'hide_formatting_buttons' => 'Hide Formatting Menu',
 
-'illegal_characters' => 'The name you submitted may only contain alpha-numeric characters, spaces, underscores, and dashes',
+    'html_button' => 'HTML Button',
 
-'in' => 'in',
+    'html_buttons' => 'HTML Buttons',
 
-'include_in_search' => 'Include in search?',
+    'htmlbutton_delete_instructions' => 'To delete an item submit the form with the tag name blank',
 
-'include_in_search_desc' => 'When enabled, this field will be included in searches.',
+    'id' => 'ID#',
 
-'include_rss_templates' => 'Include RSS Templates',
+    'illegal_characters' => 'The name you submitted may only contain alpha-numeric characters, spaces, underscores, and dashes',
 
-'instructions' => 'Instructions',
+    'in' => 'in',
 
-'instructions_desc' => 'Field instructions that appear in the publish form.',
+    'include_in_search' => 'Include in search?',
 
-'invalid_field_group_selected' => 'Invalid field group',
+    'include_in_search_desc' => 'When enabled, this field will be included in searches.',
 
-'invalid_short_name' => 'Your channel name must contain only alpha-numeric characters and no spaces.',
+    'include_rss_templates' => 'Include RSS Templates',
 
-'label_desc' => 'Name of field that appears in the publish form.',
+    'instructions' => 'Instructions',
 
-'limit' => 'limit',
+    'instructions_desc' => 'Field instructions that appear in the publish form.',
 
-'list_edit_warning' => 'If you have unsaved changes in this page they will be lost when you are transfered to the formatting editor.',
+    'invalid_field_group_selected' => 'Invalid field group',
 
-'localize_date' => 'Localize date?',
+    'invalid_short_name' => 'Your channel name must contain only alpha-numeric characters and no spaces.',
 
-'localize_date_desc' => 'When enabled, dates will be based on <a href="%s">time settings</a>.',
+    'label_desc' => 'Name of field that appears in the publish form.',
 
-'max_revisions' => 'Maximum Number of Recent Revisions per Entry',
+    'limit' => 'limit',
 
-'max_revisions_note' => 'Versioning can use up a lot of database space so it is recommended that you limit the number of revisions.',
+    'list_edit_warning' => 'If you have unsaved changes in this page they will be lost when you are transfered to the formatting editor.',
 
-'multiselect_options' => 'Multi-Select options',
+    'localize_date' => 'Localize date?',
 
-'multiselect_options_desc' => '<em><i>Each item in the textarea will be included in a multi-select in the publish form.</i>',
+    'localize_date_desc' => 'When enabled, dates will be based on <a href="%s">time settings</a>.',
 
-'new_category' => 'New Category',
+    'max_revisions' => 'Maximum Number of Recent Revisions per Entry',
 
-'new_channel' => 'New Channel',
+    'max_revisions_note' => 'Versioning can use up a lot of database space so it is recommended that you limit the number of revisions.',
 
-'new_field' => 'New Field',
+    'multiselect_options' => 'Multi Select options',
 
-'new_group_instructions' => 'Field is required if you are creating a new group',
+    'multiselect_options_desc' => '<em><i>Each item in the textarea will be included in a multi select in the publish form.</i>',
 
-'no_buttons' => 'No <abbr title="Hyper-Text Markup Language">HTML</abbr> buttons defined.',
+    'make_conditional' => 'Make conditional?',
 
-'no_buttons_found' => 'No <b>HTML Buttons</b> found.',
+    'make_conditional_desc' => 'Only display this field when conditions of other field(s) are met',
 
-'no_channel_name' => 'You must give your channel a \'short\' name.',
+    'is_conditional' => 'Conditionals',
 
-'no_channel_title' => 'You must give your channel a \'full\' name.',
+    'is_conditional_desc' => 'This field is being used as conditional for the field(s) listed below.',
 
-'no_channels_exist' => 'There are currently no channels',
+    'new_category' => 'New Category',
 
-'no_field_group_selected' => 'No field group available for this channel',
+    'new_channel' => 'New Channel',
 
-'no_statuses' => 'No statuses have been found',
+    'new_field' => 'New Field',
 
-'no_value_label_pairs' => 'No <b>value/label pairs</b> exist.',
+    'new_group_instructions' => 'Field is required if you are creating a new group',
 
-'notification_settings' => 'Notification Preferences',
+    'no_buttons' => 'No <abbr title="Hyper-Text Markup Language">HTML</abbr> buttons defined.',
 
-'open' => 'Open',
+    'no_buttons_found' => 'No <b>HTML Buttons</b> found.',
 
-'options_field_desc' => 'Choose how to create the options for this field.</em><em><i>Value/Label pairs can be used to make content selection friendlier to content authors. For example, if you need to store a value of <b>1</b>, you could use a label of <b>One</b></i></em>',
+    'no_channel_name' => 'You must give your channel a \'short\' name.',
 
-'order' => 'Order',
+    'no_channel_title' => 'You must give your channel a \'full\' name.',
 
-'orderby_date' => 'Sort by Date',
+    'no_channels_exist' => 'There are currently no channels',
 
-'orderby_title' => 'Sort by Title',
+    'no_field_group_selected' => 'No field group available for this channel',
 
-'paths' => 'Path Settings',
+    'no_statuses' => 'No statuses have been found',
 
-'publish_page_customization' => 'Publish Page Customization',
+    'no_value_label_pairs' => 'No <b>value/label pairs</b> exist.',
 
-'radio_options' => 'Radio options',
+    'notification_settings' => 'Notification Preferences',
 
-'radio_options_desc' => '<em><i>Each item in the textarea will generate a single radio button and label pair in the publish form.</i>',
+    'open' => 'Open',
 
-'related_to_channel' => 'Relate channel entries to other channel entries',
+    'options_field_desc' => 'Choose how to create the options for this field.</em><em><i>Value/Label pairs can be used to make content selection friendlier to content authors. For example, if you need to store a value of <b>1</b>, you could use a label of <b>One</b></i></em>',
 
-'relationship' => 'Relationship',
+    'order' => 'Order',
 
-'removed_field' => 'The following field was removed and its data was deleted: %s',
+    'orderby_date' => 'Sort by Date',
 
-'removed_fields_from_fluid_field' => 'The following fields were removed from the Fluid Field <b>%s</b> and their data was deleted: %s',
+    'orderby_title' => 'Sort by Title',
 
-'require_field_desc' => 'When enabled, this field will be required to submit the publish form.',
+    'paths' => 'Path Settings',
 
-'reserved_word' => 'The field name you have chosen is a reserved word and cannot be used. Please see the user guide for more information.',
+    'publish_page_customization' => 'Publish Page Customization',
 
-'restrict_status_to_group' => 'Restrict status to members of specific groups',
+    'radio_options' => 'Radio options',
 
-'row' => 'Row',
+    'radio_options_desc' => '<em><i>Each item in the textarea will generate a single radio button and label pair in the publish form.</i>',
 
-'rss_url' => 'RSS Feed URL',
+    'related_to_channel' => 'Relate channel entries to other channel entries',
 
-'rss_url_exp' => 'The URL where you can view the RSS feed for this channel.',
+    'relationship' => 'Relationship',
 
-'save_html_button' => 'Save <abbr title="Hyper-Text Markup Language">HTML</abbr> Button',
+    'removed_field' => 'The following field was removed and its data was deleted: %s',
 
-'search_excerpt' => 'Which field should be used for search excerpt?',
+    'removed_fields_from_fluid_field' => 'The following fields were removed from the Fluid Field <b>%s</b> and their data was deleted: %s',
 
-'search_results_url' => 'Search Results URL',
+    'require_field_desc' => 'When enabled (and not conditionally hidden), this field will be required to submit the publish form.',
 
-'search_results_url_exp' => 'The URL where the search results from this channel should be pointed to.',
+    'reserved_word' => 'The field name you have chosen is a reserved word and cannot be used. Please see the user guide for more information.',
 
-'select_channel_for_field' => 'Select the field you wish to pre-populate from:',
+    'restrict_status_to_group' => 'Restrict status to members of specific groups',
 
-'select_options' => 'Select menu options',
+    'row' => 'Row',
 
-'select_options_desc' => '<em><i>Each item in the textarea will be included in a select drop down menu in the publish form.</i>',
+    'rss_url' => 'RSS Feed URL',
 
-'select_related_channel' => 'Select the channel you wish to create a relationship with:',
+    'rss_url_exp' => 'The URL where you can view the RSS feed for this channel.',
 
-'show_all_channels' => 'All %d channels',
+    'save_html_button' => 'Save <abbr title="Hyper-Text Markup Language">HTML</abbr> Button',
 
-'show_formatting_buttons' => 'Allow override on publish page?',
+    'search_excerpt' => 'Which field should be used for search excerpt?',
 
-'single_word_no_spaces' => 'single word, no spaces',
+    'search_results_url' => 'Search Results URL',
 
-'sort_asc' => 'Ascending Order',
+    'search_results_url_exp' => 'The URL where the search results from this channel should be pointed to.',
 
-'sort_desc' => 'Descending Order',
+    'select_channel_for_field' => 'Select the field you wish to pre-populate from:',
 
-'status_created' => 'Status has been Created',
+    'select_options' => 'Select menu options',
 
-'status_deleted' => 'Status deleted',
+    'select_options_desc' => '<em><i>Each item in the textarea will be included in a select drop down menu in the publish form.</i>',
 
-'status_updated' => 'Status updated',
+    'select_related_channel' => 'Select the channel you wish to create a relationship with:',
 
-'tag_close' => 'Closing Tag',
+    'show_all_channels' => 'All %d channels',
 
-'tag_close_desc' => 'Closing output of this button. i.e. <b><code>&lt;/b&gt;</code></b>',
+    'show_formatting_buttons' => 'Allow override on publish page?',
 
-'tag_name' => 'Name',
+    'single_word_no_spaces' => 'single word, no spaces',
 
-'tag_open' => 'Opening Tag',
+    'sort_asc' => 'Ascending Order',
 
-'tag_open_desc' => 'Opening output of this button. i.e. <b><code>&lt;b&gt;</code></b>',
+    'sort_desc' => 'Descending Order',
 
-'tag_order' => 'Order',
+    'status_created' => 'Status has been Created',
 
-'taken_channel_name' => 'This channel name is already taken.',
+    'status_deleted' => 'Status deleted',
 
-'template_creation' => 'Create new templates for this channel?',
+    'status_updated' => 'Status updated',
 
-'template_group_choose' => 'Please choose a Template Group',
+    'tag_close' => 'Closing Tag',
 
-'template_group_name' => 'New Template Group Name',
+    'tag_close_desc' => 'Closing output of this button. i.e. <b><code>&lt;/b&gt;</code></b>',
 
-'update_existing_comments' => 'Update all existing comments with this setting?',
+    'tag_name' => 'Name',
 
-'update_existing_comments_mod' => 'Update all existing entries with this setting?',
+    'tag_open' => 'Opening Tag',
 
-'update_existing_fields' => 'Update all existing entries?',
+    'tag_open_desc' => 'Opening output of this button. i.e. <b><code>&lt;b&gt;</code></b>',
 
-'update_publish_cats' => 'Close Window and Update Categories in PUBLISH Page',
+    'tag_order' => 'Order',
 
-'use_a_theme' => 'Use one of the default themes',
+    'taken_channel_name' => 'This channel name is already taken.',
 
-'value_label_duplicate_values' => 'Each value must be unique.',
+    'template_creation' => 'Create new templates for this channel?',
 
-'value_label_empty_field' => 'Values or labels cannot be empty.',
+    'template_group_choose' => 'Please choose a Template Group',
 
-'versioning' => 'Versioning Preferences',
+    'template_group_name' => 'New Template Group Name',
 
+    'update_existing_comments' => 'Update all existing comments with this setting?',
 
-/* Generic Phrases */
-'delete' => 'Delete',
+    'update_existing_comments_mod' => 'Update all existing entries with this setting?',
 
-'delete_group' => 'Delete Group',
+    'update_existing_fields' => 'Update all existing entries?',
 
-'group'=> 'Group',
+    'update_publish_cats' => 'Close Window and Update Categories in PUBLISH Page',
 
-'group_name' => 'Group Name',
+    'use_a_theme' => 'Use one of the default themes',
 
-'new_group_name' => 'New Group Name: ',
+    'value_label_duplicate_values' => 'Each value must be unique.',
 
-'rename' => 'Rename',
+    'value_label_empty_field' => 'Values or labels cannot be empty.',
 
-'rename_group' => 'Rename Group',
+    'versioning' => 'Versioning Preferences',
 
-'total_fields' => 'Total Fields',
+    /* Generic Phrases */
+    'delete' => 'Delete',
 
+    'delete_group' => 'Delete Group',
 
-/* Category Administration */
-'add_edit_categories' => 'Add/Edit Categories',
+    'group' => 'Group',
 
-'add_new_category' => 'Add a New Category',
+    'group_name' => 'Group Name',
 
-'can_delete_categories' => 'Can Delete Categories',
+    'new_group_name' => 'New Group Name: ',
 
-'can_edit_categories' => 'Can Edit Categories',
+    'rename' => 'Rename',
 
-'cat_field_created' => 'New Category Field Created: ',
+    'rename_group' => 'Rename Group',
 
-'cat_field_deleted' => 'Category field deleted:',
+    'total_fields' => 'Total Fields',
 
-'cat_field_edited' => 'Category Field Edited:',
+    /* Category Administration */
+    'add_edit_categories' => 'Add/Edit Categories',
 
-'cat_field_html_formatting' => 'Category field HTML formatting',
+    'add_new_category' => 'Add a New Category',
 
-'cat_field_label_info' => 'This is the name what will appear in the Category Edit page',
+    'can_delete_categories' => 'Can Delete Categories',
 
-'cat_field_updated' => 'Category field updated:',
+    'can_edit_categories' => 'Can Edit Categories',
 
-'cat_url_title_is_numeric' => 'Numbers cannot be used as Category URL Titles',
+    'cat_field_created' => 'New Category Field Created: ',
 
-'category_created' => 'New Category Created',
+    'cat_field_deleted' => 'Category field deleted:',
 
-'category_deleted' => 'Category Deleted',
+    'cat_field_edited' => 'Category Field Edited:',
 
-'category_edited' => 'Category Edited',
+    'cat_field_html_formatting' => 'Category field HTML formatting',
 
-'category_group' => 'Category Group',
+    'cat_field_label_info' => 'This is the name what will appear in the Category Edit page',
 
-'category_group_created' => 'Category Group Created:',
+    'cat_field_updated' => 'Category field updated:',
 
-'category_group_deleted' => 'Category Group Deleted:',
+    'cat_url_title_is_numeric' => 'Numbers cannot be used as Category URL Titles',
 
-'category_group_updated' => 'Group Updated:',
+    'category_created' => 'New Category Created',
 
-'category_groups' => 'Category Groups',
+    'category_deleted' => 'Category Deleted',
 
-'category_image' => 'Category Image',
+    'category_edited' => 'Category Edited',
 
-'category_img_blurb' => 'This is an optional field that enables you to assign an image to your categories.',
+    'category_group' => 'Category Group',
 
-'category_name' => 'Category Name',
+    'category_group_created' => 'Category Group Created:',
 
-'category_parent' => 'Category Parent',
+    'category_group_deleted' => 'Category Group Deleted:',
 
-'category_url_title' => 'Category URL Title',
+    'category_group_updated' => 'Group Updated:',
 
-'create_new_cat_field' => 'Create New Category Field',
+    'category_groups' => 'Category Groups',
 
-'create_new_category' => 'Create a New Category',
+    'category_image' => 'Category Image',
 
-'create_new_category_group' => 'Create a New Category Group',
+    'category_img_blurb' => 'This is an optional field that enables you to assign an image to your categories.',
 
-'custom_category_fields' => 'Custom Category Fields',
+    'category_name' => 'Category Name',
 
-'delete_cat_field' => 'Delete Category Field',
+    'category_parent' => 'Category Parent',
 
-'delete_cat_field_confirmation' => 'Are you sure you want to permanently delete this category field?',
+    'category_url_title' => 'Category URL Title',
 
-'delete_cat_group_confirmation' => 'Are you sure you want to permanently delete this category group?',
+    'create_new_cat_field' => 'Create New Category Field',
 
-'delete_category' => 'Delete Category',
+    'create_new_category' => 'Create a New Category',
 
-'duplicate_cat_url_title' => 'A Category with the submitted Category URL Title already exists in this Category Group',
+    'create_new_category_group' => 'Create a New Category Group',
 
-'edit_cat_field' => 'Edit Category Field',
+    'custom_category_fields' => 'Custom Category Fields',
 
-'edit_category' => 'Edit Category',
+    'delete_cat_field' => 'Delete Category Field',
 
-'edit_category_group' => 'Edit Category Group',
+    'delete_cat_field_confirmation' => 'Are you sure you want to permanently delete this category field?',
 
-'edit_group_name' => 'Edit Group',
+    'delete_cat_group_confirmation' => 'Are you sure you want to permanently delete this category group?',
 
-'exclude_from_channels_or_publish' => 'Exclude from Channel or File Category Assignment?',
+    'delete_category' => 'Delete Category',
 
-'exclude_from_files' => 'File Assignment',
+    'duplicate_cat_url_title' => 'A Category with the submitted Category URL Title already exists in this Category Group',
 
-'exclude_from_publish' => 'Channel Assignment',
+    'edit_cat_field' => 'Edit Category Field',
 
-'formatting' => 'Formatting:',
+    'edit_category' => 'Edit Category',
 
-'manage_custom_fields' => 'Manage Category Fields',
+    'edit_category_group' => 'Edit Category Group',
 
-'member_group' => 'Member Group',
+    'edit_group_name' => 'Edit Group',
 
-'member_groups' => 'Member Groups',
+    'exclude_from_channels_or_publish' => 'Exclude from Channel or File Category Assignment?',
 
-'missing_required_fields' => 'You Are Missing Required Field(s):',
+    'exclude_from_files' => 'File Assignment',
 
-'name_of_category_group' => 'Name of category group',
+    'exclude_from_publish' => 'Channel Assignment',
 
-'no_category_group_message' => 'There are currently no categories',
+    'formatting' => 'Formatting:',
 
-'no_category_message' => 'There are currently no categories assigned to this group',
+    'manage_custom_fields' => 'Manage Category Fields',
 
-'show_all_category_groups' => 'All %d category groups',
+    'member_group' => 'Member Group',
 
-'taken_category_group_name' => 'This group name is already taken.',
+    'member_groups' => 'Member Groups',
 
-'unable_to_create_cat_url_title' => 'Unable to create valid Category URL Title for your Category',
+    'missing_required_fields' => 'You Are Missing Required Field(s):',
 
-'update_category_image' => 'Please update your category image to use the file field provided, or the old style image URL may be deleted upon saving.',
+    'name_of_category_group' => 'Name of category group',
 
-'update_existing_cat_fields' => 'Update all existing categories in this group with your new formatting choice?',
+    'no_category_group_message' => 'There are currently no categories',
 
+    'no_category_message' => 'There are currently no categories assigned to this group',
 
-/* Custom field Administration */
-'add_edit_fields' => 'Add/Edit Fields',
+    'show_all_category_groups' => 'All %d category groups',
 
-'channel_entries_will_be_deleted' => 'All channel entries containing the above field(s) will be permanently deleted.',
+    'taken_category_group_name' => 'This group name is already taken.',
 
-'create_new_custom_field' => 'Create a New Channel Field',
+    'unable_to_create_cat_url_title' => 'Unable to create valid Category URL Title for your Category',
 
-'create_new_field' => 'New Field',
+    'update_category_image' => 'Please update your category image to use the file field provided, or the old style image URL may be deleted upon saving.',
 
-'create_new_field_group' => 'Create a New Channel Field Group',
+    'update_existing_cat_fields' => 'Update all existing categories in this group with your new formatting choice?',
 
-'custom_field_created' => 'Custom Field Created',
+    /* Custom field Administration */
+    'add_edit_fields' => 'Add/Edit Fields',
 
-'custom_field_edited' => 'Custom Field Edited',
+    'channel_entries_will_be_deleted' => 'All channel entries containing the above field(s) will be permanently deleted.',
 
-'custom_field_empty' => 'The following field is required:',
+    'create_new_custom_field' => 'Create a New Channel Field',
 
-'delete_field' => 'Delete Field',
+    'create_new_field' => 'New Field',
 
-'delete_field_confirmation' => 'Are you sure you want to permanently delete this Channel Field?',
+    'create_new_field_group' => 'Create a New Channel Field Group',
 
-'delete_field_group' => 'Delete Field Group',
+    'custom_field_created' => 'Custom Field Created',
 
-'delete_field_group_confirmation' => 'Are you sure you want to permanently delete this Channel Field Group?',
+    'custom_field_edited' => 'Custom Field Edited',
 
-'dropdown_sub' => 'If you are using a \'drop-down\' field type',
+    'custom_field_empty' => 'The following field is required:',
 
-'duplicate_field_name' => 'The field name you chose is already taken',
+    'datalist_items' => 'Data List items',
 
-'duplicate_truncated_field_name' => 'The field name you chose is too long and the truncated name is already taken.',
+    'datalist_items_desc' => 'Values that will be shown as recommended options',
 
-'edit_field' => 'Edit Field',
+    'delete_field' => 'Delete Field',
 
-'edit_field_group_name' => 'Rename',
+    'delete_field_confirmation' => 'Are you sure you want to permanently delete this Channel Field?',
 
-'edit_field_order' => 'Field Order',
+    'delete_field_group' => 'Delete Field Group',
 
-'edit_list' => 'Edit List',
+    'delete_field_group_confirmation' => 'Are you sure you want to permanently delete this Channel Field Group?',
 
-'field_deleted' => 'Custom Field Deleted:',
+    'dropdown_sub' => 'If you are using a \'drop-down\' fieldtype',
 
-'field_formatting' => 'Field Formatting',
+    'duplicate_field_name' => 'The field name you chose is already taken',
 
-'field_formatting_cont' => 'If you chose textarea field type',
+    'duplicate_truncated_field_name' => 'The field name you chose is too long and the truncated name is already taken.',
 
-'field_group' => 'Channel Field Group',
+    'edit_field' => 'Edit Field',
 
-'field_group_created' => 'Field Group Created:',
+    'edit_field_group_name' => 'Rename',
 
-'field_group_deleted' => 'Field group Deleted:',
+    'edit_field_order' => 'Field Order',
 
-'field_group_updated' => 'Field Group Updated:',
+    'edit_list' => 'Edit List',
 
-'field_id' => 'Field ID',
+    'field_deleted' => 'Custom Field Deleted:',
 
-'field_label' => 'Field Label',
+    'field_formatting' => 'Field Formatting',
 
-'field_list_instructions' => 'Put each item on a single line',
+    'field_formatting_cont' => 'If you chose textarea fieldtype',
 
-'field_list_items' => 'Select Options',
+    'field_group' => 'Channel Field Group',
 
-'field_list_items_cont' => 'If you chose drop-down menu',
+    'field_group_created' => 'Field Group Created:',
 
-'field_max_length_cont' => 'If you are using a \'text\' field type',
+    'field_group_deleted' => 'Field group Deleted:',
 
-'field_name' => 'Short Name',
+    'field_group_updated' => 'Field Group Updated:',
 
-'field_name_cont' => 'Single word, no spaces. Underscores and dashes allowed',
+    'field_id' => 'Field ID',
 
-'field_order' => 'Field Display Order',
+    'field_label' => 'Field Label',
 
-'field_settings' => 'Field Settings',
+    'field_list_instructions' => 'Put each item on a single line',
 
-'field_type' => 'Type',
+    'field_list_items' => 'Select Options',
 
-'formatting_options' => 'Field Formatting Options',
+    'field_list_items_cont' => 'If you chose drop-down menu',
 
-'invalid_characters' => 'The field name you submitted contains invalid characters',
+    'field_max_length_cont' => 'If you are using a \'text\' fieldtype',
 
-'invalid_field_type' => 'Invalid field type',
+    'field_name' => 'Short Name',
 
-'is_field_required' => 'Is this a required field?',
+    'field_name_cont' => 'Single word, no spaces. Underscores and dashes allowed',
 
-'is_field_searchable' => 'Is field searchable?',
+    'field_order' => 'Field Display Order',
 
-'multi_list_items' => 'Multi-Select Options',
+    'field_settings' => 'Field Settings',
 
-'new_field_group' => 'New Field Group',
+    'field_type' => 'Type',
 
-'no_field_group_message' => 'There are currently no channel fields',
+    'formatting_options' => 'Field Formatting Options',
 
-'no_field_groups' => 'No <b>Field Groups</b> found.',
+    'invalid_characters' => 'The field name you submitted contains invalid characters',
 
-'no_field_label' => 'You must submit a field label',
+    'invalid_field_type' => 'Invalid fieldtype',
 
-'no_field_name' => 'You must submit a field name',
+    'is_field_required' => 'Is this a required field?',
 
-'option_group_items' => 'Checkbox Options',
+    'is_field_searchable' => 'Is field searchable?',
 
-'radio_items' => 'Radio Options',
+    'multi_list_items' => 'Multi Select Options',
 
-'select_list' => 'Select List',
+    'new_field_group' => 'New Field Group',
 
-'show_all_field_groups' => 'All %d field groups',
+    'no_field_group_message' => 'There are currently no channel fields',
 
-'show_all_fields' => 'All %d fields',
+    'no_field_groups' => 'No <b>Field Groups</b> found.',
 
-'show_file_selector' => 'Show File Chooser',
+    'no_field_label' => 'You must submit a field label',
 
-'show_formatting_btns' => 'Show Formatting Buttons',
+    'no_field_name' => 'You must submit a field name',
 
-'show_smileys' => 'Show Smileys',
+    'option_group_items' => 'Checkbox Options',
 
-'taken_field_group_name' => 'The name you have chosen is already taken',
+    'radio_items' => 'Radio Options',
 
-'text_input' => 'Text Input',
+    'select_list' => 'Select List',
 
-'textarea' => 'Textarea',
+    'show_all_field_groups' => 'All %d field groups',
 
-'textarea_rows' => 'Textarea Rows',
+    'show_all_fields' => 'All %d fields',
 
-'textarea_rows_cont' => 'If you are using a \'textarea\' field type',
+    'show_file_selector' => 'Show File Chooser',
 
-'type_decimal' => 'Decimal',
+    'show_formatting_btns' => 'Show Formatting Buttons',
 
-'type_file' => 'File',
+    'show_smileys' => 'Show Smileys',
 
-'type_image' => 'Image',
+    'taken_field_group_name' => 'The name you have chosen is already taken',
 
-'type_integer' => 'Integer',
+    'text_input' => 'Text Input',
 
-'type_numeric' => 'Number',
+    'textarea' => 'Textarea',
 
+    'textarea_rows' => 'Textarea Rows',
 
-/* Status Administration */
-'add_edit_statuses' => 'Add/Edit Statuses',
+    'textarea_rows_cont' => 'If you are using a \'textarea\' fieldtype',
 
-'change_status_order' => 'Change Status Order',
+    'type_decimal' => 'Decimal',
 
-'content_type_changed' => 'Field Content Type will be changed from %s. Updating the fieldtype options may result in data loss. Proceed with caution.',
+    'type_file' => 'File',
 
-'create_new_status' => 'Create a New Status',
+    'type_image' => 'Image',
 
-'default_entry_title' => 'Default Entry Title',
+    'type_integer' => 'Integer',
 
-'delete_status' => 'Delete Status',
+    'type_numeric' => 'Number',
 
-'delete_status_confirmation' => 'Are you sure you want to delete the following status?',
+    /* Status Administration */
+    'add_edit_statuses' => 'Add/Edit Statuses',
 
-'duplicate_status_name' => 'A status already exists with the same name.',
+    'change_status_order' => 'Change Status Order',
 
-'edit_status' => 'Edit Status',
+    'content_type_changed' => 'Field Content Type will be changed from %s. Updating the fieldtype options may result in data loss. Proceed with caution.',
 
-'field_instructions' => 'Field Instructions',
+    'create_new_status' => 'Create a New Status',
 
-'field_instructions_info' => 'Instructions for authors on how or what to enter into this field when submitting an entry.',
+    'default_entry_title' => 'Default Entry Title',
 
-'field_name_too_lrg' => 'Your field name exceeds the maximum length and has been truncated. Please review.',
+    'delete_status' => 'Delete Status',
 
-'highlight' => 'Highlight Color (optional)',
+    'delete_status_confirmation' => 'Are you sure you want to delete the following status?',
 
-'integrate_category_groups' => 'Integrate Category Groups',
+    'duplicate_status_name' => 'A status already exists with the same name.',
 
-'invalid_status_name' => 'Status names can only have alpha-numeric characters, as well as spaces, underscores and hyphens.',
+    'edit_status' => 'Edit Status',
 
-'invalid_url_title_prefix' => 'Invalid URL Title Prefix',
+    'field_instructions' => 'Field Instructions',
 
-'ltr' => 'Left to Right',
+    'field_instructions_info' => 'Instructions for authors on how or what to enter into this field when submitting an entry.',
 
-'multiple_cat_group_preferences' => 'Multiple Category Group Preferences',
+    'field_name_too_lrg' => 'Your field name exceeds the maximum length and has been truncated. Please review.',
 
-'new_status' => 'New Status',
+    'highlight' => 'Highlight Color (optional)',
 
-'rtl' => 'Right to Left',
+    'integrate_category_groups' => 'Integrate Category Groups',
 
-'show_all_statuses' => 'All %d statuses',
+    'invalid_status_name' => 'Status names can only have alpha-numeric characters, as well as spaces, underscores and hyphens.',
 
-'show_pages_cluster' => 'Display Pages Submission Fields',
+    'invalid_url_title_prefix' => 'Invalid URL Title Prefix',
 
-'status_name' => 'Status Name',
+    'ltr' => 'Left to Right',
 
-'status_order' => 'Status Order',
+    'multiple_cat_group_preferences' => 'Multiple Category Group Preferences',
 
-'statuses' => 'Statuses',
+    'new_status' => 'New Status',
 
-'text_direction' => 'Text Direction',
+    'rtl' => 'Right to Left',
 
-'url_title_prefix' => 'URL Title Prefix',
+    'show_all_statuses' => 'All %d statuses',
 
+    'show_pages_cluster' => 'Display Pages Submission Fields',
 
-/* Channel Form Settings */
-'channel_form_allow_guest_posts' => 'Allow Guest Posts?',
+    'status_name' => 'Status Name',
 
-'channel_form_default_status' => 'Default Status',
+    'status_order' => 'Status Order',
 
-'channel_form_default_status_empty' => '-- Use Channel Default --',
+    'statuses' => 'Statuses',
 
-'channel_form_guest_author' => 'Guest Author',
+    'text_direction' => 'Text Direction',
 
-'channel_form_guest_captcha' => 'Guest Captcha?',
+    'url_title_prefix' => 'URL Title Prefix',
 
-'channel_form_settings' => 'Channel Form Settings',
+    /* Channel Form Settings */
+    'channel_form_allow_guest_posts' => 'Allow Guest Posts?',
 
-'channel_form_settings_updated' => 'Channel Form Settings Saved',
+    'channel_form_default_status' => 'Default Status',
 
+    'channel_form_default_status_empty' => '-- Use Channel Default --',
 
-/* Channel Entries API */
-'default_value' => 'Default value',
+    'channel_form_guest_author' => 'Guest Author',
 
-'field_fmt' => 'Text formatting',
+    'channel_form_guest_captcha' => 'Guest Captcha?',
 
-'field_max_length' => 'Maximum characters',
+    'channel_form_settings' => 'Channel Form Settings',
 
-'field_show_fmt' => 'Allow override?',
+    'channel_form_settings_updated' => 'Channel Form Settings Saved',
 
-'field_show_fmt_desc' => 'When enabled, authors can override the default text formatting for this field from the publish form.',
+    /* Channel Entries API */
+    'default_value' => 'Default value',
 
-'field_text_direction' => 'Text direction',
+    'field_fmt' => 'Text formatting',
 
-'field_text_direction_ltr' => 'Left to right',
+    'field_max_length' => 'Maximum characters',
 
-'field_text_direction_rtl' => 'Right to left',
+    'field_min_value' => 'Minimum value',
 
-'invalid_api_parameter' => 'Could not create/update entry. Missing api parameter.',
+    'field_max_value' => 'Maximum value',
 
-'select_menu_options' => 'Select menu options',
+    'field_show_fmt' => 'Allow override?',
 
-'select_menu_options_desc' => 'Choose how to create the options for this field.',
+    'field_show_fmt_desc' => 'When enabled, authors can override the default text formatting for this field from the publish form.',
 
-'textarea_height' => 'Textarea row height',
+    'field_text_direction' => 'Text direction',
 
-'textarea_height_desc' => 'Height of this field in rows.',
+    'field_text_direction_ltr' => 'Left to right',
 
-'toggle_default_value_desc' => 'The default position of the toggle switch for this field when publishing new entries.',
+    'field_text_direction_rtl' => 'Right to left',
 
-'toggle_default_value_desc_cont' => '<b>Note</b>: If assigned to a channel with existing entries, those entries will be assigned this value.',
+    'invalid_api_parameter' => 'Could not create/update entry. Missing api parameter.',
 
-'unauthorized_for_this_channel' => 'You are not authorized to post in this channel',
+    'select_menu_options' => 'Select menu options',
 
-/* DB column type */
+    'select_menu_options_desc' => 'Choose how to create the options for this field.',
 
-'db_column_type' => 'Column type in database',
+    'textarea_height' => 'Textarea row height',
 
-'db_column_type_desc' => 'Choose database column type to hold your data. TEXT (64Kb) is usually good for an article. If your field content is rather a book, select MEDIUMTEXT (16Mb)',
+    'textarea_height_desc' => 'Height of this field in rows.',
+
+    'toggle_default_value_desc' => 'The default position of the toggle switch for this field when publishing new entries.',
+
+    'toggle_default_value_desc_cont' => '<b>Note</b>: If assigned to a channel with existing entries, those entries will be assigned this value.',
+
+    'unauthorized_for_this_channel' => 'You are not authorized to post in this channel',
+
+    /* DB column type */
+
+    'db_column_type' => 'Column type in database',
+
+    'db_column_type_desc' => 'Choose database column type to hold your data. TEXT (64Kb) is usually good for an article. If your field content is rather a book, select MEDIUMTEXT (16Mb)',
 
 );
 

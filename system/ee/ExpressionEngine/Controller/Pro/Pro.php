@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -16,30 +16,33 @@ use CP_Controller;
  * Pro version Controller
  * The purpose of this is re-route requests to controllers in Pro folder
  */
-class Pro extends CP_Controller {
+class Pro extends CP_Controller
+{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		parent::__construct();
+        if (!ee('pro:Access')->hasRequiredLicense()) {
+            show_error(lang('unauthorized_access'), 403);
+        }
+    }
 
-		if (!IS_PRO)
-		{
-			show_error(lang('unauthorized_access'), 403);
-		}
-	}
+    public function __call($name, $arguments)
+    {
+        $name = ucfirst($name);
+        if (!empty($arguments)) {
+            $function = array_shift($arguments);
+        } else {
+            $function = $name;
+        }
+        $class = "\ExpressionEngine\Addons\Pro\Controller\\" . $name . "\\" . $name;
+        $controller = new $class();
 
-	public function __call($name, $arguments)
-	{
-		$function = array_shift($arguments);
-		$name = ucfirst($name);
-		$class = "\ExpressionEngine\Addons\Pro\Controller\\".$name."\\".$name;
-		$controller = new $class();
-		return $controller->$function($arguments);
-	}
-
+        return $controller->$function($arguments);
+    }
 }
 
 // EOF

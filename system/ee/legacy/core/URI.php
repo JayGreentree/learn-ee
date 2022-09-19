@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,17 +15,17 @@ class EE_URI
 {
     public $uri_string;
 
-    public $keyval         = array();
-    public $segments       = array();
-    public $rsegments      = array();
+    public $keyval = array();
+    public $segments = array();
+    public $rsegments = array();
 
-    public $query_string       = 'index';  // Only the query segment of the URI: 124
-    public $page_query_string  = '';       // For a Pages request, this contains the Entry ID for the Page
-    public $session_id         = '';
+    public $query_string = 'index';  // Only the query segment of the URI: 124
+    public $page_query_string = '';       // For a Pages request, this contains the Entry ID for the Page
+    public $session_id = '';
 
     // These are reserved words that have special meaning when they are the first
     // segment of a URI string.  Template groups can not be named any of these words
-    public $reserved  = array('css');
+    public $reserved = array('css');
 
     /**
      * Constructor
@@ -46,7 +46,6 @@ class EE_URI
         }
     }
 
-
     /**
      * Fetch uri string extension
      *
@@ -65,7 +64,7 @@ class EE_URI
         if (is_array($_GET)) {
             if (isset($_GET['S'])) {
                 $key = 'S';
-            } elseif (trim(key($_GET), '/') == 'S') {
+            } elseif (trim((string) key($_GET), '/') == 'S') {
                 $key = key($_GET);
             }
         }
@@ -92,6 +91,7 @@ class EE_URI
             // Let's try the REQUEST_URI first, this will work in most situations
             if ($uri = $this->_detect_uri('REQUEST_URI')) {
                 $this->_set_uri_string($uri);
+
                 return;
             }
 
@@ -100,6 +100,7 @@ class EE_URI
             $path = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : @getenv('PATH_INFO');
             if (trim($path, '/') != '' && $path != "/" . EESELF) {
                 $this->_set_uri_string($path);
+
                 return;
             }
 
@@ -107,22 +108,26 @@ class EE_URI
             $path = (isset($_SERVER['QUERY_STRING'])) ? $_SERVER['QUERY_STRING'] : @getenv('QUERY_STRING');
             if (trim($path, '/') != '') {
                 $this->_set_uri_string($path);
+
                 return;
             }
 
             // As a last ditch effort lets try using the $_GET array
             if (is_array($_GET) && count($_GET) == 1 && trim(key($_GET), '/') != '') {
                 $this->_set_uri_string(key($_GET));
+
                 return;
             }
 
             // We've exhausted all our options...
             $this->uri_string = '';
+
             return;
         }
 
         if ($protocol == 'REQUEST_URI' or $protocol == 'QUERY_STRING') {
             $this->_set_uri_string($this->_detect_uri($protocol));
+
             return;
         }
 
@@ -174,6 +179,7 @@ class EE_URI
         // Is there a reason to continue?
         if (count($segs) == 0) {
             $this->uri_string = '';
+
             return;
         }
 
@@ -181,7 +187,6 @@ class EE_URI
         if (count($segs) > (config_item('max_url_segments') ?: 12)) {
             show_error("The URL contains too many segments.", 404);
         }
-
 
         // Is the first URI segment reserved?
         // Reserved segments are treated as Action requests so we'll assign them as $_GET variables.
@@ -274,8 +279,8 @@ class EE_URI
         }
 
         // Convert programatic characters to entities
-        $bad    = array('$',        '(',        ')',        '%28',      '%29');
-        $good   = array('&#36;',    '&#40;',    '&#41;',    '&#40;',    '&#41;');
+        $bad = array('$',        '(',        ')',        '%28',      '%29');
+        $good = array('&#36;',    '&#40;',    '&#41;',    '&#40;',    '&#41;');
 
         return str_replace($bad, $good, $str);
     }
@@ -290,7 +295,7 @@ class EE_URI
      */
     public function reformat($old, $base = null)
     {
-        $new = str_replace(AMP, '&', $old);
+        $new = str_replace(AMP, '&', (string) $old);
 
         // cp use only
         if (REQ != 'CP') {
@@ -322,7 +327,7 @@ class EE_URI
 
             $session_id = trim($matches[2], '&');
             $controller = trim($matches[3], '&');
-            $query_str  = trim($matches[4], '&');
+            $query_str = trim($matches[4], '&');
 
             $controller = preg_replace('/&?[DCM]=/', '/', $controller);
 
@@ -338,7 +343,6 @@ class EE_URI
 
         return $new;
     }
-
 
     /**
      * Detects the URI
@@ -465,7 +469,7 @@ class EE_URI
      */
     public function segment($n, $no_result = false)
     {
-        return ( ! isset($this->segments[$n])) ? $no_result : $this->segments[$n];
+        return (! isset($this->segments[$n])) ? $no_result : $this->segments[$n];
     }
 
     /**
@@ -482,7 +486,7 @@ class EE_URI
      */
     public function rsegment($n, $no_result = false)
     {
-        return ( ! isset($this->rsegments[$n])) ? $no_result : $this->rsegments[$n];
+        return (! isset($this->rsegments[$n])) ? $no_result : $this->rsegments[$n];
     }
 
     /**
@@ -555,6 +559,7 @@ class EE_URI
             foreach ($default as $val) {
                 $retval[$val] = false;
             }
+
             return $retval;
         }
 
@@ -562,7 +567,7 @@ class EE_URI
 
         $i = 0;
         $lastval = '';
-        $retval  = array();
+        $retval = array();
         foreach ($segments as $seg) {
             if ($i % 2) {
                 $retval[$lastval] = $seg;
@@ -584,9 +589,9 @@ class EE_URI
 
         // Cache the array for reuse
         $this->keyval[$n] = $retval;
+
         return $retval;
     }
-
 
     /**
      * Generate a URI string from an associative array
@@ -599,7 +604,7 @@ class EE_URI
     public function assoc_to_uri($array)
     {
         $temp = array();
-        foreach ((array)$array as $key => $val) {
+        foreach ((array) $array as $key => $val) {
             $temp[] = $key;
             $temp[] = $val;
         }
@@ -644,13 +649,13 @@ class EE_URI
      */
     public function _slash_segment($n, $where = 'trailing', $which = 'segment')
     {
-        $leading    = '/';
-        $trailing   = '/';
+        $leading = '/';
+        $trailing = '/';
 
         if ($where == 'trailing') {
-            $leading    = '';
+            $leading = '';
         } elseif ($where == 'leading') {
-            $trailing   = '';
+            $trailing = '';
         }
 
         return $leading . $this->$which($n) . $trailing;

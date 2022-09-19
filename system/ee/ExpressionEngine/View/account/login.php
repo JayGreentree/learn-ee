@@ -1,7 +1,11 @@
 <?php $this->extend('_templates/login'); ?>
 
 	<div class="login__logo">
-        <?php $this->embed('ee:_shared/ee-logo')?>
+		<?php if (ee('pro:Access')->hasRequiredLicense() && ee()->config->item('login_logo')) : ?>
+		<img src="<?=ee()->config->item('login_logo')?>" alt="Powered by ExpressionEngine&reg;">
+		<?php else: ?>
+		<?php $this->embed('ee:_shared/ee-logo')?>
+		<?php endif; ?>
 	</div>
 
 <div class="login__content">
@@ -9,7 +13,7 @@
 	<?=ee('CP/Alert')->getAllInlines()?>
 
 
-	<?=form_open(ee('CP/URL')->make('login/authenticate'), array(), array('return_path' => $return_path, 'after' => ee()->input->get_post('after')))?>
+	<?=form_open(ee('CP/URL')->make('login/authenticate'), array(), array('return_path' => $return_path, 'after' => $after))?>
 		<fieldset>
 			<div class="field-instruct">
 				<?=lang('username', 'username')?>
@@ -31,7 +35,7 @@
 		</fieldset>
 		<?php endif;?>
 		<fieldset class="last">
-			<?=form_submit('submit', $btn_label, 'class="'.$btn_class.'" data-work-text="authenticating..." tabindex="4" '.$btn_disabled)?>
+			<?=form_submit('submit', $btn_label, 'class="' . $btn_class . '" data-work-text="' . lang('authenticating') . '" tabindex="4" ' . $btn_disabled)?>
 		</fieldset>
 	<?=form_close()?>
 </div>

@@ -5,7 +5,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -29,7 +29,6 @@ class Block_and_allow_upd extends Installer
      * @access public
      * @return bool
      */
-
     public function install()
     {
         $installed = parent::install();
@@ -63,7 +62,7 @@ class Block_and_allow_upd extends Installer
                     'unsigned' => true,
                     'auto_increment' => true
                 ),
-                'allowedlist_type'  => array(
+                'allowedlist_type' => array(
                     'type' => 'varchar',
                     'constraint' => '20',
                 ),
@@ -76,6 +75,7 @@ class Block_and_allow_upd extends Installer
             ee()->dbforge->add_key('allowedlist_id', true);
             ee()->dbforge->create_table('allowedlist');
         }
+
         return $installed;
     }
 
@@ -93,6 +93,7 @@ class Block_and_allow_upd extends Installer
             ee()->dbforge->drop_table('blockedlist');
             ee()->dbforge->drop_table('allowedlist');
         }
+
         return $uninstalled;
     }
 
@@ -135,7 +136,7 @@ class Block_and_allow_upd extends Installer
                         'unsigned' => true,
                         'auto_increment' => true
                     ),
-                    'whitelisted_type'  => array(
+                    'whitelisted_type' => array(
                         'type' => 'varchar',
                         'constraint' => '20',
                     ),
@@ -187,7 +188,7 @@ class Block_and_allow_upd extends Installer
                     'unsigned' => true,
                     'auto_increment' => true
                 ),
-                'whitelisted_type'  => array(
+                'whitelisted_type' => array(
                     'name' => 'allowedlist_type',
                     'type' => 'varchar',
                     'constraint' => '20',

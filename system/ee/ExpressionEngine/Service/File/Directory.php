@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -16,68 +16,75 @@ use ExpressionEngine\Library\Filesystem\FilesystemException;
 /**
  * A directory behaves just like the filesystem rooted at a certain path
  */
-class Directory extends Filesystem {
+class Directory extends Filesystem
+{
+    protected $url;
+    protected $root;
 
-	protected $url;
-	protected $root;
+    // public function __construct($path)
+    // {
+    //     parent::__construct();
+    //     $this->root = realpath($path);
+    // }
 
-	public function __construct($path)
-	{
-		$this->root = realpath($path);
-	}
+    /**
+     * @override
+     */
+    protected function normalize($path)
+    {
+        if ($path == '..' || strpos($path, '../') !== false) {
+            throw new FilesystemException('Attempting to access file outside of directory.');
+        }
 
-	/**
-	 * @override
-	 */
-	protected function normalize($path)
-	{
-		$path = $this->root.'/'.$path;
+        // return $this->flysystem->getAdapter()->applyPathPrefix($path);
 
-		if ($path == '..' || strpos($path, '../') !== FALSE)
-		{
-			throw new FilesystemException('Attempting to access file outside of directory.');
-		}
+        return $path;
+    }
 
-		return $path;
-	}
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
 
-	public function setUrl($url)
-	{
-		$this->url = $url;
-	}
+    public function getUrl($filename = null)
+    {
+        if (empty($this->url)) {
+            if(!method_exists($this->getBaseAdapter(), 'getBaseUrl')) {
+                throw new \Exception('No directory URL given.');
+            }
 
-	public function getUrl($filename = NULL)
-	{
-		if ( ! isset($this->url))
-		{
-			throw new \Exception('No directory URL given.');
-		}
+            $this->url = $this->getBaseAdapter()->getBaseUrl();
+        }
 
-		if ( ! isset($filename))
-		{
-			return $this->url;
-		}
+        $url = rtrim($this->url, '/') . '/';
 
-		if ( ! $this->exists($filename))
-		{
-			throw new \Exception('File does not exist.');
-		}
+        if (! isset($filename)) {
+            return $url;
+        }
 
-		return rtrim($this->url, '/').'/'.$filename;
-	}
+        // We have places that are avoiding calling this method because of the
+        // possible exception when file does not exist.  This may affect other
+        // code (though initial searches suggest not) so leaving this comment.
+        // if (! $this->exists($filename)) {
+        //     throw new \Exception('File does not exist.');
+        // }
 
-	public function getPath($path)
-	{
-		return $this->normalize($path);
-	}
+        // URL Encode everything except the forward slashes
+        return $url . str_replace("%2F", "/", rawurlencode(ltrim($filename, '/')));
+    }
 
-	public function all()
-	{
-		$it = new Iterator($this->root);
-		$it->setUrl($this->url);
+    public function getPath($path)
+    {
+        return $this->normalize($path);
+    }
 
-		return new FilterIterator($it);
-	}
+    public function all()
+    {
+        $it = new Iterator($this->root);
+        $it->setUrl($this->url);
+
+        return new FilterIterator($it);
+    }
 }
 
 // EOF

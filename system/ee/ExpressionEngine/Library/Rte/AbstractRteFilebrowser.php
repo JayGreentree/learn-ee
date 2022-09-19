@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,10 +15,9 @@ namespace ExpressionEngine\Library\Rte;
  */
 abstract class AbstractRteFilebrowser implements RteFilebrowserInterface
 {
-
     /**
      * Function which will be called when displaying field
-     * Should include all necessary JS/CSS and define `window.Artee_browseImages` JS function
+     * Should include all necessary JS/CSS and define `window.Rte_browseImages` JS function
      *
      * @param String $uploadDir Upload directory identifier
      * @return void
@@ -31,9 +30,9 @@ abstract class AbstractRteFilebrowser implements RteFilebrowserInterface
      * @param String $data Field data
      * @return String $data Field data
      */
-	public function replaceTags($data)
-	{
-		return $data;
+    public function replaceTags($data)
+    {
+        return $data;
     }
 
     /**
@@ -43,9 +42,9 @@ abstract class AbstractRteFilebrowser implements RteFilebrowserInterface
      * @return String $data Field data
      */
     public function replaceUrls($data)
-	{
-		return $data;
-	}
+    {
+        return $data;
+    }
 
     /**
      * Return array of upload destinations available
@@ -56,5 +55,4 @@ abstract class AbstractRteFilebrowser implements RteFilebrowserInterface
      * @return Array
      */
     abstract public function getUploadDestinations();
-
 }

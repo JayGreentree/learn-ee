@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -17,7 +17,6 @@ use ExpressionEngine\Service\View\ViewFactory;
  */
 class NavigationList
 {
-
     /**
      * @var array $items Items in the list
      */
@@ -56,7 +55,7 @@ class NavigationList
         }
 
         return $view->make('_shared/sidebar/navigation/list')
-                 ->render(array('items' => $items));
+            ->render(array('items' => $items));
     }
 }
 

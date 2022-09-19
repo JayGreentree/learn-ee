@@ -11,7 +11,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 var MutableSelectField =
@@ -41,7 +41,7 @@ function () {
     value: function toggleAddButton() {
       var addButtons = this.field.parent().find(this.addButton);
 
-      if (this.field.find('.field-no-results').size()) {
+      if (this.field.find('.field-no-results').length) {
         addButtons.filter(function (i, el) {
           return $(el).hasClass('btn');
         }).hide();

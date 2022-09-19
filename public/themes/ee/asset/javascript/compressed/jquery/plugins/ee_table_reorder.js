@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -67,6 +67,8 @@ $.fn.eeTableReorder = function(params) {
 			items: config.item,				// Only allow these to be sortable
 			sort: EE.sortable_sort_helper,	// Custom sort handler
 			forcePlaceholderSize: true,		// Set an explict size on the placeholder
+			appendTo: 'div.panel-body',
+			cursor: "move",
 			helper: function(event, row)	// Fix issue where cell widths collapse on drag
 			{
 				var $originals = row.children();

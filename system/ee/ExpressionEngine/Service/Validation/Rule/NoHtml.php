@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,16 +15,15 @@ use ExpressionEngine\Service\Validation\ValidationRule;
 /**
  * No HTML Validation Rule
  */
-class NoHtml extends ValidationRule {
+class NoHtml extends ValidationRule
+{
+    public function validate($key, $value)
+    {
+        return ! (bool) preg_match("/<[^>]*>/", (string) $value);
+    }
 
-	public function validate($key, $value)
-	{
-		return ! (bool) preg_match("/<[^>]*>/", $value);
-	}
-
-	public function getLanguageKey()
-	{
-		return 'no_html';
-	}
-
+    public function getLanguageKey()
+    {
+        return 'no_html';
+    }
 }

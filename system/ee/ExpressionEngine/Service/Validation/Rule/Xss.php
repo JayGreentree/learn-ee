@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,16 +15,15 @@ use ExpressionEngine\Service\Validation\ValidationRule;
 /**
  * XSS Validation Rule
  */
-class Xss extends ValidationRule {
+class Xss extends ValidationRule
+{
+    public function validate($key, $value)
+    {
+        return ($value == ee('Security/XSS')->clean($value)) ? true : $this->stop();
+    }
 
-	public function validate($key, $value)
-	{
-		return ($value == ee('Security/XSS')->clean($value)) ? TRUE : $this->stop();
-	}
-
-	public function getLanguageKey()
-	{
-		return sprintf(lang('invalid_xss_check'), ee('CP/URL')->make('homepage'));
-	}
-
+    public function getLanguageKey()
+    {
+        return sprintf(lang('invalid_xss_check'), ee('CP/URL')->make('homepage'));
+    }
 }

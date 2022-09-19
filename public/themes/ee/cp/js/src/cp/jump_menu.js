@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -61,7 +61,11 @@ EE.cp.JumpMenu = {
 			EE.cp.JumpMenu.shortcut = '⌘';
 		}
 
-		jumpContainer.$('.jump-trigger').html(EE.cp.JumpMenu.shortcut);
+		if (!(jumpContainer.document.querySelector('#jumpEntry1')) || jumpContainer.document.querySelector('#jumpEntry1').length == 0) {
+			return false;
+		}
+
+		//jumpContainer.$('.jump-trigger').html(EE.cp.JumpMenu.shortcut);
 
 		jumpContainer.document.addEventListener('keydown', EE.cp.JumpMenu._keyPress, false);
 		jumpContainer.document.addEventListener('keyup', EE.cp.JumpMenu._keyUp, false);
@@ -388,7 +392,7 @@ EE.cp.JumpMenu = {
 				// We only want to display 10 so by checking for 11, we know we have at least 1
 				// more so we can display a "there are more results" message.
 				if (displayedCommands >= 11) {
-					jumpContainer.document.querySelector(resultsTarget).innerHTML += '<div class="jump-menu__header text-center">More than 10 results found, please refine your search</div>';
+					jumpContainer.document.querySelector(resultsTarget).innerHTML += '<div class="jump-menu__header text-center">' + EE.lang.many_jump_results + '</div>';
 					break;
 				}
 
@@ -413,7 +417,7 @@ EE.cp.JumpMenu = {
 					commandContext = commandSet[commandKey].command_context;
 				}
 
-				jumpContainer.document.querySelector(resultsTarget).innerHTML += '<a class="jump-menu__link ' + matchClass + '" href="' + jumpTarget + '" ' + jumpClick + '><span class="jump-menu__link-text"><i class="fas fa-sm ' + commandSet[commandKey].icon + '"></i> ' + commandSet[commandKey].command_title + '</span><span class="meta-info jump-menu__link-right">' + commandContext + '</span></a>';
+				jumpContainer.document.querySelector(resultsTarget).innerHTML += '<a class="jump-menu__link ' + matchClass + '" href="' + jumpTarget + '" ' + jumpClick + '><span class="jump-menu__link-text"><i class="fal fa-sm ' + commandSet[commandKey].icon + '"></i> ' + commandSet[commandKey].command_title + '</span><span class="meta-info jump-menu__link-right">' + commandContext + '</span></a>';
 
 				firstMatch = false;
 				matchClass = '';

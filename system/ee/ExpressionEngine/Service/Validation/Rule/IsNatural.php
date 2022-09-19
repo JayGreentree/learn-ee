@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,16 +15,15 @@ use ExpressionEngine\Service\Validation\ValidationRule;
 /**
  * Natural Number Validation Rule
  */
-class IsNatural extends ValidationRule {
+class IsNatural extends ValidationRule
+{
+    public function validate($key, $value)
+    {
+        return (bool) preg_match('/^[0-9]+$/', (string) $value);
+    }
 
-	public function validate($key, $value)
-	{
-		return (bool) preg_match('/^[0-9]+$/', $value);
-	}
-
-	public function getLanguageKey()
-	{
-		return 'is_natural';
-	}
-
+    public function getLanguageKey()
+    {
+        return 'is_natural';
+    }
 }

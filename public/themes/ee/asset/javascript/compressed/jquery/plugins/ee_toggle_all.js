@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -36,7 +36,7 @@
 			// we always need columns ...
 			this.getColumn = function(column) {
 				return $.map(rows, function(v, i) {
-					if ($(v.cells[column]).has('input[type=checkbox]').size()) {
+					if ($(v.cells[column]).has('input[type=checkbox]').length) {
 						return v.cells[column];
 					};
 				});
@@ -112,7 +112,7 @@
 			 *                        or the index of the other checked checkbox
 			 */
 			checkboxChecked: function(current){
-				if ($(this.tableCells).find('input[type=checkbox]').not(':eq('+current+')').find(':checked').size() > 1) {
+				if ($(this.tableCells).find('input[type=checkbox]').not(':eq('+current+')').find(':checked').length > 1) {
 					return false;
 				}
 

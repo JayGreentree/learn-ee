@@ -25,7 +25,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 var BulkEditEntries =
@@ -107,7 +107,7 @@ function (_React$Component) {
           return _this.handleRemoveAll();
         }
       }, React.createElement("i", {
-        className: "fas fa-sm fa-times"
+        className: "fal fa-sm fa-times"
       }), " ", lang.clearAll)));
     }
   }], [{
@@ -142,7 +142,7 @@ function BulkEditEntryItem(props) {
       return props.handleRemove(props.item);
     }
   }, React.createElement("i", {
-    className: "fas fa-sm fa-times"
+    className: "fal fa-sm fa-times"
   }), " ", props.lang.removeFromSelection))));
 }
 

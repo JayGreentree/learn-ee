@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,7 +13,6 @@
  */
 class File_integrity
 {
-
     public $emailed = array();
     public $checksums = array();
 
@@ -24,33 +23,24 @@ class File_integrity
      */
     public function check_bootstrap_files($return_site_id = false)
     {
-        ee()->load->model('site_model');
-        $sites = ee()->site_model->get_site();
-        $sites = $sites->result_array();
+        $sites = ee('Model')->get('Site')->fields('site_id', 'site_bootstrap_checksums')->all();
 
         $bootstraps = array();
 
         // Retrieve all of the bootstrap files
         foreach ($sites as $site) {
-            if (! isset($site['site_bootstrap_checksums'])) {
+            if (empty($site->site_bootstrap_checksums)) {
                 continue;
             }
 
-            $data = base64_decode($site['site_bootstrap_checksums']);
-
-            if (! is_string($data) or substr($data, 0, 2) != 'a:') {
-                continue;
-            }
-
-            $data = unserialize($data);
+            $data = $site->site_bootstrap_checksums;
 
             if (! isset($data['emailed']) or ! is_array($data['emailed'])) {
                 $data['emailed'] = array();
             }
 
-            $bootstraps[$site['site_id']] = $data;
+            $bootstraps[$site->site_id] = $data;
         }
-
 
         $altered = array();
         $removed = array();
@@ -152,13 +142,13 @@ class File_integrity
      */
     public function create_bootstrap_checksum($path = '', $site_id = '')
     {
-        $checksums  = ee()->config->item('site_bootstrap_checksums');
-        $site_id    = ($site_id != '') ? $site_id : ee()->config->item('site_id');
+        $checksums = ee()->config->item('site_bootstrap_checksums');
+        $site_id = ($site_id != '') ? $site_id : ee()->config->item('site_id');
 
         if (REQ == 'CP' && $path && file_exists($path)) {
-            $checksums              = $this->checksums[$site_id];       // should already have called check_bootstrap_files
-            $checksums[$path]       = md5_file($path);
-            $checksums['emailed']   = array();
+            $checksums = $this->checksums[$site_id];       // should already have called check_bootstrap_files
+            $checksums[$path] = md5_file($path);
+            $checksums['emailed'] = array();
 
             $this->_update_config($checksums, $site_id);
         } elseif (REQ != 'CP' && ! array_key_exists(FCPATH . EESELF, $checksums)) {

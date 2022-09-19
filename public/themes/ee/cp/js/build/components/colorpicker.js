@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 var __extends = (this && this.__extends) || (function () {
@@ -243,11 +243,17 @@ var ColorPicker = /** @class */ (function (_super) {
 }(React.Component));
 // TODO: The color picker overflows the grid field
 // Render color picker inputs when created:
-$(document).ready(function () {
-    // Using window.load to make sure this code gets called after all document.readys
-    $(window).load(function () {
+$(window).on('load', function () {
+    $(document).ready(function () {
         ColorPicker.renderFields();
     });
+});
+var miniGridInit = function (context) {
+    $('.fields-keyvalue', context).miniGrid({ grid_min_rows: 0, grid_max_rows: '' });
+};
+Grid.bind('colorpicker', 'displaySettings', function (el) {
+    miniGridInit(el[0]);
+    ColorPicker.renderFields(el[0]);
 });
 Grid.bind('colorpicker', 'display', function (cell) {
     ColorPicker.renderFields(cell[0]);
@@ -261,4 +267,21 @@ FluidField.on('colorpicker', 'add', function (field) {
 // Load any color pickers when the field manager selects a fieldtype
 FieldManager.on('fieldModalDisplay', function (modal) {
     ColorPicker.renderFields(modal[0]);
+});
+$('input.color-picker').each(function () {
+    var input = this;
+    var inputName = input.name;
+    var inputValue = input.value;
+    $(input).wrap('<div>');
+    var newContainer = $(input).parent();
+    ReactDOM.render(React.createElement(ColorPicker, {
+        inputName: inputName,
+        initialColor: inputValue,
+        allowedColors: 'any',
+        swatches: ['FA5252', 'FD7E14', 'FCC419', '40C057', '228BE6', 'BE4BDB', 'F783AC'],
+        onChange: function (newColor) {
+            // Change colors
+            input.value = newColor;
+        }
+    }, null), newContainer[0]);
 });

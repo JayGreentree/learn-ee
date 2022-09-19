@@ -5,7 +5,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -16,7 +16,6 @@ use ExpressionEngine\Service\Addon\Installer;
  */
 class Member_upd extends Installer
 {
-
     public $actions = [
         [
             'method' => 'registration_form'
@@ -59,6 +58,13 @@ class Member_upd extends Installer
         ],
         [
             'method' => 'upload_avatar'
+        ],
+        [
+            'method' => 'recaptcha_check',
+            'csrf_exempt' => 1
+        ],
+        [
+            'method' => 'validate'
         ]
     ];
 
@@ -73,6 +79,7 @@ class Member_upd extends Installer
             ee()->db->where('method', 'member_search');
             ee()->db->update('actions', ['method' => 'do_member_search']);
         }
+
         return true;
     }
 }

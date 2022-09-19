@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,97 +15,113 @@ use CP_Controller;
 /**
  * Jump Controller
  */
-class Jumps extends CP_Controller {
+class Jumps extends CP_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
 
-	public function __construct()
-	{
-		parent::__construct();
+        $this->checkRequestSegments();
+    }
 
-		if ( ! AJAX_REQUEST) {
-			$this->invalidRequest();
-		}
+    public function index()
+    {
+        if (! AJAX_REQUEST) {
+            $this->invalidRequest();
+        }
+        
+        // Dummy method to make sure it doesn't come up as a 404.
+        // Is validated by the `checkRequestSegments()` in the constructor.
+    }
 
-		$this->checkRequestSegments();
-	}
+    public function js()
+    {
+        ee()->load->library('javascript_loader');
 
-	public function index()
-	{
-		// Dummy method to make sure it doesn't come up as a 404.
-		// Is validated by the `checkRequestSegments()` in the constructor.
-	}
+        $jumpMenuItems = ee('CP/JumpMenu')->getItems();
 
-	public function addons()
-	{
-		if (!ee('Permission')->can('access_addons'))
-		{
-			$this->sendResponse([]);
-		}
+        $contents = "
+        EE.cp.jumpMenuURL = '" . ee('CP/URL', 'JUMPTARGET')->compile() . "';
+        EE.cp.JumpMenuCommands = " . json_encode($jumpMenuItems) .";";
 
-		if (empty(ee()->uri->segments[4]) || empty(ee()->uri->segments[5]))
-		{
-			$this->invalidRequest();
-		}
+        $finfo = ee()->cache->file->get_metadata('jumpmenu/' . md5(ee()->session->getMember()->getId()));
+        ee()->javascript_loader->set_headers('jumpmenu', $finfo['mtime']); 
+        ee()->output->set_header('Content-Length: ' . strlen($contents));
+        ee()->output->set_output($contents);
+    }
 
-		$name = ee()->uri->segments[4];
-		$method = ee()->uri->segments[5];
+    public function addons()
+    {
+        if (! AJAX_REQUEST) {
+            $this->invalidRequest();
+        }
+        
+        if (!ee('Permission')->can('access_addons')) {
+            $this->sendResponse([]);
+        }
 
-		$info = ee('Addon')->get($name);
+        if (empty(ee()->uri->segments[4]) || empty(ee()->uri->segments[5])) {
+            $this->invalidRequest();
+        }
 
-		$class = $info->getJumpClass();
-		$jumpMenu = new $class;
+        $name = ee()->uri->segments[4];
+        $method = ee()->uri->segments[5];
 
-		if ( ! method_exists($jumpMenu, $method))
-		{
-			$this->invalidMethod();
-		}
+        $info = ee('Addon')->get($name);
 
-		$searchKeywords = explode(' ', ee()->input->post('searchString'));
+        $class = $info->getJumpClass();
+        $jumpMenu = new $class();
 
-		$items = $jumpMenu->{$method}($searchKeywords);
+        if (! method_exists($jumpMenu, $method)) {
+            $this->invalidMethod();
+        }
 
-		foreach ($items as $key => $item) {
-			$items[$key]['target'] = ee('CP/URL')->make('addons/settings/' . $name . '/' . $items[$key]['target'])->compile();
-		}
+        $searchKeywords = explode(' ', ee()->input->post('searchString'));
 
-		return $this->sendResponse($items);
-	}
+        $items = $jumpMenu->{$method}($searchKeywords);
 
-	/**
-	 * Make sure we're passing the proper segments for each request.
-	 */
-	private function checkRequestSegments()
-	{
-		if (empty(ee()->uri->segments[3]))
-		{
-			$this->invalidRequest();
-		}
-	}
+        foreach ($items as $key => $item) {
+            $items[$key]['target'] = ee('CP/URL')->make('addons/settings/' . $name . '/' . $items[$key]['target'])->compile();
+        }
 
-	/**
-	 * Send the invalid request error response, passing any error messages we accrued along the way.
-	 * @return json   ajax compatible error string
-	 */
-	private function invalidRequest()
-	{
-		show_error(lang('machines_only_request'), 400);
-	}
+        return $this->sendResponse($items);
+    }
 
-	/**
-	 * Send the invalid method error response, passing any error messages we accrued along the way.
-	 * @return json   ajax compatible error string
-	 */
-	private function invalidMethod()
-	{
-		show_error(lang('addon_missing_jump_method'), 400);
-	}
+    /**
+     * Make sure we're passing the proper segments for each request.
+     */
+    private function checkRequestSegments()
+    {
+        if (empty(ee()->uri->segments[3])) {
+            $this->invalidRequest();
+        }
+    }
 
-	protected function sendResponse($response)
-	{
-		die(json_encode(array(
-			'status' => 'success',
-			'data' => $response
-		)));
-	}
+    /**
+     * Send the invalid request error response, passing any error messages we accrued along the way.
+     * @return void   ajax compatible error string
+     */
+    private function invalidRequest()
+    {
+        show_error(lang('machines_only_request'), 400);
+    }
+
+    /**
+     * Send the invalid method error response, passing any error messages we accrued along the way.
+     * @return void   ajax compatible error string
+     */
+    private function invalidMethod()
+    {
+        show_error(lang('addon_missing_jump_method'), 400);
+    }
+
+    protected function sendResponse($response)
+    {
+        die(json_encode(array(
+            'status' => 'success',
+            'data' => $response
+        )));
+    }
 }
 
 // EOF

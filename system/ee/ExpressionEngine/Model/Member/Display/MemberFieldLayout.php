@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,16 +15,16 @@ use ExpressionEngine\Model\Content\Display\DefaultLayout;
 /**
  * Member Field Layout
  */
-class MemberFieldLayout extends DefaultLayout {
+class MemberFieldLayout extends DefaultLayout
+{
+    public function transform(array $fields)
+    {
+        usort($fields, function ($a, $b) {
+            return ($a->get('m_field_order') > $b->get('m_field_order')) ? 1 : -1;
+        });
 
-	public function transform(array $fields)
-	{
-		usort($fields, function($a, $b) {
-			return $a->get('m_field_order') > $b->get('m_field_order');
-		});
-
-		return parent::transform($fields);
-	}
+        return parent::transform($fields);
+    }
 }
 
 // EOF

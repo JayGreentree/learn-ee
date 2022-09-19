@@ -4,18 +4,19 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
 namespace ExpressionEngine\Service\Addon;
 
 /**
- * Addon Installer Service
+ * Add-on Installer Service
  */
 class Installer
 {
     public $addon;
+    public $shortname;
     public $has_cp_backend = 'n';
     public $has_publish_fields = 'n';
     public $version;
@@ -25,14 +26,15 @@ class Installer
 
     public function __construct($settings = [])
     {
-        $caller = strtolower(str_replace(['_upd', '_ext'], '', get_class($this)));
-        $this->addon = ee('Addon')->get($caller);
+        $this->shortname = strtolower(str_replace(['_upd', '_ext'], '', get_class($this)));
+        $this->addon = ee('Addon')->get($this->shortname);
         $this->settings = $settings;
         $this->version = $this->addon->getVersion();
     }
 
     /**
      * Module installer
+     * @return bool
      */
     public function install()
     {
@@ -52,15 +54,48 @@ class Installer
             ee('Model')->make('Action', $action)->save();
         }
 
+        ee('Migration')->migrateAllByType($this->shortname);
+
+        ee()->db->data_cache = []; // Reset the cache so it will re-fetch a list of tables
+
+        return true;
+    }
+
+    /**
+     * Module updater
+     * @return bool
+     */
+    public function update($current = '')
+    {
+        if ($current == '' or version_compare($current, $this->version, '==')) {
+            return false;
+        }
+        
+        foreach ($this->actions as $action) {
+            if (!isset($action['class'])) {
+                $action['class'] = $classname;
+            }
+            $model = ee('Model')->get('Action')->filter('class', $action['class'])->filter('method', $action['method'])->first();
+            if (!empty($model)) {
+                $model->save();
+            } else {
+                ee('Model')->make('Action', $action)->save();
+            }
+        }
+        ee('Migration')->migrateAllByType($this->shortname);
+
         return true;
     }
 
     /**
      * Module uninstaller
+     * @return bool
      */
     public function uninstall()
     {
         $classname = $this->addon->getModuleClass();
+
+        ee('Migration')->rollbackAllByType($this->shortname, false);
 
         ee('Model')
             ->get('Module')
@@ -88,6 +123,7 @@ class Installer
 
     /**
      * Extension installer
+     * @return bool
      */
     public function activate_extension()
     {
@@ -97,27 +133,30 @@ class Installer
             ee('Model')->make('Extension', [
                 'class' => $classname,
                 'method' => isset($method['method']) ? $method['method'] : $method['hook'],
-				'hook' => $method['hook'],
-				'settings' => serialize($this->settings),
-				'priority' => isset($method['priority']) ? (int) $method['priority'] : 10,
+                'hook' => $method['hook'],
+                'settings' => serialize($this->settings),
+                'priority' => isset($method['priority']) ? (int) $method['priority'] : 10,
                 'version' => $this->addon->getVersion(),
                 'enabled' => (isset($method['enabled']) && in_array($method['enabled'], ['n', false])) ? 'n' : 'y'
             ])->save();
         }
+
         return true;
     }
 
     /**
      * Extension installer
+     * @return bool
      */
     public function disable_extension()
-	{
+    {
         ee('Model')
             ->get('Extension')
             ->filter('class', $this->addon->getExtensionClass())
             ->delete();
+
         return true;
-	}
+    }
 }
 
 // EOF

@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -16,35 +16,37 @@ use ExpressionEngine\Service\Validation\ValidationRule;
 /**
  * Writable Validation Rule
  */
-class Writable extends ValidationRule {
+class Writable extends ValidationRule
+{
+    protected $all_values = array();
 
-	protected $fs;
-	protected $all_values = array();
+    public function validate($key, $value)
+    {
+        $filesystem = ee('Filesystem');
 
-	public function validate($key, $value)
-	{
-		return $this->getFilesystem()->isWritable(parse_config_variables($value, $this->all_values));
-	}
+        if (array_key_exists('filesystem_provider', $this->all_values)) {
+            try {
+                $provider = $this->all_values['filesystem_provider'];
+                $filesystem = $provider->getFilesystem();
+                unset($this->all_values['filesystem_provider']);
+            } catch (\Exception $e) {
+                $this->stop();
+            }
+        }
 
-	public function getLanguageKey()
-	{
-		return 'invalid_path';
-	}
+        $parsed = parse_config_variables($value, $this->all_values);
+        return $filesystem->isWritable($parsed);
+    }
 
-	protected function getFilesystem()
-	{
-		if ( ! isset($this->fs))
-		{
-			$this->fs = new Filesystem();
-		}
+    public function getLanguageKey()
+    {
+        return 'invalid_path';
+    }
 
-		return $this->fs;
-	}
-
-	public function setAllValues(array $values)
-	{
-		$this->all_values = $values;
-	}
+    public function setAllValues(array $values)
+    {
+        $this->all_values = $values;
+    }
 }
 
 // EOF

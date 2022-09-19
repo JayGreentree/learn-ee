@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -100,11 +100,10 @@ $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
 		originalOptions.eeResponseHeaders || {}
 	);
 
-	jqXHR.complete(function(xhr) {
-
+	jqXHR.always(function(xhr) {
 		if (options.crossDomain === false) {
 			_.each(eeResponseHeaders, function(callback, name) {
-				var headerValue = xhr.getResponseHeader('X-'+name);
+				var headerValue = jqXHR.getResponseHeader('X-'+name);
 
 				if (headerValue) {
 					callback(headerValue);
@@ -231,30 +230,26 @@ $(document).ready(function () {
 	EE.cp.validateLicense();
 });
 
-// Scroll to version popover on successful update
-if (EE.cp.updateCompleted) {
-	$('.app-about-info').show()
-	$('.app-about-info__update').hide()
-	$('html, body').animate({
-		scrollTop: $('.app-about-info').offset().top
-	}, 500)
-}
 
 /**
  * Posts the current EE license to the EE main site for validation purposes.
  */
 EE.cp.validateLicense = function() {
-	if (! EE.cp.lvUrl) {
+	// Verify we have a license validation URL and the last update check was more than a minute ago.
+	if (!EE.cp.lvUrl || (EE.cp.lastUpdateCheck && EE.cp.lastUpdateCheck <= 60)) {
 		return;
 	}
+
+	var installedAddons = JSON.parse(EE.cp.installedAddons);
 
 	$.ajax({
 		type: 'POST',
 		url: EE.cp.lvUrl,
 		dataType: 'json',
 		data: {
+			appVer: EE.cp.appVer,
 			license: EE.cp.licenseKey,
-			addons: JSON.parse(EE.cp.installedAddons),
+			addons: installedAddons,
 			meta: [
 				{
 					site_name: EE.site_name,
@@ -265,22 +260,42 @@ EE.cp.validateLicense = function() {
 		},
 
 		success: function(result) {
-			if (result.messageType != 'success') {
-				console.log('License Result Failure:', result);
-				return;
-			}
-
-			for (var addon of result.addons) {
-				if (addon.status == 'expired') {
-					$('div[data-addon="' + addon.slug + '"]').css('overflow', 'hidden').append('<div class="corner-ribbon top-left orange shadow">Expired</div>');
-				} else if (addon.status == 'invalid') {
-					$('div[data-addon="' + addon.slug + '"]').css('overflow', 'hidden').append('<div class="corner-ribbon top-left red shadow">Unlicensed</div>'); // "Invalid" status
+			if (EE.cp.accessResponseURL) {
+				// Fill in some missing data between the request and response.
+				for (var addon of result.addons) {
+					installedAddons[addon.slug].status = addon.status;
+					installedAddons[addon.slug].update = addon.update;
 				}
+
+				// Post the response to the backend.
+				$.ajax({
+					type: 'POST',
+					url: EE.cp.accessResponseURL,
+					dataType: 'json',
+					data: {
+						appVer: EE.cp.appVer,
+						license: EE.cp.licenseKey,
+						licenseStatus: result,
+						addons: installedAddons,
+						site_name: EE.site_name,
+						site_id: EE.site_id,
+						site_url: EE.site_url
+					},
+
+					success: function (result) {
+
+					},
+					error: function (data, textStatus, errorThrown) {
+						console.error('Error Data:', (typeof(data.responseJSON) !== 'undefined') ? data.responseJSON : data, 'textStatus:', textStatus, 'errorThrown:', errorThrown);
+						return true;
+					}
+				});
 			}
 		},
 
 		error: function(data, textStatus, errorThrown) {
-			console.log('Error Data:', data, data.responseJSON.message, 'textStatus:', textStatus, 'errorThrown:', errorThrown);
+			console.error('Error Data:', (typeof(data.responseJSON) !== 'undefined') ? data.responseJSON : data, 'textStatus:', textStatus, 'errorThrown:', errorThrown);
+			return true;
 		}
 	});
 }
@@ -327,7 +342,7 @@ EE.cp.bindCpMessageClose = function() {
 
 	// Clear floating alerts after some time
 	var floatingAlerts = $('.app-notice--alert')
-	if (floatingAlerts.size()) {
+	if (floatingAlerts.length) {
 		setTimeout(function() {
 			floatingAlerts.fadeOut(function() {
 				floatingAlerts.remove()
@@ -390,7 +405,7 @@ EE.cp.setCsrfToken = function(newToken, skipBroadcast /* internal */) {
 	EE.CSRF_TOKEN = newToken;
 
 	if ( ! skipBroadcast) {
-		$(window).trigger('broadcast.setCsrfToken', newToken);
+		$(window.parent).trigger('broadcast.setCsrfToken', newToken);
 	}
 };
 
@@ -421,7 +436,7 @@ EE.cp.setBasePath = function(newBase, skipBroadcast /* internal */) {
 	// url to avoid that issue. You still cannot use the back button after
 	// logging back in, but how likely are you to remember what page you
 	// were on before leaving this one open for 20 minutes anyways?
-	if (typeof window.history.pushState == 'function') {
+	if (typeof window.history.pushState == 'function' && oldBaseS[1] != '') {
 		window.history.replaceState(
 			null,
 			document.title,
@@ -433,7 +448,7 @@ EE.cp.setBasePath = function(newBase, skipBroadcast /* internal */) {
 	EE.BASE = newBase;
 
 	if ( ! skipBroadcast) {
-		$(window).trigger('broadcast.setBasePath', newBase);
+		$(window.parent).trigger('broadcast.setBasePath', newBase);
 	}
 };
 

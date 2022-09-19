@@ -1,4 +1,12 @@
 <?php
+/**
+ * This source file is part of the open source project
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
+ * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
+ */
 
 namespace ExpressionEngine\Cli;
 
@@ -9,7 +17,6 @@ use ExpressionEngine\Cli\Context\OptionFactory;
 
 class Cli
 {
-
     /**
      * Primary CLI object
      * @var \ExpressionEngine\Cli\Context
@@ -44,13 +51,25 @@ class Cli
      * list of commands available from EE
      * @var array
      */
-    public $internalCommands = [
-        'hello'           => Commands\CommandHelloWorld::class,
-        'list'            => Commands\CommandListCommands::class,
-        'update'          => Commands\CommandUpdate::class,
-        'prepare-upgrade' => Commands\CommandPrepareUpgrade::class,
-        'run-update-hook' => Commands\CommandRunUpdateHook::class,
-        'cache:clear'     => Commands\CommandClearCaches::class,
+    private $internalCommands = [
+        'list' => Commands\CommandListCommands::class,
+        'update' => Commands\CommandUpdate::class,
+        'update:prepare' => Commands\CommandUpdatePrepare::class,
+        'update:run-hook' => Commands\CommandUpdateRunHook::class,
+        'make:addon' => Commands\CommandMakeAddon::class,
+        'make:command' => Commands\CommandMakeCommand::class,
+        'make:migration' => Commands\CommandMakeMigration::class,
+        'make:model' => Commands\CommandMakeModel::class,
+        'make:prolet' => Commands\CommandMakeProlet::class,
+        'make:widget' => Commands\CommandMakeWidget::class,
+        'migrate' => Commands\CommandMigrate::class,
+        'migrate:all' => Commands\CommandMigrateAll::class,
+        'migrate:addon' => Commands\CommandMigrateAddon::class,
+        'migrate:core' => Commands\CommandMigrateCore::class,
+        'migrate:reset' => Commands\CommandMigrateReset::class,
+        'migrate:rollback' => Commands\CommandMigrateRollback::class,
+        'cache:clear' => Commands\CommandClearCaches::class,
+        'sync:conditional-fields' => Commands\CommandSyncConditionalFieldLogic::class,
     ];
 
     /**
@@ -60,42 +79,51 @@ class Cli
     public $availableCommands;
 
     /**
-     * Run CLI as standalone
-     * @var [type]
-     */
-    public $isStandalone;
-
-    /**
-     * list of commands available for standalone-mode only
-     * @var array
-     */
-    public $standaloneCommands = [];
-
-    /**
      * command called on CLI
      * @var string
      */
     protected $commandCalled;
 
+    /**
+     * config setting for if the CLI is enabled
+     * @var string
+     */
+    protected $cliEnabled;
+
     public function __construct()
     {
+        // Load the language helper and the DB
+        ee()->load->helper('language_helper');
+        ee()->lang->loadfile('cli');
+        ee()->load->database();
+
+        //  Is the CLI disabled in the settings?
+        $this->cliEnabled = ee()->config->item('cli_enabled') != false ? bool_config_item('cli_enabled') : true;
 
         // Initialize the object
-        $factory = new CliFactory;
+        $factory = new CliFactory();
 
         $this->command = $factory->newContext($GLOBALS);
         $this->output = $factory->newStdio();
         $this->input = $factory->newStdio();
         $this->argv = $this->command->argv->get();
 
+        // If the cli is enabled, we will fail here, before anything has really been done
+        if (!$this->cliEnabled) {
+            $this->fail('cli_error_cli_disabled');
+        }
+
         if (! isset($this->argv[1])) {
-            $this->fail('No command given');
+            $this->fail('cli_error_no_command_given');
         }
 
         $this->arguments = array_slice($this->command->argv->get(), 2);
 
         // Get command called
         $this->commandCalled = $this->argv[1];
+
+        // This will set the desc and summary if theyre set in the lang file
+        $this->setDescriptionAndSummaryFromLang();
     }
 
     /**
@@ -104,25 +132,22 @@ class Cli
      */
     public function process()
     {
-        $this->standalone = defined('EE_INSTALLED') && EE_INSTALLED == false;
-
         $this->availableCommands = $this->availableCommands();
-
 
         // Check if command exists
         // If not, return
         if (! $this->commandExists()) {
-            return $this->fail('Command not found');
+            return $this->fail('cli_error_command_not_found');
         }
 
         $commandClass = $this->getCommand($this->commandCalled);
 
         if (! class_exists($commandClass)) {
-            return $this->fail('Command not found');
+            return $this->fail('cli_error_command_not_found');
         }
 
         // Try and initialize command
-        $command = new $commandClass;
+        $command = new $commandClass();
 
         $command->loadOptions();
 
@@ -143,12 +168,12 @@ class Cli
      */
     public function help()
     {
-        $help = new Help(new OptionFactory);
+        $help = new Help(new OptionFactory());
 
         $help->setSummary($this->summary)
-                ->setDescr($this->description)
-                ->setUsage($this->usage)
-                ->setOptions($this->commandOptions);
+            ->setDescr($this->description)
+            ->setUsage($this->usage)
+            ->setOptions($this->commandOptions);
 
         $this->output->outln($help->getHelp($this->name));
 
@@ -160,10 +185,16 @@ class Cli
      * @param  string $message
      * @return null
      */
-    public function fail($message = null)
+    public function fail($messages = null)
     {
-        if ($message) {
-            $this->output->errln("<<red>>{$message}<<reset>>");
+        if ($messages) {
+            if (! is_array($messages)) {
+                $messages = [$messages];
+            }
+
+            foreach ($messages as $message) {
+                $this->output->errln("<<red>>" . lang($message) . "<<reset>>");
+            }
         }
 
         exit(Status::FAILURE);
@@ -177,7 +208,7 @@ class Cli
     public function complete($message = null)
     {
         if ($message) {
-            $this->output->outln("<<green>>{$message}<<reset>>");
+            $this->output->outln("<<green>>" . lang($message) . "<<reset>>");
         }
 
         exit(Status::SUCCESS);
@@ -190,7 +221,7 @@ class Cli
      */
     public function write($message = null)
     {
-        $this->output->outln($message);
+        $this->output->outln(lang($message));
     }
 
     /**
@@ -200,7 +231,7 @@ class Cli
      */
     public function info($message = null)
     {
-        $this->output->outln("<<green>>{$message}<<reset>>");
+        $this->output->outln("<<green>>" . lang($message) . "<<reset>>");
     }
 
     /**
@@ -210,7 +241,7 @@ class Cli
      */
     public function error($message = null)
     {
-        $this->output->outln("<<red>>{$message}<<reset>>");
+        $this->output->outln("<<red>>" . lang($message) . "<<reset>>");
     }
 
     /**
@@ -220,43 +251,97 @@ class Cli
      */
     public function ask($question, $default = '')
     {
-        $this->output->out($question . ' ');
+        $defaultChoice = !empty($default) ? "<<white>>[<<yellow>>{$default}<<white>>]<<reset>>" : '';
+
+        $this->output->out(lang($question) . ' ' . $defaultChoice);
 
         $result = $this->input->in();
 
-        return $result ? $result : $default;
+        return $result ? addslashes($result) : $default;
+    }
+
+    public function getFirstUnnamedArgument($question = null, $default = null, $required = false)
+    {
+        $argument = isset($this->arguments[0]) ? $this->arguments[0] : null;
+
+        // If the first argument is an option, we have nothing so return null
+        if (is_string($argument) && substr($argument, 0, 1) === '-') {
+            $argument = null;
+        }
+
+        if (empty(trim((string) $argument)) && !is_null($question)) {
+            $argument = $this->ask($question, $default);
+        }
+
+        // Name is a required field
+        if ($required && empty(trim((string) $argument))) {
+            $this->fail(lang('cli_error_is_required'));
+        }
+
+        return $argument;
+    }
+
+    public function getOptionOrAsk($option, $askText, $default = null, $required = false)
+    {
+        // Get option if it was passed
+        if ($this->option($option)) {
+            return $this->option($option);
+        }
+
+        // Get the answer by asking
+        $answer = $this->ask($askText, $default);
+
+        // If it was a required field and no answer was passed, fail
+        if ($required && empty(trim($answer))) {
+            $this->fail(lang('cli_error_is_required_field') . $option);
+        }
+
+        return $answer;
     }
 
     /**
      * Ask question and get boolean answer
      * @param  string $question
+     * @param  bool $default
+     * @param  array $required array('required' => <true/false>, 'error_message' => 'cli error message - accepts lang key')
      * @return bool
      */
-    public function confirm($question, $default = false)
+    public function confirm($question, $default = false, array $required = ['required' => false, 'error_message' => 'cli_error_is_required'])
     {
+        // Set required defaults if not passed
+        $required = array_merge(['required' => false, 'error_message' => 'cli_error_is_required'], $required);
+
         $choices = '(yes/no)';
 
         $defaultText = $default ? 'yes' : 'no';
 
         $defaultChoice = "<<white>>[<<yellow>>{$defaultText}<<white>>]<<reset>>";
 
-        $this->output->outln("<<green>>{$question} {$choices} {$defaultChoice}");
+        $this->output->outln("<<green>>" . lang($question) . " {$choices} {$defaultChoice}");
 
         $answer = $this->input->in();
 
-        if (is_bool($answer)) {
-            return $answer;
+        // If they didnt answer, set answer to the default
+        if (empty($answer)) {
+            $answer = $default;
         }
 
-        $confirmationRegex = '/^y/i';
-
-        $answerIsTrue = (bool) preg_match($confirmationRegex, $answer);
-
-        if ($default === false) {
-            return $answer && $answerIsTrue;
+        // If not bool, lets convert string to bool
+        if (! is_bool($answer)) {
+            $answer = get_bool_from_string($answer);
         }
 
-        return '' === $answer || $answerIsTrue;
+        // If the string didnt convert to bool, it will be null so set to default value
+        if (is_null($answer)) {
+            $answer = $default;
+        }
+
+        // If the field is set to required and the answer is false, fail with message
+        if ($required['required'] && !$answer) {
+            $this->fail($required['error_message']);
+        }
+
+        return $answer;
     }
 
     /**
@@ -271,8 +356,7 @@ class Cli
         if (EE_INSTALLED) {
             return array_key_exists($commandToParse, $this->availableCommands);
         } else {
-            $this->error('EE is not currently installed.');
-            return array_key_exists($commandToParse, $this->standaloneCommands);
+            $this->fail('cli_error_ee_not_installed');
         }
     }
 
@@ -294,15 +378,14 @@ class Cli
      */
     protected function availableCommands()
     {
-        // If EE isn't installed, we will just pull use the standalone commands list
-
         $this->loadInternalCommands();
 
-        if (! EE_INSTALLED) {
-            return $this->standaloneCommands;
-        }
-
         $commands = $this->internalCommands;
+
+        if (!isset(ee()->addons)) {
+            ee()->load->library('addons');
+            ee('App')->setupAddons(SYSPATH . 'ee/ExpressionEngine/Addons/');
+        }
 
         $providers = ee('App')->getProviders();
 
@@ -312,7 +395,21 @@ class Cli
             }
         }
 
+        // Always return the commands in a sorted list
+        asort($commands);
+
         return $commands;
+    }
+
+    /**
+     * Parses command options to use lang files
+     * @return null
+     */
+    protected function parseCommandOptions()
+    {
+        foreach ($this->commandOptions as $k => $commandOption) {
+            $this->commandOptions[$k] = lang($commandOption);
+        }
     }
 
     /**
@@ -325,10 +422,13 @@ class Cli
             return [];
         }
 
+        // This parses the command options through the lang file
+        $this->parseCommandOptions();
+
         $commandOptions = array_merge(
             $this->commandOptions,
             [
-                'help,h'    => 'See help'
+                'help,h' => 'cli_option_help'
             ]
         );
 
@@ -358,7 +458,6 @@ class Cli
         return $this->options->get($name, $default);
     }
 
-
     /**
      * Loads EE Core commands
      * @return void
@@ -366,11 +465,21 @@ class Cli
     private function loadInternalCommands()
     {
         foreach ($this->internalCommands as $key => $value) {
-            $obj = new $value;
+            $obj = new $value();
+        }
+    }
 
-            if (isset($obj->standalone) && $obj->standalone) {
-                $this->standaloneCommands[$key] = $value;
-            }
+    /**
+     * Loads description and summary from Lang file
+     * @return void
+     */
+    private function setDescriptionAndSummaryFromLang()
+    {
+        // Automatically load the description and signature from the lang file
+        if (isset($this->signature)) {
+            $simplifiedSignature = str_replace([':', '-'], '_', $this->signature);
+            $this->description = isset($this->description) ? lang($this->description) : lang('command_' . $simplifiedSignature . '_description');
+            $this->summary = isset($this->summary) ? lang($this->summary) : lang('command_' . $simplifiedSignature . '_description');
         }
     }
 }

@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -17,382 +17,370 @@ use ExpressionEngine\Model\Channel\ChannelEntry;
 /**
  * Publish Controller
  */
-class Publish extends AbstractPublishController {
+class Publish extends AbstractPublishController
+{
+    public function __construct()
+    {
+        parent::__construct();
 
-	public function __construct()
-	{
-		parent::__construct();
+        $perms = [];
 
-		$perms = [];
+        foreach ($this->assigned_channel_ids as $channel_id) {
+            $perms[] = 'can_create_entries_channel_id_' . $channel_id;
+            $perms[] = 'can_edit_self_entries_channel_id_' . $channel_id;
+            $perms[] = 'can_edit_other_entries_channel_id_' . $channel_id;
+        }
 
-		foreach ($this->assigned_channel_ids as $channel_id)
-		{
-			$perms[] = 'can_create_entries_channel_id_' . $channel_id;
-			$perms[] = 'can_edit_self_entries_channel_id_' . $channel_id;
-			$perms[] = 'can_edit_other_entries_channel_id_' . $channel_id;
-		}
+        if (! ee('Permission')->hasAny($perms)) {
+            show_error(lang('unauthorized_access'), 403);
+        }
+    }
 
-		if ( ! ee('Permission')->hasAny($perms))
-		{
-			show_error(lang('unauthorized_access'), 403);
-		}
-	}
+    /**
+     * Renders a single field for a given channel or channel entry
+     *
+     * @param int $channel_id The Channel ID
+     * @param int $entry_id The Entry ID
+     * @return array An associative array (for JSON) containing the rendered HTML
+     */
+    public function field($channel_id, $entry_id)
+    {
+        $channel_id = (int) $channel_id;
+        $entry_id = (int) $entry_id;
 
-	/**
-	 * Renders a single field for a given channel or channel entry
-	 *
-	 * @param int $channel_id The Channel ID
-	 * @param int $entry_id The Entry ID
-	 * @return array An associative array (for JSON) containing the rendered HTML
-	 */
-	public function field($channel_id, $entry_id)
-	{
-		if (is_numeric($entry_id) && $entry_id != 0)
-		{
-			$entry = ee('Model')->get('ChannelEntry', $entry_id)
-				->filter('site_id', ee()->config->item('site_id'))
-				->first();
-		}
-		else
-		{
-			$entry = ee('Model')->make('ChannelEntry');
-			$entry->Channel = ee('Model')->get('Channel', $channel_id)->first();
-		}
+        if (is_numeric($entry_id) && $entry_id != 0) {
+            $entry = ee('Model')->get('ChannelEntry', $entry_id)
+                ->filter('site_id', ee()->config->item('site_id'))
+                ->first();
+        } else {
+            $entry = ee('Model')->make('ChannelEntry');
+            $entry->Channel = ee('Model')->get('Channel', $channel_id)->first();
+        }
 
-		$entry->set($_POST);
+        $entry->set($_POST);
 
-		return array('html' => $entry->getCustomField(ee()->input->get('field_name'))->getForm());
-	}
+        return array('html' => $entry->getCustomField(ee()->input->get('field_name'))->getForm());
+    }
 
-	/**
-	 * Populates the default author list in Channel Settings, also serves as
-	 * AJAX endpoint for that filtering
-	 *
-	 * @return array ID => Screen name array of authors
-	 */
-	public function authorList()
-	{
-		$authors = ee('Member')->getAuthors(ee('Request')->get('search'));
+    /**
+     * Populates the default author list in Channel Settings, also serves as
+     * AJAX endpoint for that filtering
+     *
+     * @return array ID => Screen name array of authors
+     */
+    public function authorList()
+    {
+        $authors = ee('Member')->getAuthors(ee('Request')->get('search'));
 
-		if (AJAX_REQUEST)
-		{
-			return ee('View/Helpers')->normalizedChoices($authors);
-		}
+        if (AJAX_REQUEST) {
+            return ee('View/Helpers')->normalizedChoices($authors);
+        }
 
-		return $authors;
-	}
+        return $authors;
+    }
 
-	/**
-	 * AJAX end-point for relationship field filtering
-	 */
-	public function relationshipFilter()
-	{
-		ee()->load->add_package_path(PATH_ADDONS.'relationship');
-		ee()->load->library('EntryList');
-		ee()->output->send_ajax_response(ee()->entrylist->ajaxFilter());
-	}
+    /**
+     * AJAX end-point for relationship field filtering
+     */
+    public function relationshipFilter()
+    {
+        ee()->load->add_package_path(PATH_ADDONS . 'relationship');
+        ee()->load->library('EntryList');
+        ee()->output->send_ajax_response(ee()->entrylist->ajaxFilter());
+    }
 
-	/**
-	 * Autosaves a channel entry
-	 *
-	 * @param int $channel_id The Channel ID
-	 * @param int $entry_id The Entry ID
-	 * @return void
-	 */
-	public function autosave($channel_id, $entry_id)
-	{
-		$site_id = ee()->config->item('site_id');
+    /**
+     * Autosaves a channel entry
+     *
+     * @param int $channel_id The Channel ID
+     * @param int $entry_id The Entry ID
+     * @return void
+     */
+    public function autosave($channel_id, $entry_id)
+    {
+        $channel_id = (int) $channel_id;
+        $entry_id = (int) $entry_id;
 
-		$autosave = ee('Model')->get('ChannelEntryAutosave')
-			->filter('original_entry_id', $entry_id)
-			->filter('site_id', $site_id)
-			->filter('channel_id', $channel_id)
-			->first();
+        $site_id = ee()->config->item('site_id');
 
-		if ( ! $autosave)
-		{
-			$autosave = ee('Model')->make('ChannelEntryAutosave');
-			$autosave->original_entry_id = $entry_id;
-			$autosave->site_id = $site_id;
-			$autosave->channel_id = $channel_id;
-		}
+        $autosave = ee('Model')->get('ChannelEntryAutosave')
+            ->filter('original_entry_id', $entry_id)
+            ->filter('site_id', $site_id)
+            ->filter('channel_id', $channel_id)
+            ->first();
 
-		$autosave->edit_date = ee()->localize->now;
-		$autosave->entry_data = $_POST;
+        if (! $autosave) {
+            $autosave = ee('Model')->make('ChannelEntryAutosave');
+            $autosave->original_entry_id = $entry_id;
+            $autosave->site_id = $site_id;
+            $autosave->channel_id = $channel_id;
+            $autosave->entry_data = $_POST;
+        } else {
+            $entry_data = $autosave->entry_data;
+            foreach ($_POST as $key => $val) {
+                $entry_data[$key] = $val;
+            }
+            $autosave->entry_data = $entry_data;
+        }
 
-		// This is currently unused, but might be useful for display purposes
-		$autosave->author_id = ee()->input->post('author_id', ee()->session->userdata('member_id'));
+        $autosave->edit_date = ee()->localize->now;
 
-		// This group of columns is unused
-		$autosave->title = (ee()->input->post('title')) ?: 'autosave_' . ee()->localize->now;
-		$autosave->url_title = (ee()->input->post('url_title')) ?: 'autosave_' . ee()->localize->now;
-		$autosave->status = ee()->input->post('status');
+        // This is currently unused, but might be useful for display purposes
+        $autosave->author_id = ee()->input->post('author_id', ee()->session->userdata('member_id'));
 
-		// This group of columns is also unused
-		$autosave->entry_date = 0;
-		$autosave->year = 0;
-		$autosave->month = 0;
-		$autosave->day = 0;
+        // This group of columns is unused
+        $autosave->title = (ee()->input->post('title')) ?: 'autosave_' . ee()->localize->now;
+        $autosave->url_title = (ee()->input->post('url_title')) ?: 'autosave_' . ee()->localize->now;
+        $autosave->status = ee()->input->post('status');
 
-		$autosave->save();
+        // This group of columns is also unused
+        $autosave->entry_date = 0;
+        $autosave->year = 0;
+        $autosave->month = 0;
+        $autosave->day = 0;
 
-		$time = ee()->localize->human_time(ee()->localize->now);
-		$time = trim(strstr($time, ' '));
+        $autosave->save();
 
-		ee()->output->send_ajax_response(array(
-			'success' => ee('View')->make('ee:publish/partials/autosave_badge')->render(['time' => $time]),
-			'autosave_entry_id' => $autosave->entry_id,
-			'original_entry_id'	=> $entry_id
-		));
-	}
+        $time = ee()->localize->human_time(ee()->localize->now);
+        $time = trim(strstr($time, ' '));
 
-	/**
-	 * Creates a new channel entry
-	 *
-	 * @param int $channel_id The Channel ID
-	 * @param int|NULL $autosave_id An optional autosave ID, for pre-populating
-	 *   the form
-	 * @return string Rendered HTML
-	 */
-	public function create($channel_id = NULL, $autosave_id = NULL)
-	{
-		if ( ! $channel_id)
-		{
-			show_404();
-		}
+        ee()->output->send_ajax_response(array(
+            'success' => ee('View')->make('ee:publish/partials/autosave_badge')->render(['time' => $time]),
+            'autosave_entry_id' => $autosave->entry_id,
+            'original_entry_id' => $entry_id
+        ));
+    }
 
-		if ( ! ee('Permission')->can('create_entries_channel_id_' . $channel_id) OR
-			 ! in_array($channel_id, $this->assigned_channel_ids))
-		{
-			show_error(lang('unauthorized_access'), 403);
-		}
+    /**
+     * Creates a new channel entry
+     *
+     * @param int $channel_id The Channel ID
+     * @param int|NULL $autosave_id An optional autosave ID, for pre-populating
+     *   the form
+     * @return string Rendered HTML
+     */
+    public function create($channel_id = null, $autosave_id = null)
+    {
+        if (! $channel_id) {
+            show_404();
+        }
 
-		$channel = ee('Model')->get('Channel', $channel_id)
-			->filter('site_id', ee()->config->item('site_id'))
-			->first();
+        $channel_id = (int) $channel_id;
 
-		if ( ! $channel)
-		{
-			show_error(lang('no_channel_exists'));
-		}
+        if (!is_null($autosave_id)) {
+            $autosave_id = (int) $autosave_id;
+        }
 
-		// Redirect to edit listing if we've reached max entries for this channel
-		if ($channel->maxEntriesLimitReached())
-		{
-			ee()->functions->redirect(
-				ee('CP/URL')->make('publish/edit/', array('filter_by_channel' => $channel_id))
-			);
-		}
+        if (! ee('Permission')->can('create_entries_channel_id_' . $channel_id) or
+             ! in_array($channel_id, $this->assigned_channel_ids)) {
+            show_error(lang('unauthorized_access'), 403);
+        }
 
-		$entry = ee('Model')->make('ChannelEntry');
-		$entry->Channel = $channel;
-		$entry->site_id =  ee()->config->item('site_id');
-		$entry->author_id = ee()->session->userdata('member_id');
-		$entry->ip_address = ee()->session->userdata['ip_address'];
-		$entry->versioning_enabled = $channel->enable_versioning;
-		$entry->sticky = FALSE;
+        $channel = ee('Model')->get('Channel', $channel_id)
+            ->filter('site_id', ee()->config->item('site_id'))
+            ->first();
 
-		// Set some defaults based on Channel Settings
-		$entry->allow_comments = (isset($channel->deft_comments)) ? $channel->deft_comments : TRUE;
+        if (! $channel) {
+            show_error(lang('no_channel_exists'));
+        }
 
-		if (isset($channel->deft_status))
-		{
-			$entry->status = $channel->deft_status;
-		}
+        // Redirect to edit listing if we've reached max entries for this channel
+        if ($channel->maxEntriesLimitReached()) {
+            ee()->functions->redirect(
+                ee('CP/URL')->make('publish/edit/', array('filter_by_channel' => $channel_id))
+            );
+        }
 
-		if ( ! empty($channel->deft_category))
-		{
-			$cat = ee('Model')->get('Category', $channel->deft_category)->first();
-			if ($cat)
-			{
-				// set directly so other categories don't get lazy loaded
-				// along with our default
-				$entry->Categories = $cat;
-			}
-		}
+        $entry = ee('Model')->make('ChannelEntry');
+        $entry->Channel = $channel;
+        $entry->site_id = ee()->config->item('site_id');
+        $entry->author_id = ee()->session->userdata('member_id');
+        $entry->ip_address = ee()->session->userdata['ip_address'];
+        $entry->versioning_enabled = $channel->enable_versioning;
+        $entry->sticky = false;
 
-		$entry->title = $channel->default_entry_title;
-		$entry->url_title = $channel->url_title_prefix;
+        // Set some defaults based on Channel Settings
+        $entry->allow_comments = (isset($channel->deft_comments)) ? $channel->deft_comments : true;
 
-		if (isset($_GET['BK']))
-		{
-			$this->populateFromBookmarklet($entry);
-		}
+        if (isset($channel->deft_status)) {
+            $entry->status = $channel->deft_status;
+        }
 
-		ee()->view->cp_page_title = sprintf(lang('create_entry_with_channel_name'), $channel->channel_title);
+        if (! empty($channel->deft_category)) {
+            $cat = ee('Model')->get('Category', $channel->deft_category)->first();
+            if ($cat) {
+                // set directly so other categories don't get lazy loaded
+                // along with our default
+                $entry->Categories = $cat;
+            }
+        }
 
-		$form_attributes = array(
-			'class' => 'ajax-validate',
-		);
+        $entry->title = $channel->default_entry_title;
+        $entry->url_title = $channel->url_title_prefix;
 
-		$vars = array(
-			'form_url' => ee('CP/URL')->getCurrentUrl(),
-			'form_attributes' => $form_attributes,
-			'form_title' => lang('new_entry'),
-			'errors' => new \ExpressionEngine\Service\Validation\Result,
-			'revisions' => $this->getRevisionsTable($entry),
-			'extra_publish_controls' => $channel->extra_publish_controls,
-			'buttons' => $this->getPublishFormButtons($entry),
-			'header' => [
-				'title' => lang('new_entry'),
-			],
-		);
+        if (isset($_GET['BK'])) {
+            $this->populateFromBookmarklet($entry);
+        }
 
-		if (ee('Request')->get('modal_form') == 'y')
-		{
-			$vars['buttons'] = [[
-				'name' => 'submit',
-				'type' => 'submit',
-				'value' => 'save_and_close',
-				'text' => 'save_and_close',
-				'working' => 'btn_saving'
-			]];
-		}
+        ee()->view->cp_page_title = sprintf(lang('create_entry_with_channel_name'), $channel->channel_title);
 
-		if ($entry->isLivePreviewable()) {
-			$lp_domain_mismatch = false;
-			$configured_site_url = explode('//', ee()->config->item('site_url'));
-			$configured_domain = explode('/', $configured_site_url[1]);
+        $form_attributes = array(
+            'class' => 'ajax-validate',
+        );
 
-			if ($_SERVER['HTTP_HOST'] != strtolower($configured_domain[0])) {
-				$lp_domain_mismatch = true;
-				$lp_message = sprintf(lang('preview_domain_mismatch_desc'), $configured_domain[0], $_SERVER['HTTP_HOST']);
-			} elseif ($configured_site_url[0] != '' && ((ee('Request')->isEncrypted() && strtolower($configured_site_url[0]) != 'https:') || (!ee('Request')->isEncrypted() && strtolower($configured_site_url[0]) == 'https:'))) {
-				$lp_domain_mismatch = true;
-				$lp_message = sprintf(lang('preview_protocol_mismatch_desc'), $configured_site_url[0], (ee('Request')->isEncrypted() ? 'https' : 'http'));
-			}
+        $livePreviewReady = $this->createLivePreviewModal($entry);
 
-			if ($lp_domain_mismatch) {
-				$lp_setup_alert = ee('CP/Alert')->makeBanner('live-preview-setup')
-					->asIssue()
-					->canClose()
-					->withTitle(lang('preview_cannot_display'))
-					->addToBody($lp_message);
-				ee()->javascript->set_global('alert.lp_setup', $lp_setup_alert->render());
-			} else {
-				$action_id = ee()->db->select('action_id')
-					->where('class', 'Channel')
-					->where('method', 'live_preview')
-					->get('actions');
-				$modal = ee('View')->make('publish/live-preview-modal')->render([
-					'preview_url'	=> ee()->functions->fetch_site_index().QUERY_MARKER.'ACT='.$action_id->row('action_id').AMP.'channel_id='.$entry->channel_id
-				]);
-				ee('CP/Modal')->addModal('live-preview', $modal);
-			}
-		} elseif (ee('Permission')->hasAll('can_admin_channels', 'can_edit_channels')) {
+        $vars = array(
+            'form_url' => ee('CP/URL')->getCurrentUrl(),
+            'form_attributes' => $form_attributes,
+            'form_title' => lang('new_entry'),
+            'errors' => new \ExpressionEngine\Service\Validation\Result(),
+            'revisions' => $this->getRevisionsTable($entry),
+            'buttons' => $this->getPublishFormButtons($entry, $livePreviewReady),
+            'head' => [
+                'title' => lang('new_entry'),
+                'class' => 'entries'
+            ],
+        );
 
-			$lp_setup_alert = ee('CP/Alert')->makeBanner('live-preview-setup')
-				->asIssue()
-				->canClose()
-				->withTitle(lang('preview_url_not_set'))
-				->addToBody(sprintf(lang('preview_url_not_set_desc'), ee('CP/URL')->make('channels/edit/'.$entry->channel_id)->compile().'#tab=t-4&id=fieldset-preview_url'));
-			ee()->javascript->set_global('alert.lp_setup', $lp_setup_alert->render());
+        if (ee('Request')->get('modal_form') == 'y') {
+            $vars['buttons'] = [[
+                'name' => 'submit',
+                'type' => 'submit',
+                'value' => 'save_and_close',
+                'text' => 'save_and_close',
+                'working' => 'btn_saving'
+            ]];
+        }
 
-		}
+        if (ee('Request')->get('load_autosave') == 'y') {
+            $autosaveExists = ee('Model')->get('ChannelEntryAutosave')
+                ->fields('entry_id')
+                ->filter('original_entry_id', 0)
+                ->filter('channel_id', $channel_id)
+                ->filter('site_id', ee()->config->item('site_id'))
+                ->first();
+            if ($autosaveExists) {
+                $autosave_id = $autosaveExists->entry_id;
+            }
+        }
 
-		if ($autosave_id)
-		{
-			$autosaved = ee('Model')->get('ChannelEntryAutosave', $autosave_id)
-				->filter('channel_id', $channel_id)
-				->filter('site_id', ee()->config->item('site_id'))
-				->first();
+        if ($autosave_id) {
+            $autosaved = ee('Model')->get('ChannelEntryAutosave', $autosave_id)
+                ->filter('channel_id', $channel_id)
+                ->filter('site_id', ee()->config->item('site_id'))
+                ->first();
 
-			if ($autosaved)
-			{
-				$entry->set($autosaved->entry_data);
-			}
-		}
+            if ($autosaved) {
+                $entry->set($autosaved->entry_data);
+            }
+        }
 
-		$channel_layout = ee('Model')->get('ChannelLayout')
-			->filter('site_id', ee()->config->item('site_id'))
-			->filter('channel_id', $entry->channel_id)
-			->with('PrimaryRoles')
-			->filter('PrimaryRoles.role_id', ee()->session->userdata('role_id'))
-			->first();
+        $channel_layout = ee('Model')->get('ChannelLayout')
+            ->filter('site_id', ee()->config->item('site_id'))
+            ->filter('channel_id', $entry->channel_id)
+            ->with('PrimaryRoles')
+            ->filter('PrimaryRoles.role_id', ee()->session->userdata('role_id'))
+            ->first();
 
-		$vars['layout'] = $entry->getDisplay($channel_layout);
+        if (empty($channel_layout)) {
+            $channel_layout = ee('Model')->get('ChannelLayout')
+                ->filter('site_id', ee()->config->item('site_id'))
+                ->filter('channel_id', $entry->channel_id)
+                ->with('PrimaryRoles')
+                ->filter('PrimaryRoles.role_id', 'IN', ee()->session->getMember()->getAllRoles()->pluck('role_id'))
+                ->all()
+                ->first();
+        }
 
-		$result = $this->validateEntry($entry, $vars['layout']);
+        $vars['layout'] = $entry->getDisplay($channel_layout);
 
-		if ($result instanceOf ValidationResult)
-		{
-			$vars['errors'] = $result;
+        $result = $this->validateEntry($entry, $vars['layout']);
 
-			if ($result->isValid())
-			{
-				return $this->saveEntryAndRedirect($entry);
-			}
-		}
+        if ($result instanceof ValidationResult) {
+            $vars['errors'] = $result;
 
-		// Auto-saving needs an entry_id...
-		$entry->entry_id = 0;
+            if ($result->isValid()) {
+                return $this->saveEntryAndRedirect($entry);
+            }
+        }
 
-		$vars['autosaves'] = $this->getAutosavesTable($entry, $autosave_id);
-		$vars['entry'] = $entry;
+        // Auto-saving needs an entry_id...
+        $entry->entry_id = 0;
 
-		$this->setGlobalJs($entry, TRUE);
+        $vars['autosaves'] = $this->getAutosavesTable($entry, $autosave_id);
+        $vars['entry'] = $entry;
 
-		ee()->cp->add_js_script(array(
-			'plugin' => array(
-				'ee_url_title',
-				'ee_filebrowser',
-				'ee_fileuploader',
-			),
-			'ui' => ['draggable'],
-			'file' => array('cp/publish/publish', 'cp/channel/category_edit')
-		));
+        $this->setGlobalJs($entry, true);
 
-		ee()->view->cp_breadcrumbs = array(
-			ee('CP/URL')->make('publish/edit')->compile() => lang('entries'),
-			'' => lang('new_entry')
-		);
+        ee()->cp->add_js_script(array(
+            'plugin' => array(
+                'ee_url_title',
+                'ee_filebrowser',
+                'ee_fileuploader',
+            ),
+            'ui' => ['draggable'],
+            'file' => array(
+                'cp/publish/publish', 
+                'cp/publish/entry-list',
+                'cp/channel/category_edit',
+            )
+        ));
 
-		$vars['breadcrumb_title'] = lang('new_entry');
+        ee()->view->cp_breadcrumbs = array(
+            ee('CP/URL')->make('publish/edit')->compile() => lang('entries'),
+            ee('CP/URL')->make('publish/edit', ['filter_by_channel' => $channel_id])->compile() => $channel->channel_title,
+            '' => lang('new_entry')
+        );
 
-		if (ee('Request')->get('modal_form') == 'y')
-		{
-			$vars['layout']->setIsInModalContext(TRUE);
-			return ee('View')->make('publish/modal-entry')->render($vars);
-		}
+        $vars['breadcrumb_title'] = lang('new_entry');
 
-		ee()->cp->render('publish/entry', $vars);
-	}
+        if (ee('Request')->get('modal_form') == 'y') {
+            $vars['layout']->setIsInModalContext(true);
 
-	/**
-	 * Populates a channel entry entity from a bookmarklet action
-	 *
-	 * @param ChannelEntry $entry A Channel Entry entity to populate
-	 * @return void
-	 */
-	private function populateFromBookmarklet(ChannelEntry $entry)
-	{
-		$data = array();
+            return ee('View')->make('publish/modal-entry')->render($vars);
+        }
 
-		if (($title = ee()->input->get('title')) !== FALSE)
-		{
-			$data['title'] = $title;
-		}
+        return ee()->cp->render('publish/entry', $vars);
+    }
 
-		foreach ($_GET as $key => $value)
-		{
-			if (strpos($key, 'field_id_') === 0)
-			{
-				$data[$key] = $value;
-			}
-		}
+    /**
+     * Populates a channel entry entity from a bookmarklet action
+     *
+     * @param ChannelEntry $entry A Channel Entry entity to populate
+     * @return void
+     */
+    private function populateFromBookmarklet(ChannelEntry $entry)
+    {
+        $data = array();
 
-		if (empty($data))
-		{
-			return;
-		}
+        if (($title = ee()->input->get('title')) !== false) {
+            $data['title'] = $title;
+        }
 
-		$entry->set($data);
-	}
+        foreach ($_GET as $key => $value) {
+            if (strpos($key, 'field_id_') === 0) {
+                $data[$key] = $value;
+            }
+        }
 
-	public function preview($channel_id, $entry_id = NULL)
-	{
-		return ee('LivePreview')->preview($channel_id, $entry_id);
-	}
+        if (empty($data)) {
+            return;
+        }
+
+        $entry->set($data);
+    }
+
+    public function preview($channel_id, $entry_id = null)
+    {
+        $channel_id = (int) $channel_id;
+
+        if (!is_null($entry_id)) {
+            $entry_id = (int) $entry_id;
+        }
+
+        return ee('LivePreview')->preview($channel_id, $entry_id);
+    }
 }
 
 // EOF

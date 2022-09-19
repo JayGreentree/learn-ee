@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,6 +15,7 @@
 
 (function ($) {
 	var bind_modal = function(url, options) {
+		window.globalDropzone = options.input_value;
 		var modal = $("." + options.rel),
 			callback = function(data) {
 				var picker = {
@@ -45,12 +46,16 @@
 					selected.parents('tr').addClass('selected');
 				}
 			}
+
+			if ($('div[data-file-field-react]').length) {
+				FileField.renderFields();
+			}
 		});
 
 		$('.modal-file').off('click', '.filepicker-item, tbody > tr:not(.tbl-action)');
 		$('.modal-file').on('click', '.filepicker-item, tbody > tr:not(.tbl-action)', function(e) {
 
-			if ($(e.target).is('a[rel=external]')) {
+			if ($(e.target).is('a[rel=external]') || $(this).is('[data-filter-url]')) {
 				return true;
 			}
 
@@ -83,6 +88,8 @@
 					dataType: 'json'
 				});
 			}
+
+			return false;
 		});
 
 		$('.modal-file').on('click', '.filters a:not([href=""]), .filter-bar a:not([href=""]), .paginate a:not([href=""], .pagination a:not([href=""]), thead a:not([href=""])', function(e) {
@@ -100,7 +107,7 @@
 				payload_elements = $('.filter-bar input', this);
 
 			// Only do this if we're on the file listing screen
-			if (payload_elements.size() == 0) {
+			if (payload_elements.length == 0) {
 				return;
 			}
 
@@ -108,7 +115,7 @@
 
 			$(this).parents('div.box').load(url+'&'+payload_elements.serialize());
 		});
-		$('.modal-file').on('click', '.tbl-action .action, .tbl-action a.button', function(e) {
+		$('.modal-file').on('click', '.tbl-action .action, .tbl-action a.button, .panel-footer a.button', function(e) {
 			e.preventDefault()
 			openInIframe($(this).attr('href'))
 		});
@@ -140,7 +147,7 @@
 				});
 			}
 
-			frame.load(function (e) {
+			frame.on('load', function (e) {
 				
 				$(modal).off('modal:close', cancelOnClose);
 
@@ -174,7 +181,7 @@
 
 					var height = this.contentWindow.document.body.scrollHeight;
 					$('.box', modal).height(height);
-					$(this).height(height + 20);
+					$(this).height(height + 2);
 				}
 			});
 
@@ -200,6 +207,14 @@
 				options.url = $(this).attr('href');
 				options.rel = $(this).attr('rel');
 				options.source = $(this);
+
+				var iframeParentList = $('div[class^="popup-modal-ee-"]', window.parent.document);
+				if (iframeParentList.length) {
+					$(iframeParentList[0]).css({
+						'height': '60vh',
+						'width': '60vw',
+					})
+				}
 
 				if (options.input_value) {
 					options.input_value = $(options.input_value);

@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -56,7 +56,10 @@ $(document).ready(function() {
 			return;
 		}
 
-		EE.cp.form_group_toggle(this);
+		//only respect the state of toggles that are not currently hidden
+		if ($(this).parents('fieldset').is(':visible')) {
+			EE.cp.form_group_toggle(this);
+		}
 
 		var config = $(this).data('groupToggle');
 
@@ -85,7 +88,7 @@ function toggleFields(fields, show, key) {
 		var fieldset = $(field).closest('fieldset');
 
 		if (fieldset.hasClass('fieldset-invalid')) {
-			if (fieldset.find('input:visible').not('input.button').size() == 0) {
+			if (fieldset.find('input:visible').not('.button').length == 0) {
 				fieldset.removeClass('fieldset-invalid');
 				fieldset.find('em.ee-form-error-message').remove();
 			}
@@ -103,9 +106,9 @@ function toggleSections(sections, show, key) {
 
 			// if we're showing this section, but the field is hidden
 			// from another toggle, then don't show it
-			if (group && group != key) {
-				hidden[group] = ! show;
-			}
+			// if (group && group != key) {
+			// 	hidden[group] = ! show;
+			// }
 
 			if (show && group && hidden[group] != undefined) {
 				toggleFields(field, hidden[group], key);
@@ -118,7 +121,7 @@ function toggleSections(sections, show, key) {
 
 EE.cp.form_group_toggle = function(element) {
 
-	if ( ! $(element).size()) {
+	if ( ! $(element).length) {
 		return;
 	}
 

@@ -1,4 +1,12 @@
 <?php
+/**
+ * This source file is part of the open source project
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
+ * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
+ */
 
 namespace ExpressionEngine\Cli\Commands\Upgrade;
 
@@ -6,46 +14,47 @@ use ExpressionEngine\Library\Filesystem\Filesystem;
 
 class UpgradeUtility
 {
+    public static function run()
+    {
+        // self::install_modules();
+        self::rename_installer();
+    }
 
-	public static function run()
-	{
-		self::install_modules();
-		self::remove_installer_directory();
-	}
+    protected static function install_modules()
+    {
+        $required_modules = [
+            'channel',
+            'comment',
+            'consent',
+            'member',
+            'stats',
+            'rte',
+            'file',
+            'filepicker',
+            'relationship',
+            'search',
+            'pro'
+        ];
 
-	protected static function install_modules()
-	{
+        ee()->load->library('addons');
+        ee()->addons->install_modules($required_modules);
 
-		$required_modules = [
-			'channel',
-			'comment',
-			'consent',
-			'member',
-			'stats',
-			'rte',
-			'file',
-			'filepicker',
-			'relationship',
-			'search'
-		];
+        $consent = ee('Addon')->get('consent');
+        $consent->installConsentRequests();
+    }
 
-		ee()->load->library('addons');
-		ee()->addons->install_modules($required_modules);
+    protected static function rename_installer()
+    {
+        $installerPath = SYSPATH . 'ee/installer';
 
-		$consent = ee('Addon')->get('consent');
-		$consent->installConsentRequests();
+        // Generate the new path by suffixing a dotless version number
+        $new_path = str_replace(
+            'installer',
+            'installer_' . APP_VER . '_' . uniqid(),
+            $installerPath
+        );
 
-	}
-
-	protected static function remove_installer_directory()
-	{
-
-		$installerPath = SYSPATH . 'ee/installer';
-
-		if(is_dir($installerPath)) {
-			rmdir($installerPath);
-		}
-
-	}
-
+        // Move the directory
+        return ee('Filesystem')->rename($installerPath, $new_path);
+    }
 }

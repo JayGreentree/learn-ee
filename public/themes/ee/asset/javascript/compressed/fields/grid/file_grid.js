@@ -26,7 +26,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license
  */
 var FileGrid =
@@ -82,7 +82,7 @@ function (_React$Component) {
   }, {
     key: "getRowCount",
     value: function getRowCount() {
-      return this.getGridInstance()._getRows().size();
+      return this.getGridInstance()._getRows().length;
     }
   }, {
     key: "render",

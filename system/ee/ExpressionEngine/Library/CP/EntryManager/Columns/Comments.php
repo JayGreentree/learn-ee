@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -17,27 +17,32 @@ use ExpressionEngine\Library\CP\EntryManager\Columns\Column;
  */
 class Comments extends Column
 {
-	public function getTableColumnLabel()
-	{
-		return 'comments';
-	}
+    public function getTableColumnLabel()
+    {
+        return 'comments';
+    }
 
-	public function renderTableCell($data, $field_id, $entry)
-	{
-		if ($entry->comment_total > 0 && ee('Permission')->can('moderate_comments'))
-		{
-			return [
-				'encode' => false,
-				'content' =>'(<a href="' . ee('CP/URL')->make('publish/comments/entry/' . $entry->entry_id) . '">' . $entry->comment_total . '</a>)'
-			];
-		}
+    public function getEntryManagerColumnSortField()
+    {
+        return 'comment_total';
+    }
 
-		return '(' . (int) $entry->comment_total . ')';
-	}
+    public function renderTableCell($data, $field_id, $entry)
+    {
+        if ($entry->comment_total > 0 && ee('Permission')->can('moderate_comments')) {
+            return [
+                'encode' => false,
+                'content' => '(<a href="' . ee('CP/URL')->make('publish/comments/entry/' . $entry->entry_id) . '">' . $entry->comment_total . '</a>)'
+            ];
+        }
 
-	public function getTableColumnConfig() {
-		return [
-			'encode'	=> false
-		];
-	}
+        return '(' . (int) $entry->comment_total . ')';
+    }
+
+    public function getTableColumnConfig()
+    {
+        return [
+            'encode' => false
+        ];
+    }
 }

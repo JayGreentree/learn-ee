@@ -5,7 +5,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,15 +13,19 @@ use ExpressionEngine\Addons\Rte\RteHelper;
 
 class Rte_ft extends EE_Fieldtype
 {
+
     public $has_array_data = true;
 
     public $entry_manager_compatible = true;
 
+    public $size = 'large';
+
     public $info = [
         'name' => 'Rich Text Editor',
-        'version' => '2.0.0'
+        'version' => '2.1.0'
     ];
 
+    public $defaultEvaluationRule = 'isNotEmpty';
 
     /**
      * Implements EntryManager\ColumnInterface
@@ -32,6 +36,7 @@ class Rte_ft extends EE_Fieldtype
         if (strlen($out) > 255) {
             $out = substr($out, 0, min(255, strpos($out, " ", 240))) . '&hellip;';
         }
+
         return html_entity_decode($out);
     }
 
@@ -162,14 +167,24 @@ class Rte_ft extends EE_Fieldtype
      */
     public function display_field($data)
     {
-        RteHelper::includeFieldResources();
-        $configHandle = RteHelper::insertConfigJsById(!empty($this->settings['toolset_id']) ? $this->settings['toolset_id'] : null);
+        $toolsetId = (isset($this->settings['toolset_id'])) ? (int) $this->settings['toolset_id'] : (!empty(ee()->config->item('rte_default_toolset')) ? (int) ee()->config->item('rte_default_toolset') : null);
+        if (!empty($toolsetId)) {
+            $toolset = ee('Model')->get('rte:Toolset')->filter('toolset_id', $toolsetId)->first();
+        } else {
+            $toolset = ee('Model')->get('rte:Toolset')->first();
+        }
+
+        // Load proper toolset
+        $serviceName = ucfirst($toolset->toolset_type) . 'Service';
+        $configHandle = ee('rte:' . $serviceName)->init($this->settings, $toolset);
 
         $id = str_replace(array('[', ']'), array('_', ''), $this->field_name);
-        $defer = (isset($this->settings['defer']) && $this->settings['defer'] == 'y') ? true : false;
+        $defer = (isset($this->settings['defer']) && $this->settings['defer'] == 'y')
+                    ? true
+                    : false;
 
         if (strpos($id, '_new_') === false) {
-            ee()->cp->add_to_foot('<script type="text/javascript">new Rte("' . $id . '", "' . $configHandle . '", ' . $defer . ');</script>');
+            ee()->cp->add_to_foot('<script type="text/javascript">new Rte("' . $id . '", "' . $configHandle . '", ' . ($defer ? 'true' : 'false') . ');</script>');
         }
 
         // pass the data through form_prep() if this is Channel Form
@@ -198,9 +213,10 @@ class Rte_ft extends EE_Fieldtype
             'id' => $id,
             'rows' => 10,
             'data-config' => $configHandle,
-            'class' => 'rte-textarea',
+            'class' => ee('rte:' . $serviceName)->getClass(),
             'data-defer' => ($defer ? 'y' : 'n')
         );
+
         return form_textarea($field);
     }
 
@@ -213,17 +229,24 @@ class Rte_ft extends EE_Fieldtype
      */
     public function grid_display_field($data)
     {
-        RteHelper::includeFieldResources();
-        $configHandle = RteHelper::insertConfigJsById(!empty($this->settings['toolset_id']) ? $this->settings['toolset_id'] : null);
+        $toolsetId = (isset($this->settings['toolset_id'])) ? (int) $this->settings['toolset_id'] : (!empty(ee()->config->item('rte_default_toolset')) ? (int) ee()->config->item('rte_default_toolset') : null);
+        if (!empty($toolsetId)) {
+            $toolset = ee('Model')->get('rte:Toolset')->filter('toolset_id', $toolsetId)->first();
+        } else {
+            $toolset = ee('Model')->get('rte:Toolset')->first();
+        }
+
+        // Load proper toolset
+        $serviceName = ucfirst($toolset->toolset_type) . 'Service';
+        $configHandle = ee('rte:' . $serviceName)->init($this->settings, $toolset);
 
         // get the cache
         if (! isset(ee()->session->cache['rte'])) {
             ee()->session->cache['rte'] = array();
         }
-        $cache =& ee()->session->cache['rte'];
+        $cache = & ee()->session->cache['rte'];
 
         if (! isset($cache['displayed_grid_cols'])) {
-            ee()->cp->add_to_foot('<script type="text/javascript" src="' . URL_THEMES . 'rte/scripts/grid.js"></script>');
             $cache['displayed_grid_cols'] = array();
         }
 
@@ -256,6 +279,7 @@ class Rte_ft extends EE_Fieldtype
             'rows' => 10,
             'data-config' => $configHandle
         );
+
         return form_textarea($field);
     }
 
@@ -374,9 +398,9 @@ class Rte_ft extends EE_Fieldtype
         ee()->typography->convert_curly = false;
 
         $data = ee()->typography->parse_type($data, array(
-            'text_format'   => 'none',
-            'html_format'   => 'all',
-            'auto_links'    => (isset($this->row['channel_auto_link_urls']) ? $this->row['channel_auto_link_urls'] : 'n'),
+            'text_format' => 'none',
+            'html_format' => 'all',
+            'auto_links' => (isset($this->row['channel_auto_link_urls']) ? $this->row['channel_auto_link_urls'] : 'n'),
             'allow_img_url' => (isset($this->row['channel_allow_img_urls']) ? $this->row['channel_allow_img_urls'] : 'y')
         ));
 
@@ -400,6 +424,9 @@ class Rte_ft extends EE_Fieldtype
      */
     public function replace_tag($data, $params = array(), $tagdata = false)
     {
+        //strip "read more" separator
+        $data = preg_replace('/(<figure>)?<div class=\"readmore"><span[^<]+<\/span><\/div>(<\/figure>)?/', '', $data);
+        
         // return images only?
         if (isset($params['images_only']) && $params['images_only'] == 'yes') {
             $data = $this->_parseImages($data, $params, $tagdata);
@@ -522,13 +549,13 @@ class Rte_ft extends EE_Fieldtype
     {
         $settings = array_merge([
             'toolset_id' => ee()->config->item('rte_default_toolset'),
-            'defer'     => 'n'
+            'defer' => 'n'
         ], $settings);
 
         // load the language file
         ee()->lang->loadfile('rte');
 
-        $configModels = ee('Model')->get('rte:Toolset')->all();
+        $configModels = ee('Model')->get('rte:Toolset')->all(true);
         $configOptions = array();
         foreach ($configModels as $model) {
             $configOptions[$model->toolset_id] = $model->toolset_name;
@@ -537,19 +564,19 @@ class Rte_ft extends EE_Fieldtype
         if (!empty($configOptions)) {
             $configFields = array(
                 'rte[toolset_id]' => array(
-                    'type'    => 'select',
+                    'type' => 'select',
                     'choices' => $configOptions,
-                    'value'   => $settings['toolset_id']
+                    'value' => $settings['toolset_id']
                 ),
                 array(
-                    'type'    => 'html',
+                    'type' => 'html',
                     'content' => '(<a href="' . ee('CP/URL')->make('addons/settings/rte')->compile() . '">' . lang('rte_edit_configs') . '</a>)'
                 )
             );
         } else {
             $configFields = array(
                 array(
-                    'type'    => 'html',
+                    'type' => 'html',
                     'content' => '<a href="' . ee('CP/URL')->make('addons/settings/rte/edit_toolset')->compile() . '">' . lang('rte_create_config') . '</a>'
                 )
             );
@@ -668,7 +695,7 @@ class Rte_ft extends EE_Fieldtype
         // offset and limit params
         if (isset($params['offset']) || isset($params['limit'])) {
             $offset = isset($params['offset']) ? (int) $params['offset'] : 0;
-            $limit  = isset($params['limit'])  ? (int) $params['limit']  : (!empty($images) ? count($images) : 0);
+            $limit = isset($params['limit']) ? (int) $params['limit'] : (!empty($images) ? count($images) : 0);
 
             $images = array_splice($images, $offset, $limit);
         }

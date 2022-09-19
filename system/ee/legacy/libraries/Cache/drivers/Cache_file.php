@@ -4,277 +4,283 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
 /**
  * File Caching
  */
-class EE_Cache_file extends CI_Driver {
+class EE_Cache_file extends CI_Driver
+{
+    /**
+     * Directory in which to save cache files
+     *
+     * @var string
+     */
+    protected $_cache_path;
 
-	/**
-	 * Directory in which to save cache files
-	 *
-	 * @var string
-	 */
-	protected $_cache_path;
+    /**
+     * Initialize file-based cache
+     *
+     * @return	void
+     */
+    public function __construct()
+    {
+        ee()->load->helper('file');
+        $this->_cache_path = PATH_CACHE;
+    }
 
-	/**
-	 * Initialize file-based cache
-	 *
-	 * @return	void
-	 */
-	public function __construct()
-	{
-		ee()->load->helper('file');
-		$this->_cache_path = PATH_CACHE;
-	}
+    /**
+     * Look for a value in the cache. If it exists, return the data
+     * if not, return FALSE
+     *
+     * @param	string	$key 	Key name
+     * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
+     *		 for local or global scoping of the cache item
+     * @return	mixed	Value matching $key or FALSE on failure
+     */
+    public function get($key, $scope = Cache::LOCAL_SCOPE)
+    {
+        $key = $this->_namespaced_key($key, $scope);
 
-	/**
-	 * Look for a value in the cache. If it exists, return the data
-	 * if not, return FALSE
-	 *
-	 * @param	string	$key 	Key name
-	 * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
-	 *		 for local or global scoping of the cache item
-	 * @return	mixed	Value matching $key or FALSE on failure
-	 */
-	public function get($key, $scope = Cache::LOCAL_SCOPE)
-	{
-		$key = $this->_namespaced_key($key, $scope);
+        if (! file_exists($this->_cache_path . $key)) {
+            return false;
+        }
 
-		if ( ! file_exists($this->_cache_path.$key))
-		{
-			return FALSE;
-		}
+        $data = unserialize(file_get_contents($this->_cache_path . $key));
 
-		$data = unserialize(file_get_contents($this->_cache_path.$key));
+        if (!is_array($data)) {
+            return false;
+        }
 
-		if ($data['ttl'] > 0 && ee()->localize->now > $data['time'] + $data['ttl'])
-		{
-			unlink($this->_cache_path.$key);
-			return FALSE;
-		}
+        if ($data['ttl'] > 0 && ee()->localize->now > $data['time'] + $data['ttl']) {
+            unlink($this->_cache_path . $key);
 
-		return $data['data'];
-	}
+            return false;
+        }
 
-	/**
-	 * Save value to cache
-	 *
-	 * @param	string	$key		Key name
-	 * @param	mixed	$data		Data to store
-	 * @param	int		$ttl = 60	Cache TTL (in seconds)
-	 * @param	const	$scope		Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
-	 *		 for local or global scoping of the cache item
-	 * @return	bool	TRUE on success, FALSE on failure
-	 */
-	public function save($key, $data, $ttl = 60, $scope = Cache::LOCAL_SCOPE)
-	{
-		$contents = array(
-			'time'		=> ee()->localize->now,
-			'ttl'		=> $ttl,
-			'data'		=> $data
-		);
+        return $data['data'];
+    }
 
-		$key = $this->_namespaced_key($key, $scope);
+    /**
+     * Save value to cache
+     *
+     * @param	string	$key		Key name
+     * @param	mixed	$data		Data to store
+     * @param	int		$ttl = 60	Cache TTL (in seconds)
+     * @param	const	$scope		Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
+     *		 for local or global scoping of the cache item
+     * @return	bool	TRUE on success, FALSE on failure
+     */
+    public function save($key, $data, $ttl = 60, $scope = Cache::LOCAL_SCOPE)
+    {
+        $contents = array(
+            'time' => ee()->localize->now,
+            'ttl' => $ttl,
+            'data' => $data
+        );
 
-		// Build file path to this key
-		$path = $this->_cache_path . $key;
+        $key = $this->_namespaced_key($key, $scope);
 
-		// Remove the cache item name to get the path by looking backwards
-		// for the directory separator
-		$path = substr($path, 0, strrpos($path, DIRECTORY_SEPARATOR) + 1);
+        // Build file path to this key
+        $path = $this->_cache_path . $key;
 
-		// Create namespace directory if it doesn't exist
-		if ( ! file_exists($path) OR ! is_dir($path))
-		{
-			@mkdir($path, DIR_WRITE_MODE, TRUE);
+        // Remove the cache item name to get the path by looking backwards
+        // for the directory separator
+        $path = substr($path, 0, strrpos($path, DIRECTORY_SEPARATOR) + 1);
 
-			// Grab the error if there was one
-			$error = error_get_last();
+        // Create namespace directory if it doesn't exist
+        if (! file_exists($path) or ! is_dir($path)) {
+            @mkdir($path, DIR_WRITE_MODE, true);
 
-			// If we had trouble creating the directory, it's likely due to a
-			// concurrent process already having created it, so we'll check
-			// to see if that's the case and if not, something else went wrong
-			// and we'll show an error
-			if ( ! is_dir($path) OR ! is_really_writable($path))
-			{
-				trigger_error($error['message'], E_USER_WARNING);
-			}
-			else
-			{
-				// Write an index.html file to ensure no directory indexing
-				write_index_html($path);
-			}
-		}
+            // Grab the error if there was one
+            $error = error_get_last();
 
-		if (write_file($this->_cache_path.$key, serialize($contents)))
-		{
-			@chmod($this->_cache_path.$key, FILE_WRITE_MODE);
-			return TRUE;
-		}
+            // If we had trouble creating the directory, it's likely due to a
+            // concurrent process already having created it, so we'll check
+            // to see if that's the case and if not, something else went wrong
+            // and we'll show an error
+            if (! is_dir($path) or ! is_really_writable($path)) {
+                if (! empty($error)) {
+                    trigger_error($error['message'], E_USER_WARNING);
+                }
+            } else {
+                // Write an index.html file to ensure no directory indexing
+                write_index_html($path);
+            }
+        }
 
-		return FALSE;
-	}
+        if (write_file($this->_cache_path . $key, serialize($contents))) {
+            @chmod($this->_cache_path . $key, FILE_WRITE_MODE);
 
-	/**
-	 * Delete from cache
-	 *
-	 * To clear a particular namespace, pass in the namespace with a trailing
-	 * slash like so:
-	 *
-	 * ee()->cache->delete('/namespace_name/');
-	 *
-	 * @param	string	$key	Key name
-	 * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
-	 *		 for local or global scoping of the cache item
-	 * @return	bool	TRUE on success, FALSE on failure
-	 */
-	public function delete($key, $scope = Cache::LOCAL_SCOPE)
-	{
-		$path = $this->_cache_path.$this->_namespaced_key($key, $scope);
+            return true;
+        }
 
-		// If we are deleting contents of a namespace
-		if (strrpos($key, Cache::NAMESPACE_SEPARATOR, strlen($key) - 1) !== FALSE)
-		{
-			$path .= DIRECTORY_SEPARATOR;
+        return false;
+    }
 
-			if (delete_files($path, TRUE))
-			{
-				// Try to remove the namespace directory; it may not be
-				// removeable on some high traffic sites where the cache fills
-				// back up quickly
-				@rmdir($path);
+    /**
+     * Delete from cache
+     *
+     * To clear a particular namespace, pass in the namespace with a trailing
+     * slash like so:
+     *
+     * ee()->cache->delete('/namespace_name/');
+     *
+     * @param	string	$key	Key name
+     * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
+     *		 for local or global scoping of the cache item
+     * @return	bool	TRUE on success, FALSE on failure
+     */
+    public function delete($key, $scope = Cache::LOCAL_SCOPE)
+    {
+        $path = $this->_cache_path . $this->_namespaced_key($key, $scope);
 
-				return TRUE;
-			}
+        // If we are deleting contents of a namespace
+        if (strrpos($key, Cache::NAMESPACE_SEPARATOR, strlen($key) - 1) !== false) {
+            $path .= DIRECTORY_SEPARATOR;
 
-			return FALSE;
-		}
+            if (delete_files($path, true)) {
+                // Try to remove the namespace directory; it may not be
+                // removeable on some high traffic sites where the cache fills
+                // back up quickly
+                @rmdir($path);
 
-		return file_exists($path) ? unlink($path) : FALSE;
-	}
+                return true;
+            }
 
-	/**
-	 * Clean the cache
-	 *
-	 * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
-	 *		 for local or global scoping of the cache item
-	 * @return	bool	TRUE on success, FALSE on failure
-	 */
-	public function clean($scope = Cache::LOCAL_SCOPE)
-	{
-		$path = $this->_cache_path.$this->_namespaced_key('', $scope);
+            return false;
+        }
 
-		// Delete all files in cache directory, excluding .htaccess and index.html
-		$result = delete_files(
-			$path,
-			TRUE,
-			0,
-			// Only skip htaccess for the global scope
-			($scope == Cache::GLOBAL_SCOPE) ? array('.htaccess') : array()
-		);
+        return file_exists($path) ? unlink($path) : false;
+    }
 
-		// Replace index.html
-		write_index_html($path);
+    /**
+     * Clean the cache
+     *
+     * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
+     *		 for local or global scoping of the cache item
+     * @return	bool	TRUE on success, FALSE on failure
+     */
+    public function clean($scope = Cache::LOCAL_SCOPE)
+    {
+        $path = $this->_cache_path . $this->_namespaced_key('', $scope);
 
-		return $result;
-	}
+        // Delete all files in cache directory, excluding .htaccess and index.html
+        $result = delete_files(
+            $path,
+            true,
+            0,
+            // Only skip htaccess for the global scope
+            ($scope == Cache::GLOBAL_SCOPE) ? array('.htaccess') : array()
+        );
 
-	/**
-	 * Cache Info
-	 *
-	 * @return	mixed	array containing cache info on success OR FALSE on failure
-	 */
-	public function cache_info()
-	{
-		return get_dir_file_info($this->_cache_path, FALSE);
-	}
+        // Replace index.html
+        write_index_html($path);
 
-	/**
-	 * Get Cache Metadata
-	 *
-	 * @param	string	$key	Key to get cache metadata on
-	 * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
-	 *		 for local or global scoping of the cache item
-	 * @return	mixed	cache item metadata
-	 */
-	public function get_metadata($key, $scope = Cache::LOCAL_SCOPE)
-	{
-		$key = $this->_namespaced_key($key, $scope);
+        return $result;
+    }
 
-		if ( ! file_exists($this->_cache_path.$key))
-		{
-			return FALSE;
-		}
+    /**
+     * Cache Info
+     *
+     * @return	mixed	array containing cache info on success OR FALSE on failure
+     */
+    public function cache_info()
+    {
+        return get_dir_file_info($this->_cache_path, false);
+    }
 
-		$data = unserialize(file_get_contents($this->_cache_path.$key));
+    /**
+     * Get Cache Metadata
+     *
+     * @param	string	$key	Key to get cache metadata on
+     * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
+     *		 for local or global scoping of the cache item
+     * @return	mixed	cache item metadata
+     */
+    public function get_metadata($key, $scope = Cache::LOCAL_SCOPE)
+    {
+        $key = $this->_namespaced_key($key, $scope);
 
-		if (is_array($data))
-		{
-			$mtime = filemtime($this->_cache_path.$key);
+        if (! file_exists($this->_cache_path . $key)) {
+            return false;
+        }
 
-			if ( ! isset($data['ttl']))
-			{
-				return FALSE;
-			}
+        $data = unserialize(file_get_contents($this->_cache_path . $key));
 
-			return array(
-				'expire'	=> $mtime + $data['ttl'],
-				'mtime'		=> $mtime,
-				'data'		=> $data['data']
-			);
-		}
+        if (is_array($data)) {
+            $mtime = filemtime($this->_cache_path . $key);
 
-		return FALSE;
-	}
+            if (! isset($data['ttl'])) {
+                return false;
+            }
 
-	/**
-	 * Is supported
-	 *
-	 * In the file driver, check to see that the cache directory is indeed writable
-	 *
-	 * @return	bool
-	 */
-	public function is_supported()
-	{
-		return is_really_writable($this->_cache_path);
-	}
+            return array(
+                'expire' => $mtime + $data['ttl'],
+                'mtime' => $mtime,
+                'data' => $data['data']
+            );
+        }
 
-	/**
-	 * If a namespace was specified, prefixes the key with it
-	 *
-	 * For the file driver, namespaces will be actual folders
-	 *
-	 * @param	string	$key	Key name
-	 * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
-	 *		 for local or global scoping of the cache item
-	 * @return	string	Key prefixed with namespace
-	 */
-	protected function _namespaced_key($key, $scope = Cache::LOCAL_SCOPE)
-	{
-		// Make sure the key doesn't begin or end with a namespace separator or
-		// directory separator to force the last segment of the key to be the
-		// file name and so we can prefix a directory reliably
-		$key = trim($key, Cache::NAMESPACE_SEPARATOR.DIRECTORY_SEPARATOR);
+        return false;
+    }
 
-		// Sometime class names are used as keys, replace class namespace
-		// slashes with underscore to prevent filesystem issues
-		$key = str_replace('\\', '_', $key);
+    /**
+     * Is supported
+     *
+     * In the file driver, check to see that the cache directory is indeed writable
+     *
+     * @return	bool
+     */
+    public function is_supported()
+    {
+        return is_really_writable($this->_cache_path);
+    }
 
-		// Replace all namespace separators with the system's directory separator
-		$key = str_replace(Cache::NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $key);
+    /**
+     * Checks whether cache file is writable
+     *
+     * @return	bool
+     */
+    public function is_writable($key, $scope = Cache::LOCAL_SCOPE)
+    {
+        $path = $this->_cache_path . $this->_namespaced_key($key, $scope);
+        return is_really_writable($path);
+    }
 
-		// For locally-cached items, separate by site name
-		if ($scope == Cache::LOCAL_SCOPE)
-		{
-			$key = (!empty(ee()->config->item('site_short_name')) ? ee()->config->item('site_short_name') . DIRECTORY_SEPARATOR : '') . $key;
-		}
+    /**
+     * If a namespace was specified, prefixes the key with it
+     *
+     * For the file driver, namespaces will be actual folders
+     *
+     * @param	string	$key	Key name
+     * @param	const	$scope	Cache::LOCAL_SCOPE or Cache::GLOBAL_SCOPE
+     *		 for local or global scoping of the cache item
+     * @return	string	Key prefixed with namespace
+     */
+    protected function _namespaced_key($key, $scope = Cache::LOCAL_SCOPE)
+    {
+        // Make sure the key doesn't begin or end with a namespace separator or
+        // directory separator to force the last segment of the key to be the
+        // file name and so we can prefix a directory reliably
+        $key = trim($key, Cache::NAMESPACE_SEPARATOR . DIRECTORY_SEPARATOR);
 
-		return $key;
-	}
+        // Sometime class names are used as keys, replace class namespace
+        // slashes with underscore to prevent filesystem issues
+        $key = str_replace('\\', '_', $key);
+
+        // Replace all namespace separators with the system's directory separator
+        $key = str_replace(Cache::NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $key);
+
+        // For locally-cached items, separate by site name
+        if ($scope == Cache::LOCAL_SCOPE) {
+            $key = (!empty(ee()->config->item('site_short_name')) ? ee()->config->item('site_short_name') . DIRECTORY_SEPARATOR : '') . $key;
+        }
+
+        return $key;
+    }
 }
 
 // EOF

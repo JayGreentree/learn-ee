@@ -2,81 +2,87 @@
 
 $lang = array(
 
-'alpha' => 'This field may only contain alphabetical characters.',
+    'alpha' => 'This field may only contain alphabetical characters.',
 
-'alpha_dash' => 'This field may only contain alpha-numeric characters, underscores, and dashes.',
+    'alpha_dash' => 'This field may only contain alpha-numeric characters, underscores, and dashes.',
 
-'alpha_dash_period' => 'This field may only contain alpha-numeric characters, underscores, dashes, periods, and emojis.',
+    'alpha_dash_period' => 'This field may only contain alpha-numeric characters, underscores, dashes, periods, and emojis.',
 
-'alpha_dash_space' => 'This field may only contain alpha-numeric characters, underscores, dashes, and spaces.',
+    'alpha_dash_space' => 'This field may only contain alpha-numeric characters, underscores, dashes, and spaces.',
 
-'alpha_numeric' => 'This field may only contain alpha-numeric characters.',
+    'alpha_numeric' => 'This field may only contain alpha-numeric characters.',
 
-'boolean' => 'This field must be a boolean value.',
+    'boolean' => 'This field must be a boolean value.',
 
-'enum' => 'This field must be one of: %s.',
+    'enum' => 'This field must be one of: %s.',
 
-'exact_length' => 'This field must be exactly %s characters in length.',
+    'exact_length' => 'This field must be exactly %s characters in length.',
 
-'greater_than' => 'This field must be greater than: %s',
+    'greater_than' => 'This field must be greater than: %s',
 
-'hex_color' => 'This field must contain a valid hex color code.',
+    'greater_or_equal_than' => 'This field must be greater or equal than: %s',
 
-'integer' => 'This field must contain an integer.',
+    'hex_color' => 'This field must contain a valid hex color code.',
 
-'invalid_path' => 'This path is either invalid or not writable.',
+    'integer' => 'This field must contain an integer.',
 
-'invalid_xss_check' => 'The data you submitted did not pass our security check. If you did not intend to submit this form, please <a href="%s">click here</a> and no settings will be changed.',
+    'invalid_path' => 'This path is either invalid or not writable.',
 
-'is_natural' => 'This field must contain only positive numbers.',
+    'invalid_xss_check' => 'The data you submitted did not pass our security check. If you did not intend to submit this form, please <a href="%s">click here</a> and no settings will be changed.',
 
-'is_natural_no_zero' => 'This field must contain a number greater than zero.',
+    'is_natural' => 'This field must contain only positive numbers.',
 
-'is_numeric' => 'This field must contain only numeric characters.',
+    'is_natural_no_zero' => 'This field must contain a number greater than zero.',
 
-'less_than' => 'This field must be less than: %s',
+    'is_numeric' => 'This field must contain only numeric characters.',
 
-'limithtml' => 'This field can only contain the following HTML tags: %s. If you want to use angle brackets < in your text, but not HTML please try &amp;lt; to replace < and &amp;gt; to replace >.',
+    'less_than' => 'This field must be less than: %s',
 
-'matches' => 'This field does not match the %s field.',
+    'less_or_equal_than' => 'This field must be less or equal than: %s',
 
-'max_length' => 'This field cannot exceed %s characters in length.',
+    'limithtml' => 'This field can only contain the following HTML tags: %s. If you want to use angle brackets < in your text, but not HTML please try &amp;lt; to replace < and &amp;gt; to replace >.',
 
-'min_length' => 'This field must be at least %s characters in length.',
+    'matches' => 'This field does not match the %s field.',
 
-'no_html' => 'This field cannot contain HTML.',
+    'max_length' => 'This field cannot exceed %s characters in length.',
 
-'numeric' => 'This field must contain only numbers.',
+    'min_length' => 'This field must be at least %s characters in length.',
 
-'regex' => 'This field must match the regular expression `%s`.',
+    'no_html' => 'This field cannot contain HTML.',
 
-'required' => 'This field is required.',
+    'numeric' => 'This field must contain only numbers.',
 
-'unique' => 'This field must be unique.',
+    'regex' => 'This field must match the regular expression `%s`.',
 
-'unique_email' => 'This field must contain a unique email address.',
+    'required' => 'This field is required.',
 
-'valid_base64' => 'This field may only contain characters in the base64 character set (alpha-numeric, slash, plus, and equals).',
+    'starts_with' => 'This field should start with <code>%s</code>.',
 
-'valid_email' => 'This field must contain a valid email address.',
+    'not_starts_with' => 'This field should not start with <code>%s</code>.',
 
-'valid_emails' => 'This field must contain all valid email addresses.',
+    'unique' => 'This field must be unique.',
 
-'valid_ip' => 'This field must contain a valid IP.',
+    'unique_email' => 'This field must contain a unique email address.',
 
-'valid_url' => 'This field must contain a valid URL.',
+    'valid_base64' => 'This field may only contain characters in the base64 character set (alpha-numeric, slash, plus, and equals).',
 
+    'valid_email' => 'This field must contain a valid email address.',
 
-/* Legacy form validation lib */
-'file_exists' => 'This path is either invalid or not writable.',
+    'valid_emails' => 'This field must contain all valid email addresses.',
 
-'writable' => 'This path is either invalid or not writable.',
+    'valid_ip' => 'This field must contain a valid IP.',
 
+    'valid_url' => 'This field must contain a valid URL.',
 
-/* special and legacy things */
-'auth_password' => 'The password entered is incorrect.',
+    /* Legacy form validation lib */
+    'file_exists' => 'This path is either invalid or not writable.',
 
-'isset' => 'The %s field must have a value.',
+    'writable' => 'This path is either invalid or not writable.',
+
+    /* special and legacy things */
+    'auth_password' => 'The password entered is incorrect.',
+
+    'isset' => 'The %s field must have a value.',
 
 );
 

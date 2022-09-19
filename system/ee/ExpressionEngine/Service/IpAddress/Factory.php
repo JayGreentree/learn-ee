@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,17 +13,18 @@ namespace ExpressionEngine\Service\IpAddress;
 /**
  * IP Address Service
  */
-class Factory {
+class Factory
+{
+    /**
+     * Anonymize an IPv4 or IPv6 address.
+     *
+     * @param $address string IP address that must be anonymized
+     * @return string The anonymized IP address. Returns an empty string when the IP address is invalid.
+     */
+    public function anonymize($address)
+    {
+        $anonymizer = new Anonymizer();
 
-	/**
-	 * Anonymize an IPv4 or IPv6 address.
-	 *
-	 * @param $address string IP address that must be anonymized
-	 * @return string The anonymized IP address. Returns an empty string when the IP address is invalid.
-	 */
-	public function anonymize($address)
-	{
-		$anonymizer = new Anonymizer();
-		return $anonymizer->anonymize($address);
-	}
+        return $anonymizer->anonymize($address);
+    }
 }

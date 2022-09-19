@@ -1,14 +1,3 @@
-<a href="https://expressionengine.com/blog/expressionengine-6-public-beta-1" class="dashboard__item dashboard__item--full beta-welcome-banner beta-fade-in" target="_blank">
-  <img src="<?=URL_THEMES?>asset/img/beta-starburst.svg" class="beta-starburst" alt="v6">
-  <div class="v6-wrapper">
-    <img src="<?=URL_THEMES?>asset/img/ee-6.svg" class="v6 beta-puff-in-center" alt="v6">
-  </div>
-  <div class="beta-copy">
-    <img src="<?=URL_THEMES?>asset/img/ee-logotype-white.svg" class="logotype beta-slide-in-top" alt="ExpressionEngine">
-    <span class="beta-intro beta-slide-in-bottom">Welcome to the beta!</span>
-  </div>
-</a>
-
 <?php
 ee()->load->helper('text');
 $menu = ee()->menu->generate_menu();
@@ -26,18 +15,18 @@ if ($can_create_channels || count($menu['channels']['edit'])): ?>
 
 		<ul class="simple-list">
 			<?php
-			if(!empty($number_of_channels)):
-				$assigned_channels = ee()->functions->fetch_assigned_channels();
-				if (!empty($assigned_channels)):
-					$entries = ee('Model')->get('ChannelEntry')
-					->fields('entry_id', 'title', 'Author.screen_name', 'entry_date')
-					->filter('channel_id', 'IN', $assigned_channels)
-					->order('entry_date', 'DESC')
-					->limit(7)
-					->all();
+            if (!empty($number_of_channels)):
+                $assigned_channels = ee()->functions->fetch_assigned_channels();
+                if (!empty($assigned_channels)):
+                    $entries = ee('Model')->get('ChannelEntry')
+                        ->fields('entry_id', 'title', 'Author.screen_name', 'entry_date')
+                        ->filter('channel_id', 'IN', $assigned_channels)
+                        ->filter('site_id', ee()->config->item('site_id'))
+                        ->order('entry_date', 'DESC')
+                        ->limit(7)
+                        ->all();
 
-
-					foreach($entries as $entry): ?>
+                    foreach ($entries as $entry): ?>
 					<li>
 						<a class="normal-link" href="<?=ee('CP/URL')->make('publish/edit/entry/' . $entry->entry_id);?>">
               <?= $entry->title; ?>
@@ -45,8 +34,8 @@ if ($can_create_channels || count($menu['channels']['edit'])): ?>
 						</a>
 					</li>
 					<?php endforeach;
-				endif;
-			endif; ?>
+                endif;
+            endif; ?>
 		</ul>
 	</div>
 <?php endif; ?>
@@ -59,10 +48,10 @@ if ($can_create_channels || count($menu['channels']['edit'])): ?>
 			<div>
 				<div class="button-group">
 					<?php
-					$pending_count = ee('Model')->get('Member')->filter('role_id', 4)->count();
+                    $pending_count = ee('Model')->get('Member')->filter('role_id', 4)->count();
 
-					if ($pending_count > 0):
-					?>
+                    if ($pending_count > 0):
+                    ?>
 					<a href="<?=ee('CP/URL')->make('members/pending')?>" class="button button--default button--small"><?=$pending_count?> <?=lang('pending')?></a>
 					<?php endif; ?>
 
@@ -73,15 +62,15 @@ if ($can_create_channels || count($menu['channels']['edit'])): ?>
 
 		<ul class="simple-list">
 			<?php
-				$recent_members = ee('Model')->get('Member')
-				->order('last_visit', 'DESC')
-				->limit(7)
-				->all();
+                $recent_members = ee('Model')->get('Member')
+                    ->order('last_visit', 'DESC')
+                    ->limit(7)
+                    ->all();
 
-				foreach($recent_members as $member):
-					$last_visit = ($member->last_visit) ? ee()->localize->human_time($member->last_visit) : '--';
-					$avatar_url = ($member->avatar_filename) ? ee()->config->slash_item('avatar_url') . $member->avatar_filename : (URL_THEMES . 'asset/img/default-avatar.png');
-				?>
+                foreach ($recent_members as $member):
+                    $last_visit = ($member->last_visit) ? ee()->localize->human_time($member->last_visit) : '--';
+                    $avatar_url = ($member->avatar_filename) ? ee()->config->slash_item('avatar_url') . $member->avatar_filename : (URL_THEMES . 'asset/img/default-avatar.png');
+                ?>
 				<li>
 					<a href="<?=ee('CP/URL')->make('members/profile/settings&id=' . $member->member_id);?>" class="d-flex align-items-center normal-link">
 						<img src="<?=$avatar_url?>" class="avatar-icon add-mrg-right" alt="">
@@ -101,31 +90,36 @@ if ($can_create_channels || count($menu['channels']['edit'])): ?>
 		<div class="widget__title-bar">
 			<h2 class="widget__title"><?=lang('comments'); ?></h2>
 
-			<div>
+			<div class="button-group button-group-xsmall">
 				<?php if ($can_edit_comments): ?>
-					<a class="button button--default button--small" href="<?=ee('CP/URL', 'publish/comments')?>"><?=$number_of_new_comments?> <?=lang('new_comments')?></a>
+					<a class="button button--default button--small" href="<?=ee('CP/URL')->make('publish/comments', ['filter_by_date' => ee()->localize->now - ee()->session->userdata['last_visit']])?>"><?=$number_of_new_comments?> <?=lang('new_comments')?></a>
+					<a class="button button--default button--small" href="<?=ee('CP/URL', 'publish/comments')?>"><?=lang('view_all')?></a>
 				<?php endif; ?>
 			</div>
 		</div>
 
 		<ul class="simple-list">
 			<?php
-			$comments = ee('Model')->get('Comment')
-			->filter('site_id', ee()->config->item('site_id'))
-			->order('comment_date', 'DESC')
-			->limit(3)
-			->all();
+            $comments = ee('Model')->get('Comment')
+                ->filter('site_id', ee()->config->item('site_id'))
+                ->order('comment_date', 'DESC')
+                ->limit(3)
+                ->all();
 
-			foreach($comments as $comment):
-			?>
+            foreach ($comments as $comment):
+            ?>
 			<li>
 				<div class="d-flex">
 					<div>
 						<p class="meta-info">
-							<a href="<?=ee('CP/URL')->make('cp/members')?>"><?=$comment->name?></a>
+							<?php if ($comment->author_id) : ?>
+							<a href="<?=ee('CP/URL')->make('cp/members/profile&id=' . $comment->author_id)?>"><?=$comment->name?></a>
+							<?php else: ?>
+							<?=$comment->name?>
+							<?php endif; ?>
 							<?=lang('commented_on')?> <a href="<?=ee('CP/URL')->make('publish/edit/entry/' . $comment->getEntry()->entry_id)?>"><?=$comment->getEntry()->title?></a>
 						</p>
-						<p><?=ellipsize($comment->comment, 150)?></p>
+						<p><a href="<?=ee('CP/URL')->make('cp/publish/comments/entry/' . $comment->entry_id)?>" class="normal-link"><?=ellipsize($comment->comment, 150)?></a></p>
 					</div>
 				</div>
 			</li>
@@ -168,7 +162,7 @@ if ($can_create_channels || count($menu['channels']['edit'])): ?>
 		<div class="list-item list-item--action">
 			<a href="<?=ee('CP/URL')->make('addons/settings/spam')?>" class="list-item__content">
 				<b><?=$number_of_new_spam?></b> <?=lang('new_spam') ?> <?=lang('since_last_login')?>
-				<i class="fas fa-chevron-right float-right" style="margin-top: 2px;"></i>
+				<i class="fal fa-chevron-right float-right" style="margin-top: 2px;"></i>
 			</a>
 		</div>
 		<?php else: ?>
@@ -182,7 +176,7 @@ if ($can_create_channels || count($menu['channels']['edit'])): ?>
 		<ul class="simple-list">
 		<?php foreach ($trapped_spam as $trapped): ?>
 			<li><a href="<?=ee('CP/URL')->make('addons/settings/spam', array('content_type' => $trapped->content_type))?>">
-				<b><?=$trapped->total_trapped?></b> <?=lang($trapped->content_type)?> <?=lang('spam')?>
+			<b class="ml-s"><?=$trapped->total_trapped?></b>&nbsp; <?php if ($trapped->total_trapped > 1): ?><?=lang("$trapped->content_type"."s")?><?php else: ?><?=lang($trapped->content_type)?><?php endif ?> <?=lang('marked_as')?> <?=lang('spam')?>
 				</a>
 			</li>
 		<?php endforeach;?>

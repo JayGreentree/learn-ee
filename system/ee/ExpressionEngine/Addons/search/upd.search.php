@@ -4,28 +4,28 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
 /**
  * Search Module update class
  */
-class Search_upd {
+class Search_upd
+{
+    public $version = '2.3.0';
 
-	var $version = '2.2.2';
-
-	/**
-	 * Module Installer
-	 *
-	 * @access	public
-	 * @return	bool
-	 */
-	function install()
-	{
-		$sql[] = "INSERT INTO exp_modules (module_name, module_version, has_cp_backend) VALUES ('Search', '$this->version', 'n')";
-		$sql[] = "INSERT INTO exp_actions (class, method, csrf_exempt) VALUES ('Search', 'do_search', 1)";
-		$sql[] = "CREATE TABLE IF NOT EXISTS exp_search (
+    /**
+     * Module Installer
+     *
+     * @access	public
+     * @return	bool
+     */
+    public function install()
+    {
+        $sql[] = "INSERT INTO exp_modules (module_name, module_version, has_cp_backend) VALUES ('Search', '$this->version', 'n')";
+        $sql[] = "INSERT INTO exp_actions (class, method, csrf_exempt) VALUES ('Search', 'do_search', 1)";
+        $sql[] = "CREATE TABLE IF NOT EXISTS exp_search (
 					 search_id varchar(32) NOT NULL,
 					 site_id INT(4) NOT NULL DEFAULT 1,
 					 search_date int(10) NOT NULL,
@@ -37,11 +37,12 @@ class Search_upd {
 					 query mediumtext NULL DEFAULT NULL,
 					 custom_fields mediumtext NULL DEFAULT NULL,
 					 result_page varchar(70) NOT NULL,
+					 no_result_page varchar(70),
 					 PRIMARY KEY `search_id` (`search_id`),
 					 KEY `site_id` (`site_id`)
-		 		) DEFAULT CHARACTER SET ".ee()->db->escape_str(ee()->db->char_set)." COLLATE ".ee()->db->escape_str(ee()->db->dbcollat);
+		 		) DEFAULT CHARACTER SET " . ee()->db->escape_str(ee()->db->char_set) . " COLLATE " . ee()->db->escape_str(ee()->db->dbcollat);
 
-		$sql[] = "CREATE TABLE IF NOT EXISTS exp_search_log (
+        $sql[] = "CREATE TABLE IF NOT EXISTS exp_search_log (
 					id int(10) NOT NULL auto_increment,
 					site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 					member_id int(10) unsigned NOT NULL,
@@ -52,117 +53,118 @@ class Search_upd {
 					search_terms varchar(200) NOT NULL,
 					PRIMARY KEY `id` (`id`),
 					KEY `site_id` (`site_id`)
-				) DEFAULT CHARACTER SET ".ee()->db->escape_str(ee()->db->char_set)." COLLATE ".ee()->db->escape_str(ee()->db->dbcollat);
+				) DEFAULT CHARACTER SET " . ee()->db->escape_str(ee()->db->char_set) . " COLLATE " . ee()->db->escape_str(ee()->db->dbcollat);
 
-		foreach ($sql as $query)
-		{
-			ee()->db->query($query);
-		}
+        foreach ($sql as $query) {
+            ee()->db->query($query);
+        }
 
-		return TRUE;
-	}
+        return true;
+    }
 
+    /**
+     * Module Uninstaller
+     *
+     * @access	public
+     * @return	bool
+     */
+    public function uninstall()
+    {
+        ee()->load->dbforge();
 
-	/**
-	 * Module Uninstaller
-	 *
-	 * @access	public
-	 * @return	bool
-	 */
-	function uninstall()
-	{
-		ee()->load->dbforge();
+        $query = ee()->db->query("SELECT module_id FROM exp_modules WHERE module_name = 'Search'");
 
-		$query = ee()->db->query("SELECT module_id FROM exp_modules WHERE module_name = 'Search'");
+        $sql[] = "DELETE FROM exp_module_member_roles WHERE module_id = '" . $query->row('module_id') . "'";
+        $sql[] = "DELETE FROM exp_modules WHERE module_name = 'Search'";
+        $sql[] = "DELETE FROM exp_actions WHERE class = 'Search'";
+        $sql[] = "DELETE FROM exp_actions WHERE class = 'Search_mcp'";
 
-		$sql[] = "DELETE FROM exp_module_member_roles WHERE module_id = '".$query->row('module_id') ."'";
-		$sql[] = "DELETE FROM exp_modules WHERE module_name = 'Search'";
-		$sql[] = "DELETE FROM exp_actions WHERE class = 'Search'";
-		$sql[] = "DELETE FROM exp_actions WHERE class = 'Search_mcp'";
+        ee()->dbforge->drop_table('search');
+        ee()->dbforge->drop_table('search_log');
 
-		ee()->dbforge->drop_table('search');
-		ee()->dbforge->drop_table('search_log');
+        foreach ($sql as $query) {
+            ee()->db->query($query);
+        }
 
-		foreach ($sql as $query)
-		{
-			ee()->db->query($query);
-		}
+        return true;
+    }
 
-		return TRUE;
-	}
+    /**
+     * Module Updater
+     *
+     * @access	public
+     * @return	bool
+     */
+    public function update($current = '')
+    {
+        if (version_compare($current, '2.1', '<')) {
+            ee()->load->library('utf8_db_convert');
 
+            ee()->utf8_db_convert->do_conversion(array(
+                'exp_search_log', 'exp_search'
+            ));
+        }
 
-	/**
-	 * Module Updater
-	 *
-	 * @access	public
-	 * @return	bool
-	 */
+        if (version_compare($current, '2.2', '<')) {
+            // Update ip_address column
+            ee()->load->dbforge();
 
-	function update($current='')
-	{
-		if (version_compare($current, '2.1', '<'))
-		{
-			ee()->load->library('utf8_db_convert');
+            $tables = array('search', 'search_log');
 
-			ee()->utf8_db_convert->do_conversion(array(
-				'exp_search_log', 'exp_search'
-			));
-		}
+            foreach ($tables as $table) {
+                $column_settings = array(
+                    'ip_address' => array(
+                        'name' => 'ip_address',
+                        'type' => 'varchar',
+                        'constraint' => '45',
+                        'default' => '0',
+                        'null' => false
+                    )
+                );
 
-		if (version_compare($current, '2.2', '<'))
-		{
-			// Update ip_address column
-			ee()->load->dbforge();
+                if ($table == 'search') {
+                    unset($column_settings['ip_address']['default']);
+                }
 
-			$tables = array('search', 'search_log');
+                ee()->dbforge->modify_column($table, $column_settings);
+            }
+        }
 
-			foreach ($tables as $table)
-			{
-				$column_settings = array(
-					'ip_address' => array(
-						'name' 			=> 'ip_address',
-						'type' 			=> 'varchar',
-						'constraint'	=> '45',
-						'default'		=> '0',
-						'null'			=> FALSE
-					)
-				);
+        if (version_compare($current, '2.2.1', '<')) {
+            ee()->load->library('smartforge');
 
-				if ($table == 'search')
-				{
-					unset($column_settings['ip_address']['default']);
-				}
+            $fields = array(
+                'site_id' => array('type' => 'int',		'constraint' => '4',	'null' => false,	'default' => 1),
+                'per_page' => array('type' => 'tinyint',	'constraint' => '3',	'unsigned' => true,	'null' => false),
+            );
 
-				ee()->dbforge->modify_column($table, $column_settings);
-			}
-		}
+            ee()->smartforge->modify_column('search', $fields);
 
-		if (version_compare($current, '2.2.1', '<'))
-		{
-			ee()->load->library('smartforge');
+            ee()->smartforge->add_key('search', 'site_id');
+        }
 
-			$fields = array(
-				'site_id'		=> array('type' => 'int',		'constraint' => '4',	'null' => FALSE,	'default' => 1),
-				'per_page'		=> array('type' => 'tinyint',	'constraint' => '3',	'unsigned' => TRUE,	'null' => FALSE),
-			);
+        if (version_compare($current, '2.2.2', '<')) {
+            // Make searches exempt from CSRF check.
+            ee()->db->where('class', 'Search')
+                ->where('method', 'do_search')
+                ->update('actions', array('csrf_exempt' => 1));
+        }
 
-			ee()->smartforge->modify_column('search', $fields);
+        if (version_compare($current, '2.3', '<')) {
+            ee()->load->library('smartforge');
 
-			ee()->smartforge->add_key('search', 'site_id');
-		}
+            $fields = array(
+                'no_result_page' => array(
+                    'type' => 'varchar',
+                    'constraint' => '70',
+                )
+            );
 
-		if (version_compare($current, '2.2.2', '<'))
-		{
-			// Make searches exempt from CSRF check.
-			ee()->db->where('class', 'Search')
-				->where('method', 'do_search')
-				->update('actions', array('csrf_exempt' => 1));
-		}
+            ee()->smartforge->add_column('search', $fields);
+        }
 
-		return TRUE;
-	}
-
+        return true;
+    }
 }
 // END CLASS
 

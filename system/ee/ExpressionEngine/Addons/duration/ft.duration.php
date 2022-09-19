@@ -4,314 +4,263 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
+
+use ExpressionEngine\Addons\Duration\Traits\DurationTrait;
 
 /**
  * Duration Fieldtype
  */
-class Duration_Ft extends EE_Fieldtype {
+class Duration_Ft extends EE_Fieldtype
+{
 
-	/**
-	 * @var array $info Legacy Fieldtype info array
-	 */
-	public $info = array(
-		'name'    => 'Duration',
-		'version' => '1.0.0'
-	);
+    use DurationTrait;
 
-	/**
-	 * @var bool $has_array_data Whether or not this Fieldtype is setup to parse as a tag pair
-	 */
-	public $has_array_data = FALSE;
+    /**
+     * @var array $info Legacy Fieldtype info array
+     */
+    public $info = array(
+        'name' => 'Duration',
+        'version' => '1.0.0'
+    );
 
-	/**
-	 * Validate Field
-	 *
-	 * @param  array  $data  Field data
-	 * @return mixed  TRUE when valid, an error string when not
-	 */
-	public function validate($data)
-	{
-		ee()->lang->loadfile('fieldtypes');
+    /**
+     * @var bool $has_array_data Whether or not this Fieldtype is setup to parse as a tag pair
+     */
+    public $has_array_data = false;
 
-		if ($data == '')
-		{
-			return TRUE;
-		}
+    public $size = 'small';
 
-		if (strpos($data, ':'))
-		{
-			$data = $this->convertFromColonNotation($data);
-		}
+    /**
+     * A list of operators that this fieldtype supports
+     *
+     * @var array
+     */
+    public $supportedEvaluationRules = ['isEmpty', 'isNotEmpty', 'durationLessThan', 'durationLessOrEqualThan', 'equal', 'notEqual', 'durationGreaterOrEqualThan', 'durationGreaterThan'];
 
-		if ( ! is_numeric($data))
-		{
-			return lang('numeric');
-		}
+    public $defaultEvaluationRule = 'isNotEmpty';
 
-		return TRUE;
-	}
+    /**
+     * Validate Field
+     *
+     * @param  array  $data  Field data
+     * @return mixed  TRUE when valid, an error string when not
+     */
+    public function validate($data)
+    {
+        ee()->lang->loadfile('fieldtypes');
 
-	/**
-	 * Save Field
-	 *
-	 * @param  array   $data  Field data
-	 * @return string  Prepped Form field
-	 */
-	public function save($data)
-	{
-		// Make sure empty is truly empty
-		if (trim($data) == '')
-		{
-			$data = NULL;
-		}
+        if ($data == '') {
+            return true;
+        }
 
-		return $data;
-	}
+        if (!preg_match('/^[0-9:]+$/', $data)) {
+            return sprintf(
+                lang('valid_duration'),
+                lang('duration_ft_' . $this->settings['units']),
+                $this->getColonNotationFormat()
+            );
+        }
 
-	/**
-	 * Display Field
-	 *
-	 * @param  array   $data  Field data
-	 * @return string  Form field
-	 */
-	public function display_field($data)
-	{
-		ee()->lang->loadfile('fieldtypes');
+        if (strpos($data, ':')) {
+            $data = $this->convertFromColonNotation($data, $this->settings['units']);
+        }
 
-		$field = array(
-			'name'        => $this->field_name,
-			'value'       => $data,
-			'placeholder' => sprintf(
-				lang('duration_ft_placeholder'),
-				lang('duration_ft_'.$this->settings['units']),
-				$this->getColonNotationFormat()
-			),
-		);
+        if (! is_numeric($data)) {
+            return lang('numeric');
+        }
 
-		if ($this->get_setting('field_disabled'))
-		{
-			$field['disabled'] = 'disabled';
-		}
+        return true;
+    }
 
-		return form_input($field);
-	}
+    /**
+     * Save Field
+     *
+     * @param  array   $data  Field data
+     * @return string  Prepped Form field
+     */
+    public function save($data)
+    {
+        // Make sure empty is truly empty
+        if (trim($data) == '') {
+            $data = null;
+        }
 
-	/**
-	 * Replace Tag
-	 *
-	 * @param  string  $data     The URL
-	 * @param  array   $params   Variable tag parameters
-	 * @param  mixed   $tagdata  The tagdata if a var pair, FALSE if not
-	 * @return string  Parsed string
-	 */
-	public function replace_tag($data, $params = array(), $tagdata = FALSE)
-	{
-		if (strpos($data, ':'))
-		{
-			$data = $this->convertFromColonNotation($data);
-		}
-		else
-		{
-			$data = $this->applyMultiplier($data);
-		}
+        return $data;
+    }
 
-		$data = ee('Format')->make('Number', $data)->duration($params);
+    /**
+     * Display Field
+     *
+     * @param  array   $data  Field data
+     * @return string  Form field
+     */
+    public function display_field($data)
+    {
+        ee()->lang->loadfile('fieldtypes');
 
-		// Duration formatter could return one of ## sec., ##:##, or ##:##:##
-		$parts = explode(':', $data);
+        $field = array(
+            'name' => $this->field_name,
+            'value' => $data,
+            'placeholder' => sprintf(
+                lang('duration_ft_placeholder'),
+                lang('duration_ft_' . $this->settings['units']),
+                $this->getColonNotationFormat()
+            ),
+        );
 
-		if (isset($params['format']))
-		{
-			switch (count($parts))
-			{
-				// hh:mm:ss
-				case 3:
-					$units = ['%h' => $parts[0], '%m' => $parts[1], '%s' => $parts[2]];
-					break;
-				// mm:ss
-				case 2:
-					$units = ['%h' => 0, '%m' => $parts[0], '%s' => $parts[1]];
-					break;
-				// ss sec.
-				case 1:
-				default:
-					// cast to int because the Number formatter will include a seconds abbreviation based on the locale
-					$units = ['%h' => 0, '%m' => 0, '%s' => (int) $parts[0]];
-					break;
-			}
+        if ($this->get_setting('field_disabled')) {
+            $field['disabled'] = 'disabled';
+        }
 
-			$data = str_replace(array_keys($units), array_values($units), $params['format']);
-		}
-		elseif (isset($params['include_seconds']) && get_bool_from_string($params['include_seconds']) === FALSE)
-		{
-			array_pop($parts);
-			$data = implode(':', $parts);
-		}
+        return form_input($field);
+    }
 
-		return $data;
-	}
+    /**
+     * Replace Tag
+     *
+     * @param  string  $data     The URL
+     * @param  array   $params   Variable tag parameters
+     * @param  mixed   $tagdata  The tagdata if a var pair, FALSE if not
+     * @return string  Parsed string
+     */
+    public function replace_tag($data, $params = array(), $tagdata = false)
+    {
+        $data = $this->convertDurationToSeconds($data, $this->settings['units']);
 
-	/**
-	 * Display Settings
-	 *
-	 * @param  array  $data  Field Settings
-	 * @return array  Field options
-	 */
-	public function display_settings($data)
-	{
-		ee()->lang->loadfile('fieldtypes');
+        $data = ee('Format')->make('Number', $data)->duration($params);
 
-		$settings = array(
-			array(
-				'title' => 'duration_ft_units',
-				'desc' => 'duration_ft_units_desc',
-				'fields' => array(
-					'units' => array(
-						'type' => 'radio',
-						'choices' => $this->getUnits(),
-						'value' => (isset($data['units'])) ? $data['units'] : 'minutes',
-						'required' => TRUE
-					)
-				)
-			),
-		);
+        // Duration formatter could return one of ## sec., ##:##, or ##:##:##
+        $parts = explode(':', $data);
 
-		if ($this->content_type() == 'grid')
-		{
-			return array('field_options' => $settings);
-		}
+        if (isset($params['format'])) {
+            switch (count($parts)) {
+                // hh:mm:ss
+                case 3:
+                    $units = ['%h' => $parts[0], '%m' => $parts[1], '%s' => $parts[2]];
 
-		return array('field_options_duration' => array(
-			'label'    => 'field_options',
-			'group'    => 'duration',
-			'settings' => $settings
-		));
-	}
+                    break;
+                // mm:ss
+                case 2:
+                    $units = ['%h' => 0, '%m' => $parts[0], '%s' => $parts[1]];
 
-	/**
-	 * Save Settings
-	 *
-	 * @param  array  $data  Field data
-	 * @return array  Settings to save
-	 */
-	public function save_settings($data)
-	{
-		$defaults = array(
-			'units' => 'minutes',
-		);
+                    break;
+                // ss sec.
+                case 1:
+                default:
+                    // cast to int because the Number formatter will include a seconds abbreviation based on the locale
+                    $units = ['%h' => 0, '%m' => 0, '%s' => (int) $parts[0]];
 
-		$all = array_merge($defaults, $data);
+                    break;
+            }
 
-		return array_intersect_key($all, $defaults);
-	}
+            $data = str_replace(array_keys($units), array_values($units), $params['format']);
+        } elseif (isset($params['include_seconds']) && get_bool_from_string($params['include_seconds']) === false) {
+            array_pop($parts);
+            $data = implode(':', $parts);
+        }
 
-	/**
-	 * Accept all content types.
-	 *
-	 * @param  string  The name of the content type
-	 * @return bool    Accepts all content types
-	 */
-	public function accepts_content_type($name)
-	{
-		return TRUE;
-	}
+        return $data;
+    }
 
-	/**
-	 * Get Units options
-	 *
-	 * @return array Units options
-	 */
-	private function getUnits()
-	{
-		return [
-			'seconds' => lang('duration_ft_seconds'),
-			'minutes' => lang('duration_ft_minutes'),
-			'hours' => lang('duration_ft_hours'),
-		];
-	}
+    /**
+     * Display Settings
+     *
+     * @param  array  $data  Field Settings
+     * @return array  Field options
+     */
+    public function display_settings($data)
+    {
+        ee()->lang->loadfile('fieldtypes');
 
-	/**
-	 * Convert from ##:##:## notation
-	 * @param  string $duration Duration, in ##:##:## notation
-	 * @return int Duration, in terms of the field's units
-	 */
-	private function convertFromColonNotation($duration)
-	{
-		$parts = explode(':', $duration);
+        $settings = array(
+            array(
+                'title' => 'duration_ft_units',
+                'desc' => 'duration_ft_units_desc',
+                'fields' => array(
+                    'units' => array(
+                        'type' => 'radio',
+                        'choices' => $this->getUnits(),
+                        'value' => (isset($data['units'])) ? $data['units'] : 'minutes',
+                        'required' => true
+                    )
+                )
+            ),
+        );
 
-		switch (count($parts))
-		{
-			// hh:mm:ss
-			case 3:
-				$seconds = ($parts[0] * 3600) + ($parts[1] * 60) + $parts[2];
-				break;
-			// mm:ss
-			case 2:
-				$seconds = ($parts[0] * 60) + $parts[1];
+        if ($this->content_type() == 'grid') {
+            return array('field_options' => $settings);
+        }
 
-				// if they input ##:## with a "minutes" field, the implied format is hh:mm rather than mm:ss
-				if ($this->settings['units'] == 'minutes')
-				{
-					$seconds = $seconds * 60;
-				}
-				break;
-			// ss
-			case 1:
-			default:
-				$seconds = $parts[0];
-				break;
-		}
+        return array('field_options_duration' => array(
+            'label' => 'field_options',
+            'group' => 'duration',
+            'settings' => $settings
+        ));
+    }
 
-		return $seconds;
-	}
+    /**
+     * Save Settings
+     *
+     * @param  array  $data  Field data
+     * @return array  Settings to save
+     */
+    public function save_settings($data)
+    {
+        $defaults = array(
+            'units' => 'minutes',
+        );
 
-	/**
-	 * Apply a multiplier based on the field's units setting
-	 *
-	 * @param  int $number Number to apply the multiplier to
-	 * @return int Duration, in terms of the field's units
-	 */
-	private function applyMultiplier($number)
-	{
-		switch ($this->settings['units'])
-		{
-			case 'hours':
-				$multiplier = 3600;
-				break;
-			case 'minutes':
-				$multiplier = 60;
-				break;
-			case 'seconds':
-			default:
-				$multiplier = 1;
-				break;
-		}
+        $all = array_merge($defaults, $data);
 
-		return $number * $multiplier;
-	}
+        return array_intersect_key($all, $defaults);
+    }
 
-	/**
-	 * Get the colon notation format based on field's units setting
-	 * e.g. hh:mm, hh:mm:ss, etc.
-	 *
-	 * @return string colon notation format
-	 */
-	private function getColonNotationFormat()
-	{
-		switch ($this->settings['units'])
-		{
-			case 'hours':
-				return lang('duration_ft_hh');
-			case 'minutes':
-				return lang('duration_ft_hhmm');
-			case 'seconds':
-			default:
-				return lang('duration_ft_hhmmss');
-		}
-	}
+    /**
+     * Accept all content types.
+     *
+     * @param  string  The name of the content type
+     * @return bool    Accepts all content types
+     */
+    public function accepts_content_type($name)
+    {
+        return true;
+    }
+
+    /**
+     * Get Units options
+     *
+     * @return array Units options
+     */
+    private function getUnits()
+    {
+        return [
+            'seconds' => lang('duration_ft_seconds'),
+            'minutes' => lang('duration_ft_minutes'),
+            'hours' => lang('duration_ft_hours'),
+        ];
+    }
+
+    /**
+     * Get the colon notation format based on field's units setting
+     * e.g. hh:mm, hh:mm:ss, etc.
+     *
+     * @return string colon notation format
+     */
+    private function getColonNotationFormat()
+    {
+        switch ($this->settings['units']) {
+            case 'hours':
+                return lang('duration_ft_hh');
+            case 'minutes':
+                return lang('duration_ft_hhmm');
+            case 'seconds':
+            default:
+                return lang('duration_ft_hhmmss');
+        }
+    }
 }
 // END CLASS
 

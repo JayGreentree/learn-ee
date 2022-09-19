@@ -2,617 +2,619 @@
 
 $lang = array(
 
-'add_field' => 'Add Field',
+    'add_field' => 'Add Field',
 
-'add_group' => 'Add Group',
+    'add_group' => 'Add Group',
 
-'add_status' => 'Add Status',
+    'add_status' => 'Add Status',
 
-'add_tab' => 'Add Tab',
+    'add_tab' => 'Add Tab',
 
-'assigned_to' => 'assigned to',
+    'assigned_to' => 'assigned to',
 
-'btn_import' => 'Import',
+    'btn_import' => 'Import',
 
-'btn_preview_layout' => 'Preview Layout',
+    'btn_preview_layout' => 'Preview Layout',
 
-'category_groups' => 'Category groups',
+    'category_groups' => 'Category groups',
 
-'category_groups_desc' => 'Assign one or more category groups to this channel.',
+    'category_groups_desc' => 'Assign one or more category groups to this channel.',
 
-'channel' => 'Channel',
+    'channel' => 'Channel',
 
-'channel_form_layouts' => '%s &ndash; Publish Layouts',
+    'channel_form_layouts' => '%s &ndash; Publish Layouts',
 
-'channel_manager' => 'Channels',
+    'channel_manager' => 'Channels',
 
-'channel_module_description' => 'Channel module',
+    'channel_module_description' => 'Channel module',
 
-'channel_module_name' => 'Channel',
+    'channel_module_name' => 'Channel',
 
-'channel_must_be_logged_in' => 'You must be a logged-in member of this site in order to perform this action.',
+    'channel_must_be_logged_in' => 'You must be a logged-in member of this site in order to perform this action.',
 
-'channel_no_action_found' => 'Unable to load the resources needed to create the entry form',
+    'channel_no_action_found' => 'Unable to load the resources needed to create the entry form',
 
-'channel_no_preview_template' => 'A preview template was not specified in your tag',
+    'channel_no_preview_template' => 'A preview template was not specified in your tag',
 
-'channel_not_specified' => 'You must specify a channel in order to use the entry form.',
+    'channel_not_specified' => 'You must specify a channel in order to use the entry form.',
 
-'channel_set_duplicates_error' => 'Import Creates Duplicates',
+    'channel_set_duplicates_error' => 'Import Creates Duplicates',
 
-'channel_set_duplicates_error_desc' => 'This channel set uses names that already exist on your site. Please rename the following items.',
+    'channel_set_duplicates_error_desc' => 'This channel set uses names that already exist on your site. Please rename the following items.',
 
-'channel_set_imported' => 'Channel Imported',
+    'channel_set_imported' => 'Channel Imported',
 
-'channel_set_imported_desc' => 'The channel was successfully imported.',
+    'channel_set_imported_desc' => 'The channel was successfully imported.',
 
-'channel_set_not_exported' => 'Cannot Export Channel Set',
+    'channel_set_not_exported' => 'Cannot Export Channel Set',
 
-'channel_set_not_exported_desc' => 'Not a valid channel.',
+    'channel_set_not_exported_desc' => 'Not a valid channel.',
 
-'channel_set_upload_error' => 'Cannot Import Channel',
+    'channel_set_upload_error' => 'Cannot Import Channel',
 
-'channel_set_upload_error_desc' => 'We were unable to import the channel, please make sure your cache folder is writable.',
+    'channel_set_upload_error_desc' => 'We were unable to import the channel, please make sure your cache folder is writable.',
 
-'channel_set_invalid' => 'Not a valid channel set. Missing channel_set.json file.',
+    'channel_set_filetype_error' => 'Cannot Import Channel',
 
-'channel_set_incompatible' => 'Incompatible channel set. This channel set requires ExpressionEngine %d.0.0 or newer.',
+    'channel_set_filetype_error_desc' => 'We were unable to import the channel; only zip files are supported.',
 
-'channels' => 'Channels',
+    'channel_set_invalid' => 'Not a valid channel set. Missing channel_set.json file.',
 
-'channels_deleted' => 'Channels deleted',
+    'channel_set_incompatible' => 'Incompatible channel set. This channel set requires ExpressionEngine %d.0.0 or newer.',
 
-'channels_deleted_desc' => '%d channels were deleted.',
+    'channels' => 'Channels',
 
-'create_channel' => 'New Channel',
+    'channels_deleted' => 'Channels deleted',
 
-'create_form_layout' => 'New Publish Layout',
+    'channels_deleted_desc' => '%d channels were deleted.',
 
-'create_layout_error' => 'Cannot Create Publish Layout',
+    'create_channel' => 'New Channel',
 
-'create_layout_error_desc' => 'We were unable to update this group, please review and fix errors below.',
+    'create_form_layout' => 'New Publish Layout',
 
-'create_layout_success' => 'Publish Layout Created',
+    'create_layout_error' => 'Cannot Create Publish Layout',
 
-'create_layout_success_desc' => 'The publish layout <b>%s</b> has been created.',
+    'create_layout_error_desc' => 'We were unable to update this group, please review and fix errors below.',
 
-'custom_fields' => 'Custom Fields',
+    'create_layout_success' => 'Publish Layout Created',
 
-'custom_fields_for' => 'Custom Fields for %s',
+    'create_layout_success_desc' => 'The publish layout <b>%s</b> has been created.',
 
-'duplicate_tab_name' => 'A tab with this name already exists.',
+    'custom_fields' => 'Custom Fields',
 
-'edit_form_layout' => 'Edit Publish Layout',
+    'custom_fields_for' => 'Custom Fields for %s',
 
-'edit_layout_error' => 'Cannot Update Publish Layout',
+    'duplicate_tab_name' => 'A tab with this name already exists.',
 
-'edit_layout_error_desc' => 'We were unable to update this group, please review and fix errors below.',
+    'edit_form_layout' => 'Edit Publish Layout',
 
-'edit_layout_success' => 'Publish Layout Updated',
+    'edit_layout_error' => 'Cannot Update Publish Layout',
 
-'edit_layout_success_desc' => 'The publish layout <b>%s</b> has been updated.',
+    'edit_layout_error_desc' => 'We were unable to update this group, please review and fix errors below.',
 
-'error_cannot_hide_tab' => 'Cannot Hide Tab',
+    'edit_layout_success' => 'Publish Layout Updated',
 
-'error_cannot_remove_tab' => 'Cannot Remove Tab',
+    'edit_layout_success_desc' => 'The publish layout <b>%s</b> has been updated.',
 
-'error_tab_has_fields' => '<b>%s</b> contains at least one field and cannot be removed. Please move all fields to another tab.',
+    'error_cannot_hide_tab' => 'Cannot Hide Tab',
 
-'error_tab_has_required_fields' => '<b>%s</b> contains at least one required field and cannot be hidden. Please move the required field(s) to another tab.',
+    'error_cannot_remove_tab' => 'Cannot Remove Tab',
 
-'export_set' => 'Export Channel Set',
+    'error_tab_has_fields' => '<b>%s</b> contains at least one field and cannot be removed. Please move all fields to another tab.',
 
-'field_group' => 'Field Group',
+    'error_tab_has_required_fields' => '<b>%s</b> contains at least one required field and cannot be hidden. Please move the required field(s) to another tab.',
 
-'field_groups' => 'Field groups',
+    'export_set' => 'Export Channel Set',
 
-'field_groups_desc' => 'Assign one or more field groups to this channel.',
+    'field_group' => 'Field Group',
 
-'fields_desc' => 'Assign one or more fields to this channel.',
+    'field_groups' => 'Field groups',
 
-'form_layouts' => 'Publish Layouts',
+    'field_groups_desc' => 'Assign one or more field groups to this channel.',
 
-'edit_layout' => 'Edit Layout',
+    'fields_desc' => 'Assign one or more fields to this channel.',
 
-'illegal_tab_name' => 'Tab names may not contain the following characters: *, >, :, +, (, ), [, ], =, |, ", \', ., #, or $',
+    'form_layouts' => 'Publish Layouts',
 
-'import' => 'Import',
+    'edit_layout' => 'Edit Layout',
 
-'import_channel' => 'Import Channel',
+    'illegal_tab_name' => 'Tab names may not contain the following characters: *, >, :, +, (, ), [, ], =, |, ", \', ., #, or $',
 
-'layout' => 'Layout',
+    'import' => 'Import',
 
-'layout_roles' => 'Member role(s)?',
+    'import_channel' => 'Import Channel',
 
-'layout_options' => 'Layout Options',
+    'layout' => 'Layout',
 
-'layouts' => 'Layouts',
+    'layout_roles' => 'Member role(s)?',
 
-'layouts_deleted_desc' => 'The following publish layouts were deleted',
+    'layout_options' => 'Layout Options',
 
-'manage_channels' => 'Manage Channels',
+    'layouts' => 'Layouts',
 
-'maximum_channels_reached' => 'You have reached the maximum number of Channels allowed.',
+    'layouts_deleted_desc' => 'The following publish layouts were deleted',
 
-'member_group' => 'Member group',
+    'manage_channels' => 'Manage Channels',
 
-'roles_desc' => 'Choose the member role(s) to apply this layout to.',
+    'maximum_channels_reached' => 'You have reached the maximum number of Channels allowed.',
 
-'new_layout' => 'New Layout',
+    'member_group' => 'Member group',
 
-'no_channels' => 'No <b>Channels</b> found.',
+    'roles_desc' => 'Choose the member role(s) to apply this layout to.',
 
-'no_layouts' => 'No <b>Layouts</b> found.',
+    'new_layout' => 'New Layout',
 
-'search_for' => 'Search for "%s"',
+    'no_channels' => 'No <b>Channels</b> found.',
 
-'section_search_results' => 'results for the search term <mark>%s</mark>',
+    'no_layouts' => 'No <b>Layouts</b> found.',
 
-'settings' => 'Settings',
+    'search_for' => 'Search for "%s"',
 
-'short_name' => 'Short name',
+    'section_search_results' => 'results for the search term <mark>%s</mark>',
 
-'short_name_col' => 'Short Name',
+    'settings' => 'Settings',
 
-'tab_name' => 'Tab Name',
+    'short_name' => 'Short name',
 
-'tab_name_desc' => 'Short name for this tab.',
+    'short_name_col' => 'Short Name',
 
-'tab_name_required' => 'Please choose a name for your tab.',
+    'tab_name' => 'Tab Name',
 
+    'tab_name_desc' => 'Short name for this tab.',
 
-/* Channel Create/Edit */
-'category_groups_not_found' => 'No <b>category groups</b> found',
+    'tab_name_required' => 'Please choose a name for your tab.',
 
-'channel_created' => 'Channel Created',
+    /* Channel Create/Edit */
+    'category_groups_not_found' => 'No <b>category groups</b> found',
 
-'channel_created_desc' => 'The channel <b>%s</b> has been created.',
+    'channel_created' => 'Channel Created',
 
-'channel_do_not_duplicate' => 'Do not duplicate',
+    'channel_created_desc' => 'The channel <b>%s</b> has been created.',
 
-'channel_duplicate' => 'Duplicate existing channel?',
+    'channel_do_not_duplicate' => 'Do not duplicate',
 
-'channel_duplicate_desc' => 'On creation, this channel will copy all settings from the selected channel.',
+    'channel_duplicate' => 'Duplicate existing channel?',
 
-'channel_max_entries' => 'Maximum number of entries',
+    'channel_duplicate_desc' => 'On creation, this channel will copy all settings from the selected channel.',
 
-'channel_max_entries_desc' => 'Leave blank to make unlimited &infin;.',
+    'channel_max_entries' => 'Maximum number of entries',
 
-'channel_not_created' => 'Cannot Create Channel',
+    'channel_max_entries_desc' => 'Leave blank to make unlimited &infin;.',
 
-'channel_not_created_desc' => 'We were unable to create this channel, please review and fix errors below.',
+    'channel_not_created' => 'Cannot Create Channel',
 
-'channel_not_updated' => 'Cannot Update Channel',
+    'channel_not_created_desc' => 'We were unable to create this channel, please review and fix errors below.',
 
-'channel_not_updated_desc' => 'We were unable to update this channel, please review and fix errors below.',
+    'channel_not_updated' => 'Cannot Update Channel',
 
-'channel_preview_url_invalid' => 'The Preview URL must be just a template path or route, it cannot be a full URL (including {base_url})',
+    'channel_not_updated_desc' => 'We were unable to update this channel, please review and fix errors below.',
 
-'channel_publishing_options' => 'Publishing Options',
+    'channel_preview_url_invalid' => 'The Preview URL must be just a template path or route, it cannot be a full URL (including {base_url})',
 
-'channel_publishing_options_warning' => '<b>Warning</b>: Channels require custom field groups to collect any data other than title, and date.',
+    'channel_publishing_options' => 'Publishing Options',
 
-'channel_publishing_options_warning2' => 'If you need to collect additional data for this channel, it\'s best practice to create any <a href="%s">custom field groups</a>, first.',
+    'channel_publishing_options_warning' => '<b>Warning</b>: Channels require custom field groups to collect any data other than title, and date.',
 
-'channel_title' => 'Name',
+    'channel_publishing_options_warning2' => 'If you need to collect additional data for this channel, it\'s best practice to create any <a href="%s">custom field groups</a>, first.',
 
-'channel_updated' => 'Channel Updated',
+    'channel_title' => 'Name',
 
-'channel_updated_desc' => 'The channel <b>%s</b> has been updated.',
+    'channel_updated' => 'Channel Updated',
 
-'create_new_category_group' => 'Create New Category Group',
+    'channel_updated_desc' => 'The channel <b>%s</b> has been updated.',
 
-'create_new_field_group' => 'Create New Field Group',
+    'create_new_category_group' => 'Create New Category Group',
 
-'custom_field_group' => 'Custom field group',
+    'create_new_field_group' => 'Create New Field Group',
 
-'custom_field_groups' => 'Custom field groups',
+    'custom_field_group' => 'Custom field group',
 
-'custom_field_groups_not_found' => 'No <b>custom field groups</b> found',
+    'custom_field_groups' => 'Custom field groups',
 
-'custom_fields_desc' => 'Choose the fields you would like to include in this field group.',
+    'custom_field_groups_not_found' => 'No <b>custom field groups</b> found',
 
-'edit_channel' => 'Edit Channel',
+    'custom_fields_desc' => 'Choose the fields you would like to include in this field group.',
 
-'invalid_short_name' => 'Your channel name must contain only alpha-numeric characters and no spaces.',
+    'edit_channel' => 'Edit Channel',
 
-'taken_channel_name' => 'This channel name is already taken.',
+    'invalid_short_name' => 'Your channel name must contain only alpha-numeric characters and no spaces.',
 
+    'taken_channel_name' => 'This channel name is already taken.',
 
-/* Channel Settings */
-'allow_all_html' => 'Allow all HTML',
+    /* Channel Settings */
+    'allow_all_html' => 'Allow all HTML',
 
-'allow_all_html_not_recommended' => 'Allow all HTML (not recommended)',
+    'allow_all_html_not_recommended' => 'Allow all HTML (not recommended)',
 
-'allow_comments' => 'Allow comments?',
+    'allow_comments' => 'Allow comments?',
 
-'allow_comments_checked' => 'Allow comments default?',
+    'allow_comments_checked' => 'Allow comments default?',
 
-'allow_comments_checked_desc' => 'When enabled, the "Allow comments" option will be set to "yes" by default',
+    'allow_comments_checked_desc' => 'When enabled, the "Allow comments" option will be set to "yes" by default',
 
-'allow_comments_desc' => 'When enabled, members can submit comments to this channel\'s entries.',
+    'allow_comments_desc' => 'When enabled, members can submit comments to this channel\'s entries.',
 
-'allow_guest_submission' => 'Allow guest submissions?',
+    'allow_guest_submission' => 'Allow guest submissions?',
 
-'allow_guest_submission_desc' => 'When enabled, unregistered users will be able to submit forms for this channel.',
+    'allow_guest_submission_desc' => 'When enabled, unregistered users will be able to submit forms for this channel.',
 
-'allow_safe_html' => 'Allow only safe HTML',
+    'allow_safe_html' => 'Allow only safe HTML',
 
-'apply_comment_enabled_to_existing' => 'Update all existing entries with this setting?',
+    'apply_comment_enabled_to_existing' => 'Update all existing entries with this setting?',
 
-'apply_expiration_to_existing' => 'Update all existing comments with this setting?',
+    'apply_expiration_to_existing' => 'Update all existing comments with this setting?',
 
-'btn_save_settings' => 'Save Settings',
+    'btn_save_settings' => 'Save Settings',
 
-'channel_defaults' => 'Defaults',
+    'channel_defaults' => 'Defaults',
 
-'channel_description' => 'Description',
+    'channel_description' => 'Description',
 
-'channel_description_desc' => 'Brief description of this channel.',
+    'channel_description_desc' => 'Brief description of this channel.',
 
-'channel_form' => 'Channel Form',
+    'channel_form' => 'Channel Form',
 
-'channel_form_default_author' => 'Author',
+    'channel_form_default_author' => 'Author',
 
-'channel_form_default_author_desc' => 'Default author for guest entries posted via Channel Form.',
+    'channel_form_default_author_desc' => 'Default author for guest entries posted via Channel Form.',
 
-'channel_form_default_status_empty' => '-- Use Channel Default --',
+    'channel_form_default_status_empty' => '-- Use Channel Default --',
 
-'channel_form_status_desc' => 'Default status for forms in this channel.',
+    'channel_form_status_desc' => 'Default status for forms in this channel.',
 
-'channel_url_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of this channel.',
+    'channel_url_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of this channel.',
 
-'clear_versioning_data' => 'Delete all existing revision data in this channel?',
+    'clear_versioning_data' => 'Delete all existing revision data in this channel?',
 
-'closed' => 'Closed',
+    'update_versioning' => 'Update this setting for all entries?',
 
-'comment_convert_image_urls_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s to image resources will be automagically rendered as images in this channel\'s comments.',
+    'closed' => 'Closed',
 
-'comment_convert_urls_emails_to_links_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s and Email address will be rendered as links in this channel\'s comments.',
+    'comment_convert_image_urls_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s to image resources will be automagically rendered as images in this channel\'s comments.',
 
-'comment_expiration' => 'Comment expiration',
+    'comment_convert_urls_emails_to_links_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s and Email address will be rendered as links in this channel\'s comments.',
 
-'comment_expiration_desc' => 'Number of days after an entry is published, before comments are no longer accepted.</em><br /><em>Leave blank for no expiration.',
+    'comment_expiration' => 'Comment expiration',
 
-'comment_form' => 'Comment form',
+    'comment_expiration_desc' => 'Number of days after an entry is published, before comments are no longer accepted.</em><br /><em>Leave blank for no expiration.',
 
-'comment_form_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of comment form for this channel.',
+    'comment_form' => 'Comment form',
 
-'comment_time_limit' => 'Comment time limit',
+    'comment_form_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of comment form for this channel.',
 
-'comment_time_limit_desc' => 'Number of seconds that must pass before a member can submit another comment.</em><br /><em>Enter 0 for no time limit.',
+    'comment_time_limit' => 'Comment time limit',
 
-'commenting' => 'Commenting',
+    'comment_time_limit_desc' => 'Number of seconds that must pass before a member can submit another comment.</em><br /><em>Enter 0 for no time limit.',
 
-'convert_image_urls' => 'Allow image <abbr title="Unified Resource Locator">URL</abbr>s?',
+    'commenting' => 'Commenting',
 
-'convert_image_urls_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s to image resources will be automagically rendered as images in this channel\'s entries.',
+    'convert_image_urls' => 'Allow image <abbr title="Unified Resource Locator">URL</abbr>s?',
 
-'convert_to_entities' => 'Convert to HTML entities',
+    'convert_image_urls_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s to image resources will be automagically rendered as images in this channel\'s entries.',
 
-'convert_urls_emails_to_links' => 'Render <abbr title="Unified Resource Locator">URL</abbr>s and Email addresses as links?',
+    'convert_to_entities' => 'Convert to HTML entities',
 
-'convert_urls_emails_to_links_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s and Email address will be rendered as links in this channel\'s entries.',
+    'convert_urls_emails_to_links' => 'Render <abbr title="Unified Resource Locator">URL</abbr>s and Email addresses as links?',
 
-'enable_sticky' => 'Enable Sticky entries?',
+    'convert_urls_emails_to_links_desc' => 'When enabled, <abbr title="Unified Resource Locator">URL</abbr>s and Email address will be rendered as links in this channel\'s entries.',
 
-'enable_sticky_desc' => 'When enabled, entries can be marked as sticky and have preference in sorted listings.',
+    'enable_sticky' => 'Enable Sticky entries?',
 
-'default_category' => 'Category',
+    'enable_sticky_desc' => 'When enabled, entries can be marked as sticky and have preference in sorted listings.',
 
-'default_category_desc' => 'Category assigned to all <b>new</b> entries in this channel.',
+    'enable_entry_cloning' => 'Enable entry cloning?',
 
-'default_status' => 'Status',
+    'enable_entry_cloning_desc' => 'When enabled, entries can be duplicated using "Clone to New Entry" option in saving options dropdown.',
 
-'default_status_desc' => 'Status assigned to all <b>new</b> entries in this channel.',
+    'default_category' => 'Category',
 
-'default_title' => 'Generated title',
+    'default_category_desc' => 'Category assigned to all <b>new</b> entries in this channel.',
 
-'default_title_desc' => 'Title assigned to all <b>new</b> entries in this channel.',
+    'default_status' => 'Status',
 
-'enable_author_notification' => 'Enable author notification?',
+    'default_status_desc' => 'Status assigned to all <b>new</b> entries in this channel.',
 
-'enable_author_notification_desc' => 'When enabled, the author of an entry will be notified when someone comments on their entry.',
+    'default_title' => 'Generated title',
 
-'enable_channel_entry_notification' => 'Enable channel entry notification?',
+    'default_title_desc' => 'Title assigned to all <b>new</b> entries in this channel.',
 
-'enable_channel_entry_notification_desc' => 'When enabled, all recipients listed will receive Email notification when a new entry is published to this channel.</em><br /><em>Separate multiple Emails with a <code>comma (,)</code>.',
+    'enable_author_notification' => 'Enable author notification?',
 
-'enable_comment_notification' => 'Enable comment notification?',
+    'enable_author_notification_desc' => 'When enabled, the author of an entry will be notified when someone comments on their entry.',
 
-'enable_comment_notification_desc' => 'When enabled, all recipients listed will receive Email notification when a new comment is submitted to this channel.</em><br /><em>Separate multiple Emails with a <code>comma (,)</code>.',
+    'enable_channel_entry_notification' => 'Enable channel entry notification?',
 
-'enable_versioning' => 'Enable entry versioning?',
+    'enable_channel_entry_notification_desc' => 'When enabled, all recipients listed will receive Email notification when a new entry is published to this channel.</em><br /><em>Separate multiple Emails with a <code>comma (,)</code>.',
 
-'enable_versioning_desc' => 'When enabled, ExpressionEngine will save revisions of each entry for this channel.',
+    'enable_comment_notification' => 'Enable comment notification?',
 
-'extra_publish_controls' => 'Show extra publish controls?',
+    'enable_comment_notification_desc' => 'When enabled, all recipients listed will receive Email notification when a new comment is submitted to this channel.</em><br /><em>Separate multiple Emails with a <code>comma (,)</code>.',
 
-'extra_publish_controls_desc' => 'When enabled, a second set of publish controls will appear at the top of the publish form for this channel.',
+    'enable_versioning' => 'Enable entry versioning?',
 
-'html_formatting' => '<abbr title="Hyper-Text Markup Language">HTML</abbr> formatting',
+    'enable_versioning_desc' => 'When enabled, ExpressionEngine will save revisions of each entry for this channel.',
 
-'invalid_url_title_prefix' => 'This field cannot contain spaces.',
+    'html_formatting' => '<abbr title="Hyper-Text Markup Language">HTML</abbr> formatting',
 
-'preview_url' => 'Preview <abbr title="Unified Resource Locator">URL</abbr>',
+    'invalid_url_title_prefix' => 'This field cannot contain spaces.',
 
-'preview_url_desc' => 'Template path or route to use for previewing. Use <code>{url_title}</code> or <code>{entry_id}</code> for single-entry templates. i.e. <b><code>blog/entry/{url_title}</code></b>',
+    'preview_url' => 'Preview <abbr title="Unified Resource Locator">URL</abbr>',
 
-'max_characters' => 'Maximum characters allowed?',
+    'preview_url_desc' => 'Template path or route to use for previewing. Use <code>{url_title}</code> or <code>{entry_id}</code> for single-entry templates. i.e. <b><code>blog/entry/{url_title}</code></b>',
 
-'max_characters_desc' => 'Total number of characters allowed for submitted comments.',
+    'allow_preview' => 'Allow Preview?',
 
-'max_versions' => 'Maximum versions per entry',
+    'allow_preview_desc' => 'When enabled, users will be able to preview entries if the Preview <abbr title="Unified Resource Locator">URL</abbr> is set',
 
-'max_versions_desc' => 'Maximum number of revisions to be saved per entry.',
+    'max_characters' => 'Maximum characters allowed?',
 
-'moderate_comments' => 'Moderate comments?',
+    'max_characters_desc' => 'Total number of characters allowed for submitted comments.',
 
-'moderate_comments_desc' => 'When enabled, submitted comments will be put into a moderation queue, and must be approved by a Super Admin or other member group with moderation permissions.',
+    'max_versions' => 'Maximum versions per entry',
 
-'notifications' => 'Notifications',
+    'max_versions_desc' => 'Maximum number of revisions to be saved per entry.',
 
-'open' => 'Open',
+    'moderate_comments' => 'Moderate comments?',
 
-'publishing' => 'Publishing',
+    'moderate_comments_desc' => 'When enabled, submitted comments will be put into a moderation queue, and must be approved by a Super Admin or other member group with moderation permissions.',
 
-'require_email' => 'Require Email?',
+    'notifications' => 'Notifications',
 
-'require_email_desc'=> 'When enabled, a member must provide a valid Email address to submit comments to this channel\'s entries.',
+    'open' => 'Open',
 
-'require_membership' => 'Require membership?',
+    'publishing' => 'Publishing',
 
-'require_membership_desc' => 'When enabled, only registered members can submit comments to this channel\'s entries.',
+    'require_email' => 'Require Email?',
 
-'rss_feed' => '<abbr title="Really Simple Syndication">RSS</abbr> feed',
+    'require_email_desc' => 'When enabled, a member must provide a valid Email address to submit comments to this channel\'s entries.',
 
-'rss_feed_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of <abbr title="Really Simple Syndication">RSS</abbr> for this channel.',
+    'require_membership' => 'Require membership?',
 
-'search_excerpt' => 'Search excerpt',
+    'require_membership_desc' => 'When enabled, only registered members can submit comments to this channel\'s entries.',
 
-'search_excerpt_desc' => 'Field used for all search result excerpts for this channel.',
+    'rss_feed' => '<abbr title="Really Simple Syndication">RSS</abbr> feed',
 
-'search_results' => 'Search results',
+    'rss_feed_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of <abbr title="Really Simple Syndication">RSS</abbr> for this channel.',
 
-'search_results_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of search results for this channel.',
+    'search_excerpt' => 'Search excerpt',
 
-'text_formatting' => 'Text formatting',
+    'search_excerpt_desc' => 'Field used for all search result excerpts for this channel.',
 
-'text_formatting_desc' => 'Type of formatting for comment text.',
+    'search_results' => 'Search results',
 
-'title_field_label' => 'Title field label',
+    'search_results_desc' => '<abbr title="Unified Resource Locator">URL</abbr> location of search results for this channel.',
 
-'title_field_label_desc' => 'Changes the title field label in the Publish form for this channel.',
+    'text_formatting' => 'Text formatting',
 
-'url_path_settings' => '<abbr title="Unified Resource Locator">URL</abbr> and Path Settings',
+    'text_formatting_desc' => 'Type of formatting for comment text.',
 
-'url_title_prefix' => '<abbr title="Unified Resource Locator">URL</abbr> title prefix',
+    'title_field_label' => 'Title field label',
 
-'url_title_prefix_desc' => '<abbr title="Unified Resource Locator">URL</abbr> title prefix assigned to all <b>new</b> entries in this channel.',
+    'title_field_label_desc' => 'Changes the title field label in the Publish form for this channel.',
 
-'versioning' => 'Versioning',
+    'url_path_settings' => '<abbr title="Unified Resource Locator">URL</abbr> and Path Settings',
 
-'xml_language' => '<abbr title="Extensible Markup Language">XML</abbr> language',
+    'url_title_prefix' => '<abbr title="Unified Resource Locator">URL</abbr> title prefix',
 
-'xml_language_desc' => 'Default language for <abbr title="Extensible Markup Language">XML</abbr> files, generated by this channel.',
+    'url_title_prefix_desc' => '<abbr title="Unified Resource Locator">URL</abbr> title prefix assigned to all <b>new</b> entries in this channel.',
 
+    'versioning' => 'Versioning',
 
-/* Categories */
-'cat_field_ajax_reorder_fail' => 'Attention: Failed to save category field order',
+    'xml_language' => '<abbr title="Extensible Markup Language">XML</abbr> language',
 
-'cat_field_ajax_reorder_fail_desc' => 'We failed to save your new category fields order. Refresh the page and make sure you\'re logged in.',
+    'xml_language_desc' => 'Default language for <abbr title="Extensible Markup Language">XML</abbr> files, generated by this channel.',
 
-'cat_group_no_roles_found' => 'No <b>roles</b> with permissions exist.',
+    /* Categories */
+    'cat_field_ajax_reorder_fail' => 'Attention: Failed to save category field order',
 
-'cat_image_choose' => 'Choose from directory',
+    'cat_field_ajax_reorder_fail_desc' => 'We failed to save your new category fields order. Refresh the page and make sure you\'re logged in.',
 
-'cat_image_none' => 'None <i>&mdash; no image</i>',
+    'cat_group_no_roles_found' => 'No <b>roles</b> with permissions exist.',
 
-'cat_require_field_desc' => 'When enabled, this field will be required to submit the publish form.',
+    'cat_image_choose' => 'Choose from directory',
 
-'categories' => 'Categories',
+    'cat_image_none' => 'None <i>&mdash; no image</i>',
 
-'categories_not_found' => 'No <b>Categories</b> found.',
+    'cat_require_field_desc' => 'When enabled, this field will be required to submit the publish form.',
 
-'categories_deleted' => 'Categories deleted',
+    'categories' => 'Categories',
 
-'categories_deleted_desc' => '%d categories were deleted.',
+    'categories_not_found' => 'No <b>Categories</b> found.',
 
-'category' => 'Category',
+    'categories_deleted' => 'Categories deleted',
 
-'category_ajax_reorder_fail' => 'Attention: Failed to save category order',
+    'categories_deleted_desc' => '%d categories were deleted.',
 
-'category_ajax_reorder_fail_desc' => 'We failed to save your new categories order. Refresh the page and make sure you\'re logged in.',
+    'category_ajax_reorder_fail' => 'Attention: Failed to save category order',
 
-'category_created' => 'Category Created',
+    'category_ajax_reorder_fail_desc' => 'We failed to save your new categories order. Refresh the page and make sure you\'re logged in.',
 
-'category_created_desc' => 'The category <b>%s</b> has been created.',
+    'category_created' => 'Category Created',
 
-'category_field' => 'Category Field',
+    'category_created_desc' => 'The category <b>%s</b> has been created.',
 
-'category_field_created' => 'Category Field Created',
+    'category_field' => 'Category Field',
 
-'category_field_created_desc' => 'The category field <b>%s</b> has been created.',
+    'category_field_created' => 'Category Field Created',
 
-'category_field_not_created' => 'Cannot Create Category Field',
+    'category_field_created_desc' => 'The category field <b>%s</b> has been created.',
 
-'category_field_not_created_desc' => 'We were unable to create this category field, please review and fix errors below.',
+    'category_field_not_created' => 'Cannot Create Category Field',
 
-'category_field_not_updated' => 'Cannot Update Category Field',
+    'category_field_not_created_desc' => 'We were unable to create this category field, please review and fix errors below.',
 
-'category_field_not_updated_desc' => 'We were unable to update this category field, please review and fix errors below.',
+    'category_field_not_updated' => 'Cannot Update Category Field',
 
-'category_field_updated' => 'Category Field Updated',
+    'category_field_not_updated_desc' => 'We were unable to update this category field, please review and fix errors below.',
 
-'category_field_updated_desc' => 'The category field <b>%s</b> has been updated.',
+    'category_field_updated' => 'Category Field Updated',
 
-'category_fields' => 'Category Fields',
+    'category_field_updated_desc' => 'The category field <b>%s</b> has been updated.',
 
-'category_fields_desc' => 'Assign fields to this group.',
+    'category_fields' => 'Category Fields',
 
-'category_fields_removed' => 'Category fields removed',
+    'category_fields_desc' => 'Assign fields to this group.',
 
-'category_fields_removed_desc' => '%d category fields were removed.',
+    'category_fields_removed' => 'Category fields removed',
 
-'category_group' => 'Category Group',
+    'category_fields_removed_desc' => '%d category fields were removed.',
 
-'category_group_created' => 'Category Group Created',
+    'category_group' => 'Category Group',
 
-'category_group_created_desc' => 'The category group <b>%s</b> has been created.',
+    'category_group_created' => 'Category Group Created',
 
-'category_group_not_created' => 'Cannot Create Category Group',
+    'category_group_created_desc' => 'The category group <b>%s</b> has been created.',
 
-'category_group_not_created_desc' => 'We were unable to create this category group, please review and fix errors below.',
+    'category_group_not_created' => 'Cannot Create Category Group',
 
-'category_group_not_updated' => 'Cannot Update Category Group',
+    'category_group_not_created_desc' => 'We were unable to create this category group, please review and fix errors below.',
 
-'category_group_not_updated_desc' => 'We were unable to update this category group, please review and fix errors below.',
+    'category_group_not_updated' => 'Cannot Update Category Group',
 
-'category_group_updated' => 'Category Group Updated',
+    'category_group_not_updated_desc' => 'We were unable to update this category group, please review and fix errors below.',
 
-'category_group_updated_desc' => 'The category group <b>%s</b> has been updated.',
+    'category_group_updated' => 'Category Group Updated',
 
-'category_groups_deleted' => 'Category group deleted',
+    'category_group_updated_desc' => 'The category group <b>%s</b> has been updated.',
 
-'category_groups_deleted_desc' => 'The category group <b>%s</b> has been deleted.',
+    'category_groups_deleted' => 'Category group deleted',
 
-'category_manager' => 'Categories',
+    'category_groups_deleted_desc' => 'The category group <b>%s</b> has been deleted.',
 
-'category_not_created' => 'Cannot Create Category',
+    'category_manager' => 'Categories',
 
-'category_not_created_desc' => 'We were unable to create this category, please review and fix errors below.',
+    'category_not_created' => 'Cannot Create Category',
 
-'category_not_updated' => 'Cannot Update Category',
+    'category_not_created_desc' => 'We were unable to create this category, please review and fix errors below.',
 
-'category_not_updated_desc' => 'We were unable to update this category, please review and fix errors below.',
+    'category_not_updated' => 'Cannot Update Category',
 
-'category_permissions_warning' => '<b>Warning</b>: Please be very careful with the access privileges you grant.',
+    'category_not_updated_desc' => 'We were unable to update this category, please review and fix errors below.',
 
-'category_permissions_warning2' => 'Any setting marked with %s should only be granted to people you trust implicitly.',
+    'category_permissions_warning' => '<b>Warning</b>: Please be very careful with the access privileges you grant.',
 
-'category_updated' => 'Category Updated',
+    'category_permissions_warning2' => 'Any setting marked with %s should only be granted to people you trust implicitly.',
 
-'category_updated_desc' => 'The category <b>%s</b> has been updated.',
+    'category_updated' => 'Category Updated',
 
-'category_parent_invalid' => 'Category parent needs to be in same group and different from the category itself',
+    'category_updated_desc' => 'The category <b>%s</b> has been updated.',
 
-'create_category' => 'Create Category',
+    'category_parent_invalid' => 'Category parent needs to be in same group and different from the category itself',
 
-'create_category_btn' => 'Create New Category',
+    'create_category' => 'Create Category',
 
-'create_category_field' => 'Create Category Field',
+    'create_category_btn' => 'Create New Category',
 
-'create_category_group' => 'New Category Group',
+    'create_category_field' => 'Create Category Field',
 
-'delete_categories' => 'Delete Categories',
+    'create_category_group' => 'New Category Group',
 
-'delete_categories_desc' => 'Users in selected roles will be allowed to delete categories in this category group.</em><em>Super Administrators are <b>always</b> allowed.',
+    'delete_categories' => 'Delete Categories',
 
-'duplicate_category_group_name' => 'A category group already exists with the same name.',
+    'delete_categories_desc' => 'Users in selected roles will be allowed to delete categories in this category group.</em><em>Super Administrators are <b>always</b> allowed.',
 
-'duplicate_field_name' => 'The field name you chose is already taken.',
+    'duplicate_category_group_name' => 'A category group already exists with the same name.',
 
-'edit_categories' => 'Edit Categories',
+    'duplicate_field_name' => 'The field name you chose is already taken.',
 
-'edit_categories_desc' => 'Users in selected roles will be allowed to edit categories in this category group.</em><em>Super Administrators are <b>always</b> allowed.',
+    'edit_categories' => 'Edit Categories',
 
-'edit_category' => 'Edit Category',
+    'edit_categories_desc' => 'Users in selected roles will be allowed to edit categories in this category group.</em><em>Super Administrators are <b>always</b> allowed.',
 
-'edit_category_field' => 'Edit Category Field',
+    'edit_category' => 'Edit Category',
 
-'edit_category_group' => 'Edit Category Group',
+    'edit_category_field' => 'Edit Category Field',
 
-'edit_member_groups' => 'Edit Member Groups',
+    'edit_category_group' => 'Edit Category Group',
 
-'exclude_group_form' => 'Exclude group from?',
+    'edit_member_groups' => 'Edit Member Groups',
 
-'exclude_group_form_desc' => 'Prevent this category group from being offered as choice for assignment to channels and file directories.',
+    'exclude_group_form' => 'Exclude group from?',
 
-'field' => 'Field',
+    'exclude_group_form_desc' => 'Prevent this category group from being offered as choice for assignment to channels and file directories.',
 
-'fields' => 'Fields',
+    'field' => 'Field',
 
-'files' => 'Files',
+    'fields' => 'Fields',
 
-'group_name' => 'Group Name',
+    'files' => 'Files',
 
-'label' => 'Label',
+    'group_name' => 'Group Name',
 
-'no_category_fields' => 'No <b>Category Fields</b> found.',
+    'label' => 'Label',
 
-'no_category_groups' => 'No <b>Category Groups</b> found.',
+    'no_category_fields' => 'No <b>Category Fields</b> found.',
 
-'no_fields' => 'No <b>Fields</b> found.',
+    'no_category_groups' => 'No <b>Category Groups</b> found.',
 
-'parent_category' => 'Parent category',
+    'no_fields' => 'No <b>Fields</b> found.',
 
-'permissions' => 'Permissions',
+    'parent_category' => 'Parent category',
 
-'require_field' => 'Require field?',
+    'permissions' => 'Permissions',
 
-'select_dropdown' => 'Select Dropdown',
+    'require_field' => 'Require field?',
 
-'text_input' => 'Text Input',
+    'select_dropdown' => 'Select Dropdown',
 
-'textarea' => 'Textarea',
+    'text_input' => 'Text Input',
 
+    'textarea' => 'Textarea',
 
-/* Statuses */
-'create_status' => 'New Status',
+    /* Statuses */
+    'create_status' => 'New Status',
 
-'duplicate_status_name' => 'A status already exists with the same name.',
+    'duplicate_status_name' => 'A status already exists with the same name.',
 
-'edit_status' => 'Edit Status',
+    'edit_status' => 'Edit Status',
 
-'highlight_color' => 'Highlight color',
+    'highlight_color' => 'Highlight color',
 
-'highlight_color_desc' => 'Text color for this status. Accepts HEX codes.',
+    'highlight_color_desc' => 'Text color for this status. Accepts HEX codes.',
 
-'invalid_hex_code' => 'This field must contain a valid hex color code.',
+    'invalid_hex_code' => 'This field must contain a valid hex color code.',
 
-'status' => 'Status',
+    'status' => 'Status',
 
-'status_access' => 'Status access',
+    'status_access' => 'Status access',
 
-'status_access_desc' => 'Users in selected groups will be allowed to access this status.</em><em>Super Administrators are <b>always</b> allowed.',
+    'status_access_desc' => 'Users in selected groups will be allowed to access this status.</em><em>Super Administrators are <b>always</b> allowed.',
 
-'status_ajax_reorder_fail' => 'Attention: Failed to save status order',
+    'status_ajax_reorder_fail' => 'Attention: Failed to save status order',
 
-'status_ajax_reorder_fail_desc' => 'We failed to save your new statuses order. Refresh the page and make sure you\'re logged in.',
+    'status_ajax_reorder_fail_desc' => 'We failed to save your new statuses order. Refresh the page and make sure you\'re logged in.',
 
-'status_created' => 'Status Created',
+    'status_created' => 'Status Created',
 
-'status_created_desc' => 'The status <b>%s</b> has been created.',
+    'status_created_desc' => 'The status <b>%s</b> has been created.',
 
-'status_name' => 'Status Name',
+    'status_name' => 'Status Name',
 
-'status_name_desc' => 'Descriptive name of this status.',
+    'status_name_desc' => 'Descriptive name of this status.',
 
-'status_not_created' => 'Cannot Create Status',
+    'status_not_created' => 'Cannot Create Status',
 
-'status_not_created_desc' => 'We were unable to create this status, please review and fix errors below.',
+    'status_not_created_desc' => 'We were unable to create this status, please review and fix errors below.',
 
-'status_not_updated' => 'Cannot Update Status',
+    'status_not_updated' => 'Cannot Update Status',
 
-'status_not_updated_desc' => 'We were unable to update this status, please review and fix errors below.',
+    'status_not_updated_desc' => 'We were unable to update this status, please review and fix errors below.',
 
-'status_updated' => 'Status Updated',
+    'status_updated' => 'Status Updated',
 
-'status_updated_desc' => 'The status <b>%s</b> has been updated.',
+    'status_updated_desc' => 'The status <b>%s</b> has been updated.',
 
-'statuses' => 'Statuses',
+    'statuses' => 'Statuses',
 
-'statuses_desc' => 'Assign one or more statuses to this channel.',
+    'statuses_desc' => 'Assign one or more statuses to this channel.',
 
-'statuses_removed' => 'Statuses removed',
+    'statuses_removed' => 'Statuses removed',
 
-'statuses_removed_desc' => '%d statuses were removed.',
+    'statuses_removed_desc' => '%d statuses were removed.',
 
-'channel_roles' => 'Allowed Roles',
+    'channel_roles' => 'Allowed Roles',
 
-'channel_roles_desc' => 'Members in these roles can perform each selected action in this channel.',
-
-'edit_in_full_form'	=> 'Edit in full form'
+    'channel_roles_desc' => 'Members in these roles can perform each selected action in this channel.',
 
 );
 

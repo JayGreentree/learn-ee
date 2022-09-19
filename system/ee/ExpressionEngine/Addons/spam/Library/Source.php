@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -16,20 +16,19 @@ namespace ExpressionEngine\Addons\Spam\Library;
  * to attach extra information to each piece of text which can be used for
  * Naive Bayes.
  */
-class Source {
+class Source
+{
+    private $text;
 
-	private $text;
+    public function __construct($text)
+    {
+        $this->text = $text;
+    }
 
-	public function __construct($text)
-	{
-		$this->text = $text;
-	}
-
-	public function __toString()
-	{
-		return $this->text;
-	}
-
+    public function __toString()
+    {
+        return $this->text;
+    }
 }
 
 // EOF

@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,30 +15,27 @@ use ExpressionEngine\Service\Validation\ValidationRule;
 /**
  * Exact Length Validation Rule
  */
-class ExactLength extends ValidationRule {
+class ExactLength extends ValidationRule
+{
+    public function validate($key, $value)
+    {
+        ee()->load->helper('multibyte');
 
-	public function validate($key, $value)
-	{
+        list($length) = $this->assertParameters('length');
 
-		ee()->load->helper('multibyte');
+        $length = $this->numericOrConstantParameter($length);
 
-		list($length) = $this->assertParameters('length');
+        if ($length === false) {
+            return false;
+        }
 
-		$length = $this->numericOrConstantParameter($length);
+        return (ee_mb_strlen($value) == $length);
+    }
 
-		if ($length === FALSE)
-		{
-			return FALSE;
-		}
-
-		return (ee_mb_strlen($value) == $length);
-
-	}
-
-	public function getLanguageKey()
-	{
-		return 'exact_length';
-	}
+    public function getLanguageKey()
+    {
+        return 'exact_length';
+    }
 }
 
 // EOF

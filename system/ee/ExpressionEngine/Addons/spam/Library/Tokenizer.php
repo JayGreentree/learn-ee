@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,22 +13,25 @@ namespace ExpressionEngine\Addons\Spam\Library;
 /**
  * Spam Tokenizer
  */
-class Tokenizer {
-
-	/**
-	 * __construct
-	 *
-	 * @param int $ngrams  Size of the n-grams to calculate
-	 * @param string $pattern  Regex pattern used to split string, defaults to
-	 * 						   splitting by character
-	 * @access public
-	 * @return void
-	 */
-	public function __construct($ngram = 1, $pattern = "\s")
-	{
-		$this->ngram = $ngram;
-		$this->pattern = $pattern;
-	}
+class Tokenizer
+{
+    public $ngram;
+    public $pattern;
+    
+    /**
+     * __construct
+     *
+     * @param int $ngrams  Size of the n-grams to calculate
+     * @param string $pattern  Regex pattern used to split string, defaults to
+     * 						   splitting by character
+     * @access public
+     * @return void
+     */
+    public function __construct($ngram = 1, $pattern = "\s")
+    {
+        $this->ngram = $ngram;
+        $this->pattern = $pattern;
+    }
 
     /**
      * Tokenize takes a string and splits it into ngrams. This will return
@@ -38,56 +41,50 @@ class Tokenizer {
      * @access public
      * @return array An array of strings split based on ngram
      */
-	public function tokenize($string)
-	{
-		if ( ! empty($this->pattern))
-		{
-			$tokens = preg_split("/{$this->pattern}/i", $string);
-		}
-		else
-		{
-			$tokens = str_split($string);
-		}
+    public function tokenize($string)
+    {
+        if (! empty($this->pattern)) {
+            $tokens = preg_split("/{$this->pattern}/i", $string);
+        } else {
+            $tokens = str_split($string);
+        }
 
-		$tokens = array_filter($tokens);
-		return $this->ngrams($tokens, $this->ngram);
-	}
+        $tokens = array_filter($tokens);
 
-	/**
-	 * Calculates the n-grams for a string
-	 *
-	 * @param array $tokens
-	 * @param int $n
-	 * @access private
-	 * @return array  The array of n-grams
-	 */
-	private function ngrams($tokens, $n = 1)
-	{
-		if ($n == 1)
-		{
-			return $tokens;
-		}
+        return $this->ngrams($tokens, $this->ngram);
+    }
 
-		$length = count($tokens);
-		$ngrams = array();
-		$i = 0;
+    /**
+     * Calculates the n-grams for a string
+     *
+     * @param array $tokens
+     * @param int $n
+     * @access private
+     * @return array  The array of n-grams
+     */
+    private function ngrams($tokens, $n = 1)
+    {
+        if ($n == 1) {
+            return $tokens;
+        }
 
-		while (count($tokens) > 0)
-		{
-			$token = "";
+        $length = count($tokens);
+        $ngrams = array();
+        $i = 0;
 
-			for ($j = 0; $j < $n; $j++)
-			{
-				$token .= " " . $tokens[($n * $i) + $j];
-			}
+        while (count($tokens) > 0) {
+            $token = "";
 
-			$ngrams[] = $token;
-			$i++;
-		}
+            for ($j = 0; $j < $n; $j++) {
+                $token .= " " . $tokens[($n * $i) + $j];
+            }
 
-		return $ngrams;
-	}
+            $ngrams[] = $token;
+            $i++;
+        }
 
+        return $ngrams;
+    }
 }
 
 // EOF

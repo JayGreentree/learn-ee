@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,27 +15,29 @@ use ExpressionEngine\Service\Model\Gateway;
 /**
  * Content Variable Column Gateway
  */
-class VariableColumnGateway extends Gateway {
+class VariableColumnGateway extends Gateway
+{
+    /**
+     *
+     */
+    public function getFieldList($cached = true)
+    {
+        if ($cached && isset(static::$_field_list_cache[get_class($this)])) {
+            return static::$_field_list_cache[get_class($this)];
+        }
 
-	/**
-	 *
-	 */
-	public function getFieldList($cached = TRUE)
-	{
-		if ($cached && isset($this->_field_list_cache))
-		{
-			return $this->_field_list_cache;
-		}
+        $all = ee('Database')
+            ->newQuery()
+            ->list_fields($this->getTableName());
 
-		$all = ee('Database')
-			->newQuery()
-			->list_fields($this->getTableName());
+        $known = parent::getFieldList();
 
-		$known = parent::getFieldList();
+        if (!is_array(static::$_field_list_cache)) {
+            static::$_field_list_cache = [];
+        }
 
-		return $this->_field_list_cache = array_merge($known, $all);
-	}
-
+        return static::$_field_list_cache[get_class($this)] = array_merge($known, $all);
+    }
 }
 
 // EOF

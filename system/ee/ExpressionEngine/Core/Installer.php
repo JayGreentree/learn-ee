@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,26 +13,28 @@ namespace ExpressionEngine\Core;
 /**
  * Core Installer
  */
-class Installer extends Core {
-	/**
-	 *
-	 */
-	public function boot()
-	{
-		define('APPPATH', SYSPATH.'ee/installer/');
-		define('EE_APPPATH', BASEPATH);
+class Installer extends Core
+{
+    /**
+     *
+     */
+    public function boot()
+    {
+        define('APPPATH', SYSPATH . 'ee/installer/');
+        define('EE_APPPATH', BASEPATH);
 
-		define('PATH_ADDONS', SYSPATH .'ee/ExpressionEngine/Addons/');
-		define('PATH_MOD', SYSPATH .'ee/ExpressionEngine/Addons/');
-		define('PATH_PI', SYSPATH .'ee/ExpressionEngine/Addons/');
-		define('PATH_EXT', SYSPATH .'ee/ExpressionEngine/Addons/');
-		define('PATH_FT', SYSPATH .'ee/ExpressionEngine/Addons/');
-		define('INSTALLER', TRUE);
+        define('PATH_PRO_ADDONS', SYSPATH . 'ee/ExpressionEngine/Addons/pro/levelups/');
+        define('PATH_ADDONS', SYSPATH . 'ee/ExpressionEngine/Addons/');
+        define('PATH_MOD', SYSPATH . 'ee/ExpressionEngine/Addons/');
+        define('PATH_PI', SYSPATH . 'ee/ExpressionEngine/Addons/');
+        define('PATH_EXT', SYSPATH . 'ee/ExpressionEngine/Addons/');
+        define('PATH_FT', SYSPATH . 'ee/ExpressionEngine/Addons/');
+        define('INSTALLER', true);
 
-		get_config(array('subclass_prefix' => 'Installer_'));
+        get_config(array('subclass_prefix' => 'Installer_'));
 
-		parent::boot();
-	}
+        parent::boot();
+    }
 }
 
 // EOF

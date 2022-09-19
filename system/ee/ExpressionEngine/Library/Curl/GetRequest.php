@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,18 +13,16 @@ namespace ExpressionEngine\Library\Curl;
 /**
  * Curl GET Request
  */
-class GetRequest extends Request {
+class GetRequest extends Request
+{
+    public function __construct($url, $data = array(), $callback = null)
+    {
+        if (! empty($data)) {
+            $url = trim($url, '/') . '?' . http_build_query($data);
+        }
 
-	public function __construct($url, $data = array(), $callback = NULL)
-	{
-		if ( ! empty($data))
-		{
-			$url = trim($url, '/') . '?' . http_build_query($data);
-		}
-
-		return parent::__construct($url, array(), $callback);
-	}
-
+        parent::__construct($url, array(), $callback);
+    }
 }
 
 // EOF

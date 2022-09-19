@@ -5,7 +5,13 @@
 	<?=form_open($form_url, 'class="ajax-validate"')?>
   <div class="panel-heading">
     <div class="form-btns form-btns-top">
-  		<?php $this->embed('ee:_shared/form/buttons'); ?>
+		<div class="title-bar title-bar--large">
+    		<h3 class="title-bar__title"><?=ee('Format')->make('Text', (isset($cp_page_title_alt)) ? $cp_page_title_alt : $cp_page_title)->attributeSafe()->compile()?></h3>
+
+    		<div class="title-bar__extra-tools">
+  				<?php $this->embed('ee:_shared/form/buttons'); ?>
+			</div>
+		</div>
   	</div>
   </div>
   <div class="panel-body">
@@ -22,23 +28,17 @@
 			<div class="tab-bar__tabs">
 			<?php foreach ($layout->getTabs() as $index => $tab): ?>
 				<?php
-				$icon = '';
-				if (strpos($tab->id, 'custom_') !== FALSE)
-				{
-					$icon = '<i class="tab-remove">';
-				}
-				else
-				{
-					if ($tab->isVisible())
-					{
-						$icon = '<i class="tab-on">';
-					}
-					else
-					{
-						$icon = '<i class="tab-off">';
-					}
-				}
-				?>
+                $icon = '';
+                if (strpos($tab->id, 'custom_') !== false) {
+                    $icon = '<i class="tab-remove">';
+                } else {
+                    if ($tab->isVisible()) {
+                        $icon = '<i class="tab-on">';
+                    } else {
+                        $icon = '<i class="tab-off">';
+                    }
+                }
+                ?>
 				<button type="button" class="tab-bar__tab js-tab-button <?php if ($index == 0): ?>active<?php endif; ?>" rel="t-<?=$index?>"><?=lang($tab->title)?> <?php if ($tab->title != 'publish'): ?><?=$icon?></i><?php endif; ?></button>
 			<?php endforeach; ?>
 			</div>
@@ -51,19 +51,34 @@
 			<div class="tab t-<?=$index?><?php if ($index == 0): ?> tab-open<?php endif; ?>">
 				<div class="layout-item-wrapper">
 			<?php $fields = $tab->getFields();
-			foreach ($fields as $field): ?>
+            foreach ($fields as $field): ?>
 						<div class="js-layout-item">
 							<div class="layout-item">
 								<div class="layout-item__handle ui-sortable-handle"></div>
 								<div class="layout-item__content">
-									<label class="layout-item__title"><span class="faded float-right"><?=$field->getTypeName()?></span><?=$field->getLabel()?> <span class="faded">(<?=$field->getShortName()?>)</span></label>
+									<label class="layout-item__title"><span class="faded float-right"><?=$field->getTypeName()?></span><?=$field->getLabel()?> <span class="faded"><?=(($tab->id != 'categories') ? '(' . $field->getShortName() . ')' : '') ?></span></label>
 									<div class="layout-item__options">
 										<?php if ($field->isRequired()): ?>
 										<label class="field-option-required"><?=ucwords(lang('required_field'))?></label>
 										<?php else: ?>
-										<label class="field-option-hide"><input class="checkbox checkbox--small" type="checkbox"<?php if ( ! $field->isVisible()): ?> checked="checked"<?php endif ?>><?=lang('hide')?></label>
+										<label class="field-option-hide"><input class="checkbox checkbox--small" type="checkbox"<?php if (! $field->isVisible()): ?> checked="checked"<?php endif ?>><?=lang('hide')?></label>
 										<?php endif; ?>
+                                        <?php if (!$field->publishLayoutCollapseIsHidden()): ?>
 										<label class="field-option-collapse"><input class="checkbox checkbox--small" type="checkbox"<?php if ($field->isCollapsed()):?> checked="checked"<?php endif ?>><?=lang('collapse')?></label>
+                                        <?php endif; ?>
+										<div class="layout-item__field-width">
+										<div class="field-control field-option-width">
+											<i class="fal fa-arrows-h"></i>
+											<select class="select-popup button--xsmall">
+											<option value="100" <?php echo ($field->getWidth() == 100) ? 'selected="selected"' : ''; ?>>100%</option>
+											<option value="75" <?php echo ($field->getWidth() == 75) ? 'selected="selected"' : ''; ?>>75%</option>
+											<option value="66.66" <?php echo ($field->getWidth() == 66.66) ? 'selected="selected"' : ''; ?>>66%</option>
+											<option value="50" <?php echo ($field->getWidth() == 50) ? 'selected="selected"' : ''; ?>>50%</option>
+											<option value="33.33" <?php echo ($field->getWidth() == 33.33) ? 'selected="selected"' : ''; ?>>33%</option>
+											<option value="25" <?php echo ($field->getWidth() == 25) ? 'selected="selected"' : ''; ?>>25%</option>
+											</select>
+										</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -92,7 +107,7 @@
 
           <div class="dialog__header">
             <h2 class="dialog__title"><?=lang('add_tab')?> <span class="req-title"><?=lang('required_fields')?></h2>
-            <div class="dialog__close js-modal-close"><i class="fas fa-times"></i></div>
+            <div class="dialog__close js-modal-close"><i class="fal fa-times"></i></div>
           </div>
           <div class="dialog__body">
 					<form class="settings">

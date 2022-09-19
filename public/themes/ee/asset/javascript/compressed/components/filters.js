@@ -25,7 +25,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 function FieldTools(props) {
@@ -69,6 +69,10 @@ function (_React$Component) {
       _this.props.onToggleAll(checked);
     });
 
+    _defineProperty(_assertThisInitialized(_this), "handleInputChange", function (event) {
+      _this.handleClick();
+    });
+
     _this.state = {
       checked: false
     };
@@ -79,9 +83,9 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return React.createElement("label", {
-        className: (this.props.checkAll ? "ctrl-all" : "ctrl-all") + (this.state.checked ? " act" : ""),
-        onClick: this.handleClick
+        className: (this.props.checkAll ? "ctrl-all" : "ctrl-all") + (this.state.checked ? " act" : "")
       }, React.createElement("span", null, this.props.checkAll ? EE.lang.check_all : EE.lang.clear_all), React.createElement("input", {
+        onChange: this.handleInputChange,
         value: this.state.checked,
         type: "checkbox",
         "class": "checkbox--small"

@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -13,171 +13,93 @@ use  ExpressionEngine\Library\Mime\MimeType;
 /**
  * Core Mime type
  */
-class Mime_type {
+class Mime_type
+{
+    /**
+     * Determines the MIME type of a file
+     *
+     * @see MimeType::ofFile
+     */
+    public function ofFile($path)
+    {
+        ee()->load->library('logger');
+        ee()->logger->deprecated('7.0.0', "ee('MimeType')->ofFile()");
+        return ee('MimeType')->ofFile($path);
+    }
 
-	protected $mime_type;
+    /**
+     * Determines the MIME type of a buffer
+     *
+     * @see MimeType::ofFile
+     */
+    public function ofBuffer($buffer)
+    {
+        ee()->load->library('logger');
+        ee()->logger->deprecated('7.0.0', "ee('MimeType')->ofBuffer()");
+        return ee('MimeType')->ofBuffer($buffer);
+    }
 
-	/**
-	 * Instantiates a new MimeType object and adds whitelisted MIME types based
-	 * on the config/mimes.php file and any MIME types in the
-	 * 'mime_whitelist_additions' config override.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->mime_type = new MimeType();
+    /**
+     * Determines if a file is an image or not.
+     *
+     * @see MimeType::fileIsImage
+     */
+    public function fileIsImage($path)
+    {
+        ee()->load->library('logger');
+        ee()->logger->deprecated('7.0.0', "ee('MimeType')->fileIsImage()");
+        return ee('MimeType')->fileIsImage($path);
+    }
 
-		$whitelist = ee()->config->loadFile('mimes');
+    /**
+     * Determines if a MIME type is in our list of valid image MIME types.
+     *
+     * @see MimeType::isImage
+     */
+    public function isImage($mime)
+    {
+        ee()->load->library('logger');
+        ee()->logger->deprecated('7.0.0', "ee('MimeType')->isImage()");
+        return ee('MimeType')->isImage($mime);
+    }
 
-		$this->mime_type->addMimeTypes($whitelist);
+    /**
+     * Gets the MIME type of a file and compares it to our whitelist to see if
+     * it is safe for upload.
+     *
+     * @see MimeType::fileIsSafeForUpload
+     */
+    public function fileIsSafeForUpload($path)
+    {
+        ee()->load->library('logger');
+        ee()->logger->deprecated('7.0.0', "ee('MimeType')->fileIsSafeForUpload()");
+        return ee('MimeType')->fileIsSafeForUpload($path);
+    }
 
-		// Add any mime types from the config
-		$extra_mimes = ee()->config->item('mime_whitelist_additions');
-		if ($extra_mimes !== FALSE)
-		{
-			if (is_array($extra_mimes))
-			{
-				$this->mime_type->addMimeTypes($extra_mimes);
-			}
-			else
-			{
-				$this->mime_type->addMimeTypes(explode('|', $extra_mimes));
-			}
-		}
-	}
+    /**
+     * Checks a given MIME type against our whitelist to see if it is safe for
+     * upload
+     *
+     * @see MimeType::isSafeForUpload
+     */
+    public function isSafeForUpload($mime)
+    {
+        ee()->load->library('logger');
+        ee()->logger->deprecated('7.0.0', "ee('MimeType')->isSafeForUpload()");
+        return ee('MimeType')->isSafeForUpload($mime);
+    }
 
-	/**
-	 * Checks the config for specific member exceptions or member group
-	 * exceptions and compares the current member to those lists.
-	 *
-	 * @return bool TRUE if excluded; FALSE otherwise
-	 */
-	protected function memberExcludedFromWhitelistRestrictions()
-	{
-		$excluded_members = ee()->config->item('mime_whitelist_member_exception');
-		if ($excluded_members !== FALSE)
-		{
-			$excluded_members = preg_split('/[\s|,]/', $excluded_members, -1, PREG_SPLIT_NO_EMPTY);
-			$excluded_members = is_array($excluded_members) ? $excluded_members : array($excluded_members);
-
-			if (in_array(ee()->session->userdata('member_id'), $excluded_members))
-			{
-				return TRUE;
-			}
-		}
-
-		$excluded_member_groups = ee()->config->item('mime_whitelist_member_group_exception');
-		if ($excluded_member_groups !== FALSE)
-		{
-			$excluded_member_groups = preg_split('/[\s|,]/', $excluded_member_groups, -1, PREG_SPLIT_NO_EMPTY);
-			$excluded_member_groups = is_array($excluded_member_groups) ? $excluded_member_groups : array($excluded_member_groups);
-
-			if (ee('Permission')->hasAnyRole($excluded_member_groups))
-			{
-				return TRUE;
-			}
-		}
-
-		return FALSE;
-	}
-
-	/**
-	 * Determines the MIME type of a file
-	 *
-	 * @see MimeType::ofFile
-	 */
-	public function ofFile($path)
-	{
-		try
-		{
-			return $this->mime_type->ofFile($path);
-		}
-		catch (Exception $e)
-		{
-			show_error(sprintf(lang('file_not_found'), $path));
-		}
-	}
-
-	/**
-	 * Determines the MIME type of a buffer
-	 *
-	 * @see MimeType::ofFile
-	 */
-	public function ofBuffer($buffer)
-	{
-		return $this->mime_type->ofBuffer($buffer);
-	}
-
-	/**
-	 * Determines if a file is an image or not.
-	 *
-	 * @see MimeType::fileIsImage
-	 */
-	public function fileIsImage($path)
-	{
-		try
-		{
-			return $this->mime_type->fileIsImage($path);
-		}
-		catch (Exception $e)
-		{
-			show_error(sprintf(lang('file_not_found'), $path));
-		}
-	}
-
-	/**
-	 * Determines if a MIME type is in our list of valid image MIME types.
-	 *
-	 * @see MimeType::isImage
-	 */
-	public function isImage($mime)
-	{
-		return $this->mime_type->isImage($mime);
-	}
-
-	/**
-	 * Gets the MIME type of a file and compares it to our whitelist to see if
-	 * it is safe for upload.
-	 *
-	 * @see MimeType::fileIsSafeForUpload
-	 */
-	public function fileIsSafeForUpload($path)
-	{
-		if ($this->memberExcludedFromWhitelistRestrictions())
-		{
-			return TRUE;
-		}
-
-		return $this->mime_type->fileIsSafeForUpload($path);
-	}
-
-	/**
-	 * Checks a given MIME type against our whitelist to see if it is safe for
-	 * upload
-	 *
-	 * @see MimeType::isSafeForUpload
-	 */
-	public function isSafeForUpload($mime)
-	{
-		if ($this->memberExcludedFromWhitelistRestrictions())
-		{
-			return TRUE;
-		}
-
-		return $this->mime_type->isSafeForUpload($mime);
-	}
-
-	/**
-	 * Returns the whitelist of MIME Types
-	 *
-	 * @return array An array of MIME types that are on the whitelist
-	 */
-	public function getWhitelist()
-	{
-		return $this->mime_type->getWhitelist();
-	}
-
+    /**
+     * Returns the whitelist of MIME Types
+     *
+     * @return array An array of MIME types that are on the whitelist
+     */
+    public function getWhitelist()
+    {
+        ee()->load->library('logger');
+        ee()->logger->deprecated('7.0.0', "ee('MimeType')->getWhitelist()");
+        return ee('MimeType')->getWhitelist();
+    }
 }
 
 // EOF

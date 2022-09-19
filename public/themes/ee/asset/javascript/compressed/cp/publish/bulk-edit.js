@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -255,11 +255,11 @@ EE.cp.BulkEdit = {
 	_enableOrDisableButtons: function() {
 
 		// No Fluid field? Nothing to do
-		if (this.modal.find('.fluid').size() == 0) {
+		if (this.modal.find('.fluid').length == 0) {
 			return
 		}
 
-		var itemCount = this.formContainer.find('.js-sorting-container .fluid__item').size(),
+		var itemCount = this.formContainer.find('.js-sorting-container .fluid__item').length,
 			buttons = this.formContainer.find('.button')
 
 		if (itemCount == 0) {

@@ -3,7 +3,9 @@
 <div class="panel">
 	<div class="tbl-ctrls">
 		<?php if (empty($layouts) && empty($channel_id)): ?>
-			<?php $this->embed('_shared/table-list', ['data' => []]); ?>
+			<div class="panel-body">
+				<?php $this->embed('_shared/table-list', ['data' => []]); ?>
+			</div>
 		<?php else: ?>
 			<?=form_open($base_url)?>
         <div class="panel-heading">
@@ -20,20 +22,22 @@
         <div class="panel-body">
 				<div class="app-notice-wrap"><?=ee('CP/Alert')->getAllInlines()?></div>
 				<?php $this->embed('_shared/table-list', ['data' => $layouts]); ?>
-				<?php if (isset($pagination)) echo $pagination; ?>
+				<?php if (isset($pagination)) {
+    echo $pagination;
+} ?>
 				<?php $this->embed('ee:_shared/form/bulk-action-bar', [
-					'options' => [
-						[
-							'value' => "",
-							'text' => '-- ' . lang('with_selected') . ' --'
-						],
-						[
-							'value' => "remove",
-							'text' => lang('delete'),
-							'attrs' => ' data-confirm-trigger="selected" rel="modal-confirm-delete"'
-						]
-					],
-					'modal' => true
+				    'options' => [
+				        [
+				            'value' => "",
+				            'text' => '-- ' . lang('with_selected') . ' --'
+				        ],
+				        [
+				            'value' => "remove",
+				            'text' => lang('delete'),
+				            'attrs' => ' data-confirm-trigger="selected" rel="modal-confirm-delete"'
+				        ]
+				    ],
+				    'modal' => true
 				]); ?>
       </div>
 			</form>
@@ -43,11 +47,11 @@
 <?php
 
 $modal_vars = array(
-	'name'		=> 'modal-confirm-delete',
-	'form_url'	=> ee('CP/URL')->make('channels/layouts/' . $channel_id, ee()->cp->get_url_state()),
-	'hidden'	=> array(
-		'bulk_action'	=> 'remove'
-	)
+    'name' => 'modal-confirm-delete',
+    'form_url' => ee('CP/URL')->make('channels/layouts/' . $channel_id, ee()->cp->get_url_state()),
+    'hidden' => array(
+        'bulk_action' => 'remove'
+    )
 );
 
 $modal = $this->make('ee:_shared/modal_confirm_delete')->render($modal_vars);

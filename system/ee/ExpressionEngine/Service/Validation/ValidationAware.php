@@ -4,7 +4,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2020, Packet Tide, LLC (https://www.packettide.com)
+ * @copyright Copyright (c) 2003-2022, Packet Tide, LLC (https://www.packettide.com)
  * @license   https://expressionengine.com/license Licensed under Apache License, Version 2.0
  */
 
@@ -15,15 +15,15 @@ namespace ExpressionEngine\Service\Validation;
  * than just fancy arrays. Opens up access to internal
  * validate* callbacks and rules.
  */
-interface ValidationAware {
+interface ValidationAware
+{
+    /**
+     * Return an array of validation data.
+     */
+    public function getValidationData();
 
-	/**
-	 * Return an array of validation data.
-	 */
-	public function getValidationData();
-
-	/**
-	 * Return an array of validation rules
-	 */
-	public function getValidationRules();
+    /**
+     * Return an array of validation rules
+     */
+    public function getValidationRules();
 }
